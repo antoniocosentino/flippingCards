@@ -13,6 +13,7 @@
     "@eva-design/eva": "2.0.0",
     "@ui-kitten/components": "5.0.0",
     "@ui-kitten/eva-icons": "5.0.0",
+    "eslint-config-prettier": "^6.11.0",
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-svg": "^12.1.0"
@@ -31,8 +32,8 @@
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.58.0",
-    "react-test-renderer": "16.11.0",
     "prettier": "^2.0.2",
+    "react-test-renderer": "16.11.0",
     "typescript": "^3.8.3"
   },
   "jest": {
