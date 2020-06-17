@@ -8,7 +8,8 @@ import {
     Layout,
     Text,
     IconProps,
-    useTheme
+    useTheme,
+    Card
 } from '@ui-kitten/components';
 
 import { StyleSheet } from 'react-native';
@@ -16,6 +17,28 @@ import { StyleSheet } from 'react-native';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 
+const DEMO_WORDS = [
+    {
+        de: 'zeigen',
+        en: 'to show'
+    },
+    {
+        de: 'die Unterhaltung',
+        en: 'entertainment'
+    },
+    {
+        de: 'der Lebensabschnittpartner',
+        en: 'part-time lover'
+    },
+    {
+        de: 'liegen',
+        en: 'to lie, to be located'
+    },
+    {
+        de: 'nennen',
+        en: 'to name, to call'
+    }
+];
 
 const ListIcon = ( props: IconProps ) => <Icon {...props} name='list-outline' />;
 const CardsIcon = ( props: IconProps ) => <Icon {...props} name='grid-outline' />;
@@ -43,21 +66,22 @@ const styles = StyleSheet.create( {
     mainBlock: {
         flex: 11,
         justifyContent:
-        'center',
-        alignItems: 'center'
+        'flex-start',
+        alignItems: 'center',
+        marginTop: 70
     },
     bottomZone: {
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
-        paddingBottom: 20
+        paddingBottom: 26
     },
     text: {
         textAlign: 'center',
         color: '#000000'
     },
     plusContainer: {
-        borderRadius: 28,
+        borderRadius: 27,
         overflow: 'hidden'
     },
     plusIcon: {
@@ -68,22 +92,41 @@ const styles = StyleSheet.create( {
         width: 30,
         height: 30,
         color: 'white'
+    },
+    wordCard: {
+        width: '91%',
+        marginTop: 10,
+        marginLeft: '4.5%',
+        marginRight: '4.5%',
+        backgroundColor: '#3466FF',
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderRadius: 10
+    },
+    mainWord: {
+        color: '#fff',
+        fontSize: 22
+    },
+    translationWord: {
+        color: '#fff',
+        fontSize: 16,
+        marginTop: 8
     }
 } );
 
 export default () => {
     const [selectedIndex, setSelectedIndex] = React.useState( 0 );
 
-    const [ mainText, setMainText ] = React.useState( 'FlipCards' );
+    const [ view, setView ] = React.useState( 'LIST' );
 
     const onMenuClick = ( index: number ) => {
         if ( index === 2 ) {
             // TODO: insert here logic for opening the plus stuff
-            setMainText( 'Porc Dieu' );
+            setView( 'ADD' );
             return;
         }
         setSelectedIndex( index );
-        setMainText( 'FlipCards' );
+        setView( 'LIST' );
     };
 
     return (
@@ -91,7 +134,31 @@ export default () => {
             <IconRegistry icons={EvaIconsPack} />
             <ApplicationProvider {...eva} theme={eva.light}>
                 <Layout style={ styles.mainBlock }>
-                    <Text style={styles.text} category='h1'>{ mainText }</Text>
+                    {
+                        view === 'LIST' && DEMO_WORDS.map( ( word, wordKey ) => {
+                            return (
+                                <Card
+                                    style={ styles.wordCard }
+                                    key={ wordKey }
+                                >
+                                    <Text
+                                        style={ styles.mainWord }
+                                    >
+                                        { word.de }
+                                    </Text>
+                                    <Text
+                                        style={ styles.translationWord }
+                                    >
+                                        { word.en }
+                                    </Text>
+                                </Card>
+                            );
+                        } )
+                    }
+                    {
+                        view === 'ADD' &&
+                        <Text style={styles.text} category='h1'>Add new word</Text>
+                    }
                 </Layout>
                 <Layout style={ styles.bottomZone }>
                     <BottomNavigation
