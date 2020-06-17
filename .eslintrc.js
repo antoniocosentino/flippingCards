@@ -8,6 +8,8 @@ module.exports = {
     'prettier/prettier': 0,
     'space-in-parens': [ 1, 'always' ],
     'indent': [ 1, 4 ],
-    'comma-dangle': [ 1, 'never' ]
+    'comma-dangle': [ 1, 'never' ],
+    'no-unused-vars':  0,
+    '@typescript-eslint/no-unused-vars': 1
   },
 };
