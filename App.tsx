@@ -45,6 +45,22 @@ const DEMO_WORDS = [
     {
         de: 'nennen',
         en: 'to name, to call'
+    },
+    {
+        de: 'nennen',
+        en: 'to name, to call'
+    },
+    {
+        de: 'nennen',
+        en: 'to name, to call'
+    },
+    {
+        de: 'nennen',
+        en: 'to name, to call'
+    },
+    {
+        de: 'nennen',
+        en: 'to name, to call'
     }
 ];
 
@@ -146,6 +162,7 @@ export default () => {
             <ApplicationProvider {...eva} theme={eva.light}>
                 <Layout style={ styles.mainBlock }>
                     <ScrollView
+                        showsVerticalScrollIndicator={false}
                         style={ styles.cardsScrollView }
                     >
                         {
