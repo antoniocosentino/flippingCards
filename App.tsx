@@ -12,7 +12,7 @@ import {
     Card
 } from '@ui-kitten/components';
 
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
@@ -33,6 +33,14 @@ const DEMO_WORDS = [
     {
         de: 'liegen',
         en: 'to lie, to be located'
+    },
+    {
+        de: 'nennen',
+        en: 'to name, to call'
+    },
+    {
+        de: 'nennen',
+        en: 'to name, to call'
     },
     {
         de: 'nennen',
@@ -68,7 +76,8 @@ const styles = StyleSheet.create( {
         justifyContent:
         'flex-start',
         alignItems: 'center',
-        marginTop: 70
+        marginTop: 70,
+        overflow: 'scroll'
     },
     bottomZone: {
         flex: 1,
@@ -93,11 +102,13 @@ const styles = StyleSheet.create( {
         height: 30,
         color: 'white'
     },
-    wordCard: {
+    cardsScrollView: {
         width: '91%',
-        marginTop: 10,
         marginLeft: '4.5%',
-        marginRight: '4.5%',
+        marginRight: '4.5%'
+    },
+    wordCard: {
+        marginTop: 10,
         backgroundColor: '#3466FF',
         paddingTop: 10,
         paddingBottom: 10,
@@ -134,27 +145,31 @@ export default () => {
             <IconRegistry icons={EvaIconsPack} />
             <ApplicationProvider {...eva} theme={eva.light}>
                 <Layout style={ styles.mainBlock }>
-                    {
-                        view === 'LIST' && DEMO_WORDS.map( ( word, wordKey ) => {
-                            return (
-                                <Card
-                                    style={ styles.wordCard }
-                                    key={ wordKey }
-                                >
-                                    <Text
-                                        style={ styles.mainWord }
+                    <ScrollView
+                        style={ styles.cardsScrollView }
+                    >
+                        {
+                            view === 'LIST' && DEMO_WORDS.map( ( word, wordKey ) => {
+                                return (
+                                    <Card
+                                        style={ styles.wordCard }
+                                        key={ wordKey }
                                     >
-                                        { word.de }
-                                    </Text>
-                                    <Text
-                                        style={ styles.translationWord }
-                                    >
-                                        { word.en }
-                                    </Text>
-                                </Card>
-                            );
-                        } )
-                    }
+                                        <Text
+                                            style={ styles.mainWord }
+                                        >
+                                            { word.de }
+                                        </Text>
+                                        <Text
+                                            style={ styles.translationWord }
+                                        >
+                                            { word.en }
+                                        </Text>
+                                    </Card>
+                                );
+                            } )
+                        }
+                    </ScrollView>
                     {
                         view === 'ADD' &&
                         <Text style={styles.text} category='h1'>Add new word</Text>
