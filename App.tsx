@@ -112,9 +112,9 @@ const styles = StyleSheet.create( {
     },
     bottomZone: {
         flex: 1,
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingBottom: 26
+        paddingBottom: 10
     },
     text: {
         textAlign: 'center',
