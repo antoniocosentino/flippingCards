@@ -110,6 +110,9 @@ const styles = StyleSheet.create( {
         marginTop: 10,
         overflow: 'scroll'
     },
+    extraMainBlock: {
+        marginTop: 100
+    },
     bottomZone: {
         flex: 1.5,
         justifyContent: 'flex-start',
@@ -169,15 +172,17 @@ export default () => {
         <>
             <IconRegistry icons={EvaIconsPack} />
             <ApplicationProvider {...eva} theme={eva.light}>
-                <Layout style={ styles.topSearch }>
-                    <Input
-                        style={ styles.topSearchInput }
-                        placeholder='Search'
-                        value={searchValue}
-                        onChangeText={nextValue => setSearchValue( nextValue )}
-                    />
-                </Layout>
-                <Layout style={ styles.mainBlock }>
+                { view === 'LIST' &&
+                    <Layout style={ styles.topSearch }>
+                        <Input
+                            style={ styles.topSearchInput }
+                            placeholder='Search'
+                            value={searchValue}
+                            onChangeText={nextValue => setSearchValue( nextValue )}
+                        />
+                    </Layout>
+                }
+                <Layout style={ [ styles.mainBlock, view === 'ADD' ? styles.extraMainBlock : null ] }>
                     { view === 'LIST' &&
                         <ScrollView
                             showsVerticalScrollIndicator={false}
@@ -213,6 +218,7 @@ export default () => {
                 </Layout>
                 <Layout style={ styles.bottomZone }>
                     <BottomNavigation
+                        appearance={ 'noIndicator' }
                         style={ styles.bottomWrapper }
                         selectedIndex={selectedIndex}
                         onSelect={ ( index ) => onMenuClick( index ) }>
