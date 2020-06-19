@@ -103,7 +103,7 @@ const styles = StyleSheet.create( {
         borderRadius: 18
     },
     mainBlock: {
-        flex: 8.5,
+        flex: 9,
         justifyContent:
         'flex-start',
         alignItems: 'center',
@@ -111,10 +111,12 @@ const styles = StyleSheet.create( {
         overflow: 'scroll'
     },
     bottomZone: {
-        flex: 1,
+        flex: 1.5,
         justifyContent: 'flex-start',
-        alignItems: 'center',
-        paddingBottom: 10
+        alignItems: 'center'
+    },
+    bottomWrapper: {
+        paddingTop: 16
     },
     text: {
         textAlign: 'center',
@@ -211,6 +213,7 @@ export default () => {
                 </Layout>
                 <Layout style={ styles.bottomZone }>
                     <BottomNavigation
+                        style={ styles.bottomWrapper }
                         selectedIndex={selectedIndex}
                         onSelect={ ( index ) => onMenuClick( index ) }>
                         <BottomNavigationTab icon={ListIcon} />
