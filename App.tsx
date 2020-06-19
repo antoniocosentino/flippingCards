@@ -8,7 +8,8 @@ import {
     Layout,
     Text,
     IconProps,
-    Card
+    Card,
+    Input
 } from '@ui-kitten/components';
 
 import { StyleSheet, ScrollView } from 'react-native';
@@ -91,12 +92,22 @@ const PlayIcon = ( props: IconProps ) => <Icon {...props} name='award-outline' /
 const SettingsIcon = ( props: IconProps ) => <Icon {...props} name='settings-2-outline' />;
 
 const styles = StyleSheet.create( {
+    topSearch: {
+        flex: 1.5,
+        justifyContent: 'flex-end'
+    },
+    topSearchInput: {
+        width: '91%',
+        marginLeft: '4.5%',
+        marginRight: '4.5%',
+        borderRadius: 18
+    },
     mainBlock: {
-        flex: 11,
+        flex: 8.5,
         justifyContent:
         'flex-start',
         alignItems: 'center',
-        marginTop: 50,
+        marginTop: 10,
         overflow: 'scroll'
     },
     bottomZone: {
@@ -150,10 +161,20 @@ export default () => {
         setView( 'LIST' );
     };
 
+    const [ searchValue, setSearchValue ] = React.useState( '' );
+
     return (
         <>
             <IconRegistry icons={EvaIconsPack} />
             <ApplicationProvider {...eva} theme={eva.light}>
+                <Layout style={ styles.topSearch }>
+                    <Input
+                        style={ styles.topSearchInput }
+                        placeholder='Search'
+                        value={searchValue}
+                        onChangeText={nextValue => setSearchValue( nextValue )}
+                    />
+                </Layout>
                 <Layout style={ styles.mainBlock }>
                     { view === 'LIST' &&
                         <ScrollView
