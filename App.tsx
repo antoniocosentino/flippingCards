@@ -96,11 +96,14 @@ const styles = StyleSheet.create( {
         flex: 1.5,
         justifyContent: 'flex-end'
     },
+    topSpacer: {
+        flex: 1.5
+    },
     topSearchInput: {
         width: '91%',
         marginLeft: '4.5%',
         marginRight: '4.5%',
-        borderRadius: 18
+        borderRadius: 14
     },
     mainBlock: {
         flex: 9,
@@ -109,9 +112,6 @@ const styles = StyleSheet.create( {
         alignItems: 'center',
         marginTop: 10,
         overflow: 'scroll'
-    },
-    extraMainBlock: {
-        marginTop: 100
     },
     bottomZone: {
         flex: 1.5,
@@ -179,10 +179,14 @@ export default () => {
                             placeholder='Search'
                             value={searchValue}
                             onChangeText={nextValue => setSearchValue( nextValue )}
+                            size={ 'small' }
                         />
                     </Layout>
                 }
-                <Layout style={ [ styles.mainBlock, view === 'ADD' ? styles.extraMainBlock : null ] }>
+                { view !== 'LIST' &&
+                    <Layout style={ styles.topSpacer } />
+                }
+                <Layout style={ styles.mainBlock }>
                     { view === 'LIST' &&
                         <ScrollView
                             showsVerticalScrollIndicator={false}
