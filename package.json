@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@eva-design/eva": "2.0.0",
+    "@react-native-community/async-storage": "^1.11.0",
     "@ui-kitten/components": "5.0.0",
     "@ui-kitten/eva-icons": "5.0.0",
     "babel-plugin-inline-import": "^3.0.0",

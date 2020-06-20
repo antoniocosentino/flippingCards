@@ -12,12 +12,20 @@ import {
     Input
 } from '@ui-kitten/components';
 
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, Button } from 'react-native';
 
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { SvgXml } from 'react-native-svg';
 
+import AsyncStorage from '@react-native-community/async-storage';
+
+type TSingleWord = {
+    de: string,
+    en: string
+}
+
+type TWordsWallet = ReadonlyArray<TSingleWord>
 
 const plusSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
 <g fill="none" fill-rule="evenodd">
@@ -29,7 +37,7 @@ const plusSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" 
 </g>
 </svg>`;
 
-const DEMO_WORDS = [
+const DEMO_WORDS: TWordsWallet = [
     {
         de: 'zeigen',
         en: 'to show'
@@ -156,6 +164,33 @@ export default () => {
 
     const [ view, setView ] = React.useState( 'LIST' );
 
+    const storeData = async ( value: TWordsWallet ) => {
+        try {
+            const jsonValue = JSON.stringify( value );
+            await AsyncStorage.setItem( '@wordsWallet', jsonValue );
+        } catch ( e ) {
+            console.error( 'Error:', e );
+        }
+    };
+
+    const getData = async () => {
+        try {
+            const value = await AsyncStorage.getItem( '@wordsWallet' );
+
+            if ( value !== null ) {
+                setWordsWallet( JSON.parse( value ) );
+            }
+        } catch ( e ) {
+            // error reading value
+        }
+    };
+
+    const [ wordsWallet, setWordsWallet ] = React.useState( [] as TWordsWallet );
+
+    if ( wordsWallet.length === 0 ) {
+        getData();
+    }
+
     const onMenuClick = ( index: number ) => {
         if ( index === 2 ) {
             // TODO: insert here logic for opening the plus stuff
@@ -193,7 +228,7 @@ export default () => {
                             style={ styles.cardsScrollView }
                         >
                             {
-                                DEMO_WORDS.map( ( word, wordKey ) => {
+                                wordsWallet.map( ( word, wordKey ) => {
                                     return (
                                         <Card
                                             style={ styles.wordCard }
@@ -217,7 +252,23 @@ export default () => {
                     }
                     {
                         view === 'ADD' &&
-                        <Text style={styles.text} category='h1'>Add new word</Text>
+                        <>
+                            <Text style={styles.text} category='h1'>Add new word</Text>
+                            <Button
+                                title='boh'
+                                onPress={() => storeData( DEMO_WORDS )}
+                            >
+                                store data
+                            </Button>
+                            <Button
+                                title='boh2'
+                                onPress={() => getData()}
+                            >
+                                get data
+                            </Button>
+
+                        </>
+
                     }
                 </Layout>
                 <Layout style={ styles.bottomZone }>
