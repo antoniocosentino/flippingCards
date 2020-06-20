@@ -12,13 +12,16 @@ import {
     Input
 } from '@ui-kitten/components';
 
-import { StyleSheet, ScrollView, Button } from 'react-native';
+import { ScrollView, Button } from 'react-native';
 
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { SvgXml } from 'react-native-svg';
 
 import AsyncStorage from '@react-native-community/async-storage';
+import { plusSvg } from './utils/customIcons';
+import { DEMO_WORDS } from './utils/demoData';
+import { styles } from './styles/styles';
 
 type TSingleWord = {
     de: string,
@@ -26,63 +29,6 @@ type TSingleWord = {
 }
 
 type TWordsWallet = ReadonlyArray<TSingleWord>
-
-const plusSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
-<g fill="none" fill-rule="evenodd">
-  <circle cx="14" cy="14" r="14" fill="#3466FF"/>
-  <g fill-rule="nonzero" transform="translate(2 2)">
-    <rect width="24" height="24" fill="#000" opacity="0" transform="rotate(180 12 12)"/>
-    <path fill="#FFF" d="M19,11 L13,11 L13,5 C13,4.44771525 12.5522847,4 12,4 C11.4477153,4 11,4.44771525 11,5 L11,11 L5,11 C4.44771525,11 4,11.4477153 4,12 C4,12.5522847 4.44771525,13 5,13 L11,13 L11,19 C11,19.5522847 11.4477153,20 12,20 C12.5522847,20 13,19.5522847 13,19 L13,13 L19,13 C19.5522847,13 20,12.5522847 20,12 C20,11.4477153 19.5522847,11 19,11 Z"/>
-  </g>
-</g>
-</svg>`;
-
-const DEMO_WORDS: TWordsWallet = [
-    {
-        de: 'zeigen',
-        en: 'to show'
-    },
-    {
-        de: 'die Unterhaltung',
-        en: 'entertainment'
-    },
-    {
-        de: 'der Lebensabschnittpartner',
-        en: 'part-time lover'
-    },
-    {
-        de: 'liegen',
-        en: 'to lie, to be located'
-    },
-    {
-        de: 'nennen',
-        en: 'to name, to call'
-    },
-    {
-        de: 'nennen',
-        en: 'to name, to call'
-    },
-    {
-        de: 'nennen',
-        en: 'to name, to call'
-    },
-    {
-        de: 'nennen',
-        en: 'to name, to call'
-    },
-    {
-        de: 'nennen',
-        en: 'to name, to call'
-    },
-    {
-        de: 'nennen',
-        en: 'to name, to call'
-    },
-    {
-        de: 'nennen',
-        en: 'to name, to call'
-    }
-];
 
 const ListIcon = ( props: IconProps ) => <Icon {...props} name='list-outline' />;
 const CardsIcon = ( props: IconProps ) => <Icon {...props} name='grid-outline' />;
@@ -98,66 +44,6 @@ const PlusIcon = () => {
 };
 const PlayIcon = ( props: IconProps ) => <Icon {...props} name='award-outline' />;
 const SettingsIcon = ( props: IconProps ) => <Icon {...props} name='settings-2-outline' />;
-
-const styles = StyleSheet.create( {
-    topSearch: {
-        flex: 1.5,
-        justifyContent: 'flex-end'
-    },
-    topSpacer: {
-        flex: 1.5
-    },
-    topSearchInput: {
-        width: '91%',
-        marginLeft: '4.5%',
-        marginRight: '4.5%',
-        borderRadius: 14
-    },
-    mainBlock: {
-        flex: 9,
-        justifyContent:
-        'flex-start',
-        alignItems: 'center',
-        marginTop: 10,
-        overflow: 'scroll'
-    },
-    bottomZone: {
-        flex: 1.5,
-        justifyContent: 'flex-start',
-        alignItems: 'center'
-    },
-    bottomWrapper: {
-        paddingTop: 16
-    },
-    text: {
-        textAlign: 'center',
-        color: '#000000'
-    },
-    plusIcon: {
-        marginLeft: -1
-    },
-    cardsScrollView: {
-        width: '91%',
-        marginLeft: '4.5%',
-        marginRight: '4.5%'
-    },
-    wordCard: {
-        marginBottom: 10,
-        backgroundColor: '#3466FF',
-        paddingTop: 10,
-        paddingBottom: 10,
-        borderRadius: 10
-    },
-    mainWord: {
-        color: '#fff',
-        fontSize: 22
-    },
-    translationWord: {
-        color: '#fff',
-        fontSize: 16,
-        marginTop: 8
-    }
-} );
 
 export default () => {
     const [selectedIndex, setSelectedIndex] = React.useState( 0 );
