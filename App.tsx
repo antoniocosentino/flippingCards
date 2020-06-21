@@ -64,13 +64,30 @@ export default () => {
     }
 
     const onMenuClick = ( index: number ) => {
-        if ( index === 2 ) {
-            // TODO: insert here logic for opening the plus stuff
-            setView( 'ADD' );
-            return;
+        switch ( index ) {
+            case 0:
+            default:
+                setView( 'LIST' );
+                break;
+
+            case 1:
+                setView( 'CARDS' );
+                break;
+
+            case 2:
+                setView( 'ADD' );
+                break;
+
+            case 3:
+                setView( 'PLAY' );
+                break;
+
+            case 4:
+                setView( 'SETTINGS' );
+                break;
         }
+
         setSelectedIndex( index );
-        setView( 'LIST' );
     };
 
     const [ searchValue, setSearchValue ] = React.useState( '' );

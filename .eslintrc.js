@@ -15,7 +15,7 @@ module.exports = {
         "when": "always"
       }
     }],
-    'indent': [1, 4],
+    'indent': [1, 4, { "SwitchCase": 1 }],
     'comma-dangle': [1, 'never'],
     'no-unused-vars': 0,
     '@typescript-eslint/no-unused-vars': 1
