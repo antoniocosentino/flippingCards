@@ -8,11 +8,10 @@ import {
     Layout,
     Text,
     IconProps,
-    Card,
     Input
 } from '@ui-kitten/components';
 
-import { ScrollView, Button } from 'react-native';
+import { Button } from 'react-native';
 
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
@@ -22,6 +21,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { plusSvg } from './utils/customIcons';
 import { DEMO_WORDS } from './utils/demoData';
 import { styles } from './styles/styles';
+import { List } from './views/List';
 
 type TSingleWord = {
     de: string,
@@ -29,6 +29,12 @@ type TSingleWord = {
 }
 
 type TWordsWallet = ReadonlyArray<TSingleWord>
+
+type TAppData = {
+    wordsWallet: TWordsWallet
+};
+
+export const AppContext = React.createContext( {} as TAppData );
 
 const ListIcon = ( props: IconProps ) => <Icon {...props} name='list-outline' />;
 const CardsIcon = ( props: IconProps ) => <Icon {...props} name='grid-outline' />;
@@ -77,6 +83,10 @@ export default () => {
         getData();
     }
 
+    const appData = {
+        wordsWallet
+    };
+
     const onMenuClick = ( index: number ) => {
         if ( index === 2 ) {
             // TODO: insert here logic for opening the plus stuff
@@ -93,83 +103,60 @@ export default () => {
         <>
             <IconRegistry icons={EvaIconsPack} />
             <ApplicationProvider {...eva} theme={eva.light}>
-                { view === 'LIST' &&
-                    <Layout style={ styles.topSearch }>
-                        <Input
-                            style={ styles.topSearchInput }
-                            placeholder='Search'
-                            value={searchValue}
-                            onChangeText={nextValue => setSearchValue( nextValue )}
-                            size={ 'small' }
-                        />
-                    </Layout>
-                }
-                { view !== 'LIST' &&
-                    <Layout style={ styles.topSpacer } />
-                }
-                <Layout style={ styles.mainBlock }>
+                <AppContext.Provider value={ appData }>
                     { view === 'LIST' &&
-                        <ScrollView
-                            showsVerticalScrollIndicator={false}
-                            style={ styles.cardsScrollView }
-                        >
-                            {
-                                wordsWallet.map( ( word, wordKey ) => {
-                                    return (
-                                        <Card
-                                            style={ styles.wordCard }
-                                            key={ wordKey }
-                                        >
-                                            <Text
-                                                style={ styles.mainWord }
-                                            >
-                                                { word.de }
-                                            </Text>
-                                            <Text
-                                                style={ styles.translationWord }
-                                            >
-                                                { word.en }
-                                            </Text>
-                                        </Card>
-                                    );
-                                } )
-                            }
-                        </ScrollView>
+                        <Layout style={ styles.topSearch }>
+                            <Input
+                                style={ styles.topSearchInput }
+                                placeholder='Search'
+                                value={searchValue}
+                                onChangeText={nextValue => setSearchValue( nextValue )}
+                                size={ 'small' }
+                            />
+                        </Layout>
                     }
-                    {
-                        view === 'ADD' &&
-                        <>
-                            <Text style={styles.text} category='h1'>Add new word</Text>
-                            <Button
-                                title='boh'
-                                onPress={() => storeData( DEMO_WORDS )}
-                            >
-                                store data
-                            </Button>
-                            <Button
-                                title='boh2'
-                                onPress={() => getData()}
-                            >
-                                get data
-                            </Button>
-
-                        </>
-
+                    { view !== 'LIST' &&
+                        <Layout style={ styles.topSpacer } />
                     }
-                </Layout>
-                <Layout style={ styles.bottomZone }>
-                    <BottomNavigation
-                        appearance={ 'noIndicator' }
-                        style={ styles.bottomWrapper }
-                        selectedIndex={selectedIndex}
-                        onSelect={ ( index ) => onMenuClick( index ) }>
-                        <BottomNavigationTab icon={ListIcon} />
-                        <BottomNavigationTab icon={CardsIcon} />
-                        <BottomNavigationTab icon={PlusIcon} />
-                        <BottomNavigationTab icon={PlayIcon} />
-                        <BottomNavigationTab icon={SettingsIcon} />
-                    </BottomNavigation>
-                </Layout>
+                    <Layout style={ styles.mainBlock }>
+                        { view === 'LIST' &&
+                            <List />
+                        }
+                        {
+                            view === 'ADD' &&
+                            <>
+                                <Text style={styles.text} category='h1'>Add new word</Text>
+                                <Button
+                                    title='boh'
+                                    onPress={() => storeData( DEMO_WORDS )}
+                                >
+                                    store data
+                                </Button>
+                                <Button
+                                    title='boh2'
+                                    onPress={() => getData()}
+                                >
+                                    get data
+                                </Button>
+
+                            </>
+
+                        }
+                    </Layout>
+                    <Layout style={ styles.bottomZone }>
+                        <BottomNavigation
+                            appearance={ 'noIndicator' }
+                            style={ styles.bottomWrapper }
+                            selectedIndex={selectedIndex}
+                            onSelect={ ( index ) => onMenuClick( index ) }>
+                            <BottomNavigationTab icon={ListIcon} />
+                            <BottomNavigationTab icon={CardsIcon} />
+                            <BottomNavigationTab icon={PlusIcon} />
+                            <BottomNavigationTab icon={PlayIcon} />
+                            <BottomNavigationTab icon={SettingsIcon} />
+                        </BottomNavigation>
+                    </Layout>
+                </AppContext.Provider>
             </ApplicationProvider>
         </>
     );
