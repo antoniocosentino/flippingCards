@@ -1,27 +1,20 @@
 import React from 'react';
 import {
-    BottomNavigation,
-    BottomNavigationTab,
-    Icon,
     ApplicationProvider,
     IconRegistry,
     Layout,
     Text,
-    IconProps,
     Input
 } from '@ui-kitten/components';
 
 import { Button } from 'react-native';
-
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import { SvgXml } from 'react-native-svg';
-
 import AsyncStorage from '@react-native-community/async-storage';
-import { plusSvg } from './utils/customIcons';
 import { DEMO_WORDS } from './utils/demoData';
 import { styles } from './styles/styles';
 import { List } from './views/List';
+import { BottomMenu } from './views/BottomMenu';
 
 type TSingleWord = {
     de: string,
@@ -31,28 +24,15 @@ type TSingleWord = {
 type TWordsWallet = ReadonlyArray<TSingleWord>
 
 type TAppData = {
-    wordsWallet: TWordsWallet
+    wordsWallet: TWordsWallet,
+    selectedIndex: number,
+    onMenuClick: ( index: number ) => void
 };
 
 export const AppContext = React.createContext( {} as TAppData );
 
-const ListIcon = ( props: IconProps ) => <Icon {...props} name='list-outline' />;
-const CardsIcon = ( props: IconProps ) => <Icon {...props} name='grid-outline' />;
-const PlusIcon = () => {
-    return (
-        <SvgXml
-            width='44'
-            height='44'
-            xml={ plusSvg }
-            style={ styles.plusIcon }
-        />
-    );
-};
-const PlayIcon = ( props: IconProps ) => <Icon {...props} name='award-outline' />;
-const SettingsIcon = ( props: IconProps ) => <Icon {...props} name='settings-2-outline' />;
-
 export default () => {
-    const [selectedIndex, setSelectedIndex] = React.useState( 0 );
+    const [ selectedIndex, setSelectedIndex ] = React.useState( 0 );
 
     const [ view, setView ] = React.useState( 'LIST' );
 
@@ -83,10 +63,6 @@ export default () => {
         getData();
     }
 
-    const appData = {
-        wordsWallet
-    };
-
     const onMenuClick = ( index: number ) => {
         if ( index === 2 ) {
             // TODO: insert here logic for opening the plus stuff
@@ -99,18 +75,23 @@ export default () => {
 
     const [ searchValue, setSearchValue ] = React.useState( '' );
 
+    const appData = { wordsWallet,
+        selectedIndex,
+        onMenuClick
+    };
+
     return (
         <>
-            <IconRegistry icons={EvaIconsPack} />
-            <ApplicationProvider {...eva} theme={eva.light}>
+            <IconRegistry icons={ EvaIconsPack } />
+            <ApplicationProvider { ...eva } theme={ eva.light }>
                 <AppContext.Provider value={ appData }>
                     { view === 'LIST' &&
                         <Layout style={ styles.topSearch }>
                             <Input
                                 style={ styles.topSearchInput }
                                 placeholder='Search'
-                                value={searchValue}
-                                onChangeText={nextValue => setSearchValue( nextValue )}
+                                value={ searchValue }
+                                onChangeText={ nextValue => setSearchValue( nextValue ) }
                                 size={ 'small' }
                             />
                         </Layout>
@@ -125,16 +106,16 @@ export default () => {
                         {
                             view === 'ADD' &&
                             <>
-                                <Text style={styles.text} category='h1'>Add new word</Text>
+                                <Text style={ styles.text } category='h1'>Add new word</Text>
                                 <Button
                                     title='boh'
-                                    onPress={() => storeData( DEMO_WORDS )}
+                                    onPress={ () => storeData( DEMO_WORDS ) }
                                 >
                                     store data
                                 </Button>
                                 <Button
                                     title='boh2'
-                                    onPress={() => getData()}
+                                    onPress={ () => getData() }
                                 >
                                     get data
                                 </Button>
@@ -144,17 +125,7 @@ export default () => {
                         }
                     </Layout>
                     <Layout style={ styles.bottomZone }>
-                        <BottomNavigation
-                            appearance={ 'noIndicator' }
-                            style={ styles.bottomWrapper }
-                            selectedIndex={selectedIndex}
-                            onSelect={ ( index ) => onMenuClick( index ) }>
-                            <BottomNavigationTab icon={ListIcon} />
-                            <BottomNavigationTab icon={CardsIcon} />
-                            <BottomNavigationTab icon={PlusIcon} />
-                            <BottomNavigationTab icon={PlayIcon} />
-                            <BottomNavigationTab icon={SettingsIcon} />
-                        </BottomNavigation>
+                        <BottomMenu />
                     </Layout>
                 </AppContext.Provider>
             </ApplicationProvider>

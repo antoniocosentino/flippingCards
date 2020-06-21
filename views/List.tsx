@@ -14,25 +14,25 @@ export const List = () => {
 
     return (
         <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={styles.cardsScrollView}
+            showsVerticalScrollIndicator={ false }
+            style={ styles.cardsScrollView }
         >
             {
                 wordsWallet.map( ( word, wordKey ) => {
                     return (
                         <Card
-                            style={styles.wordCard}
-                            key={wordKey}
+                            style={ styles.wordCard }
+                            key={ wordKey }
                         >
                             <Text
-                                style={styles.mainWord}
+                                style={ styles.mainWord }
                             >
-                                {word.de}
+                                { word.de }
                             </Text>
                             <Text
-                                style={styles.translationWord}
+                                style={ styles.translationWord }
                             >
-                                {word.en}
+                                { word.en }
                             </Text>
                         </Card>
                     );
