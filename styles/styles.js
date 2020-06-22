@@ -57,5 +57,11 @@ export const styles = StyleSheet.create( {
         color: '#fff',
         fontSize: 16,
         marginTop: 8
+    },
+    deleteAction: {
+        flex: 1,
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+        paddingRight: 10
     }
 } );

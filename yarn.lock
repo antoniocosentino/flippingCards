@@ -5153,6 +5153,11 @@ react-native-svg@^12.1.0:
     css-select "^2.1.0"
     css-tree "^1.0.0-alpha.39"
 
+react-native-swipe-list-view@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-swipe-list-view/-/react-native-swipe-list-view-3.1.2.tgz#e94fa72803bc18d19db88003926575108aadd969"
+  integrity sha512-xI36tOrrEfH9PUGVQh5fqoyDU0tmaOgEUufoT6YTz896/l2YIxbpw9eyNdLVaRfmP9BfvSuNAnOOxie8R+ViJQ==
+
 react-native@0.62.2:
   version "0.62.2"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.62.2.tgz#d831e11a3178705449142df19a70ac2ca16bad10"

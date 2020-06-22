@@ -21,7 +21,7 @@ type TSingleWord = {
     en: string
 }
 
-type TWordsWallet = ReadonlyArray<TSingleWord>
+export type TWordsWallet = ReadonlyArray<TSingleWord>
 
 type TAppData = {
     wordsWallet: TWordsWallet,
