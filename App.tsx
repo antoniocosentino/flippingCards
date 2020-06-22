@@ -97,6 +97,8 @@ export default () => {
         onMenuClick
     };
 
+    const showTopSpacer = view !== 'LIST';
+
     return (
         <>
             <IconRegistry icons={ EvaIconsPack } />
@@ -113,7 +115,7 @@ export default () => {
                             />
                         </Layout>
                     }
-                    { view !== 'LIST' &&
+                    { showTopSpacer &&
                         <Layout style={ styles.topSpacer } />
                     }
                     <Layout style={ styles.mainBlock }>
@@ -123,22 +125,15 @@ export default () => {
                         {
                             view === 'ADD' &&
                             <>
-                                <Text style={ styles.text } category='h1'>Add new word</Text>
-                                <Button
-                                    title='boh'
-                                    onPress={ () => storeData( DEMO_WORDS ) }
-                                >
-                                    store data
-                                </Button>
-                                <Button
-                                    title='boh2'
-                                    onPress={ () => getData() }
-                                >
-                                    get data
-                                </Button>
-
+                                <Text style={ styles.text } category='h4'>Add new word</Text>
                             </>
 
+                        }
+                        { view === 'SETTINGS' &&
+                            <Button
+                                title='Fill Wallet with Demo Words'
+                                onPress={ () => storeData( DEMO_WORDS ) }
+                            />
                         }
                     </Layout>
                     <Layout style={ styles.bottomZone }>
