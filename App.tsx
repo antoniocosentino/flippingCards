@@ -26,7 +26,8 @@ export type TWordsWallet = ReadonlyArray<TSingleWord>
 type TAppData = {
     wordsWallet: TWordsWallet,
     selectedIndex: number,
-    onMenuClick: ( index: number ) => void
+    onMenuClick: ( index: number ) => void,
+    storeData: ( value: TWordsWallet ) => void
 };
 
 export const AppContext = React.createContext( {} as TAppData );
@@ -36,7 +37,10 @@ export default () => {
 
     const [ view, setView ] = React.useState( 'LIST' );
 
+    const [ isDataUpdated, setDataUpdated ] = React.useState( false );
+
     const storeData = async ( value: TWordsWallet ) => {
+        setDataUpdated( false );
         try {
             const jsonValue = JSON.stringify( value );
             await AsyncStorage.setItem( '@wordsWallet', jsonValue );
@@ -59,8 +63,9 @@ export default () => {
 
     const [ wordsWallet, setWordsWallet ] = React.useState( [] as TWordsWallet );
 
-    if ( wordsWallet.length === 0 ) {
+    if ( !isDataUpdated ){
         getData();
+        setDataUpdated( true );
     }
 
     const onMenuClick = ( index: number ) => {
@@ -92,9 +97,11 @@ export default () => {
 
     const [ searchValue, setSearchValue ] = React.useState( '' );
 
-    const appData = { wordsWallet,
+    const appData = {
+        wordsWallet,
         selectedIndex,
-        onMenuClick
+        onMenuClick,
+        storeData
     };
 
     const showTopSpacer = view !== 'LIST';
@@ -130,10 +137,16 @@ export default () => {
 
                         }
                         { view === 'SETTINGS' &&
-                            <Button
-                                title='Fill Wallet with Demo Words'
-                                onPress={ () => storeData( DEMO_WORDS ) }
-                            />
+                            <>
+                                <Button
+                                    title='Fill Wallet with Demo Words'
+                                    onPress={ () => storeData( DEMO_WORDS ) }
+                                />
+                                <Button
+                                    title='Wipe Everything'
+                                    onPress={ () => storeData( [] ) }
+                                />
+                            </>
                         }
                     </Layout>
                     <Layout style={ styles.bottomZone }>

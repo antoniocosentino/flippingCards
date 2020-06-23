@@ -18,29 +18,5 @@ export const DEMO_WORDS = [
     {
         de: 'nennen',
         en: 'to name, to call'
-    },
-    {
-        de: 'nennen',
-        en: 'to name, to call'
-    },
-    {
-        de: 'nennen',
-        en: 'to name, to call'
-    },
-    {
-        de: 'nennen',
-        en: 'to name, to call'
-    },
-    {
-        de: 'nennen',
-        en: 'to name, to call'
-    },
-    {
-        de: 'nennen',
-        en: 'to name, to call'
-    },
-    {
-        de: 'nennen',
-        en: 'to name, to call'
     }
 ];

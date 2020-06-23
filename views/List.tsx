@@ -15,7 +15,17 @@ export const List = () => {
 
     const appData = useContext( AppContext );
 
-    const { wordsWallet } = appData;
+    const { wordsWallet, storeData } = appData;
+
+    const deleteWord = ( word: string ) => {
+
+        const updatedWallet = wordsWallet.filter( ( singleWord ) => {
+            return singleWord.de !== word;
+        } );
+
+        storeData( updatedWallet );
+
+    };
 
     const wordsWalletWithKeys = [...wordsWallet].map( ( word, index ) => {
         return {
@@ -24,8 +34,6 @@ export const List = () => {
         };
     } );
 
-
-    console.log( '🍌: List -> wordsWalletWithKeys', wordsWalletWithKeys );
 
     return (
         <SwipeListView
@@ -48,9 +56,13 @@ export const List = () => {
                     </Text>
                 </Card>
             ) }
-            renderHiddenItem={ () => (
+            renderHiddenItem={ ( data, rowMap ) => (
                 <View style={ styles.deleteAction } >
-                    <Text><DeleteIcon/></Text>
+                    <Text>
+                        <DeleteIcon
+                            onPress={ () => { deleteWord( data.item.de ); rowMap[data.item.key].closeRow(); } }
+                        />
+                    </Text>
                 </View>
             ) }
             rightOpenValue={ -75 }
