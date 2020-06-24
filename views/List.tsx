@@ -17,7 +17,11 @@ export const List = () => {
 
     const { wordsWallet, storeData } = appData;
 
-    const deleteWord = ( word: string ) => {
+    const deleteWord = ( word: string, rowMap: any, rowKey: string ) => {
+
+        if ( rowMap[rowKey] ) {
+            rowMap[rowKey].closeRow();
+        }
 
         const updatedWallet = wordsWallet.filter( ( singleWord ) => {
             return singleWord.de !== word;
@@ -60,7 +64,7 @@ export const List = () => {
                 <View style={ styles.deleteAction } >
                     <Text>
                         <DeleteIcon
-                            onPress={ () => { deleteWord( data.item.de ); rowMap[data.item.key].closeRow(); } }
+                            onPress={ () => { deleteWord( data.item.de, rowMap, data.item.key ); } }
                         />
                     </Text>
                 </View>
