@@ -16,6 +16,38 @@ import { styles } from './styles/styles';
 import { List } from './views/List';
 import { BottomMenu } from './views/BottomMenu';
 
+const SQLite = require( 'react-native-sqlite-storage' );
+
+const okCallback = () => {
+    console.log( 'connected to DB' );
+};
+
+const errorCallback = () => {
+    console.log( 'DB connection error' );
+};
+
+const db = SQLite.openDatabase( { name: 'dictionary.db', createFromLocation: 1 }, okCallback, errorCallback );
+const query = "select * from dictionary where de LIKE '%gesundheit%'";
+
+db.transaction( ( tx: any ) => {
+
+    tx.executeSql( query, [], ( trans: any, results:any ) => {
+        console.log( 'Query executed' );
+
+        const len = results.rows.length;
+
+        for ( let i = 0; i < len; i++ ) {
+            let row = results.rows.item( i );
+
+            console.log( `Word: ${row.de}, Translation: ${row.en}` );
+        }
+    },
+    ( error: any ) => {
+        console.log( 'Errors with the query', error );
+    }
+    );
+} );
+
 type TSingleWord = {
     de: string,
     en: string
@@ -133,6 +165,7 @@ export default () => {
                             view === 'ADD' &&
                             <>
                                 <Text style={ styles.text } category='h4'>Add new word</Text>
+
                             </>
 
                         }

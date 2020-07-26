@@ -17,6 +17,7 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* flipCardsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* flipCardsTests.m */; };
+		A9C45E0924CCA96F007D8816 /* www in Resources */ = {isa = PBXBuildFile; fileRef = A9C45E0824CCA96F007D8816 /* www */; };
 		DE73ECEB48DB708138A6C532 /* libPods-flipCards-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F6CBDDEDCBCDFD41051993A /* libPods-flipCards-tvOS.a */; };
 		E8B86FEDC1D267FB51E556A3 /* libPods-flipCards-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8922EA12840F63861339DC7D /* libPods-flipCards-tvOSTests.a */; };
 		F1F5352A2DF3961A9C7895DD /* libPods-flipCards-flipCardsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D22D09BC359D0F136AF502E /* libPods-flipCards-flipCardsTests.a */; };
@@ -63,6 +64,7 @@
 		8949B4BD9A587CB1B234976B /* Pods-flipCards-flipCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-flipCards-flipCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-flipCards-flipCardsTests/Pods-flipCards-flipCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8DB01EF80647A3F5D41D9520 /* Pods-flipCards-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-flipCards-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-flipCards-tvOSTests/Pods-flipCards-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		9A1A78C4FDF0784CEF22DF10 /* Pods-flipCards-flipCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-flipCards-flipCardsTests.release.xcconfig"; path = "Target Support Files/Pods-flipCards-flipCardsTests/Pods-flipCards-flipCardsTests.release.xcconfig"; sourceTree = "<group>"; };
+		A9C45E0824CCA96F007D8816 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../www; sourceTree = "<group>"; };
 		C2224DA90BD128F45FCC7C88 /* libPods-flipCards.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-flipCards.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6D42A8436210ACAA2EF5F70 /* Pods-flipCards-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-flipCards-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-flipCards-tvOSTests/Pods-flipCards-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -125,6 +127,7 @@
 		13B07FAE1A68108700A75B9A /* flipCards */ = {
 			isa = PBXGroup;
 			children = (
+				A9C45E0824CCA96F007D8816 /* www */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -339,6 +342,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9C45E0924CCA96F007D8816 /* www in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
