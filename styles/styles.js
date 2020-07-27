@@ -1,18 +1,34 @@
 import { StyleSheet } from 'react-native';
 
+const inputGlobalStyles = {
+    width: '91%',
+    marginLeft: '4.5%',
+    marginRight: '4.5%',
+    borderRadius: 14
+};
+
+const mainColor = '#3466FF';
+
 export const styles = StyleSheet.create( {
     topSearch: {
         flex: 1.5,
         justifyContent: 'flex-end'
     },
+    addBar: {
+        backgroundColor: mainColor,
+        paddingTop: 60
+    },
+    addWordInput: {
+        ...inputGlobalStyles,
+        borderRadius: 21,
+        marginBottom: 20
+
+    },
     topSpacer: {
         flex: 1.5
     },
     topSearchInput: {
-        width: '91%',
-        marginLeft: '4.5%',
-        marginRight: '4.5%',
-        borderRadius: 14
+        ...inputGlobalStyles
     },
     mainBlock: {
         flex: 9,
@@ -44,7 +60,7 @@ export const styles = StyleSheet.create( {
     },
     wordCard: {
         marginBottom: 10,
-        backgroundColor: '#3466FF',
+        backgroundColor: mainColor,
         paddingTop: 10,
         paddingBottom: 10,
         borderRadius: 10

@@ -27,26 +27,6 @@ const errorCallback = () => {
 };
 
 const db = SQLite.openDatabase( { name: 'dictionary.db', createFromLocation: 1 }, okCallback, errorCallback );
-const query = "select * from dictionary where de LIKE '%gesundheit%'";
-
-db.transaction( ( tx: any ) => {
-
-    tx.executeSql( query, [], ( trans: any, results:any ) => {
-        console.log( 'Query executed' );
-
-        const len = results.rows.length;
-
-        for ( let i = 0; i < len; i++ ) {
-            let row = results.rows.item( i );
-
-            console.log( `Word: ${row.de}, Translation: ${row.en}` );
-        }
-    },
-    ( error: any ) => {
-        console.log( 'Errors with the query', error );
-    }
-    );
-} );
 
 type TSingleWord = {
     de: string,
@@ -67,7 +47,7 @@ export const AppContext = React.createContext( {} as TAppData );
 export default () => {
     const [ selectedIndex, setSelectedIndex ] = React.useState( 0 );
 
-    const [ view, setView ] = React.useState( 'LIST' );
+    const [ view, setView ] = React.useState( 'ADD' ); // LIST
 
     const [ isDataUpdated, setDataUpdated ] = React.useState( false );
 
@@ -138,6 +118,52 @@ export default () => {
 
     const showTopSpacer = view !== 'LIST';
 
+    // database stuff
+
+    const [ addSearch, setAddSearch ] = React.useState( '' );
+    const [ shouldQuery, setShouldQuery ] = React.useState( false );
+
+    const setAddSearchWrapper = ( word: string ) => {
+        setShouldQuery( true );
+        setAddSearch( word );
+    };
+
+    const [ addSearchWords, setAddSearchWords ] = React.useState( [] );
+
+    const query = `select * from dictionary where de LIKE '${ addSearch }'`;
+
+    if ( shouldQuery ) {
+        db.transaction( ( tx: any ) => {
+
+            tx.executeSql( query, [], ( trans: any, results:any ) => {
+                console.log( 'Query executed' );
+
+                const len = results.rows.length;
+
+                const tempAddSearchWords = [];
+
+                for ( let i = 0; i < len; i++ ) {
+                    let row = results.rows.item( i );
+
+                    const tempObj = {
+                        de: row.de,
+                        en: row.en
+                    };
+
+                    tempAddSearchWords.push( tempObj );
+                }
+
+                setAddSearchWords( tempAddSearchWords as any ); // TODO: types
+                setShouldQuery( false );
+            },
+            ( error: any ) => {
+                console.log( 'Errors with the query', error );
+            }
+            );
+        } );
+    }
+
+
     return (
         <>
             <IconRegistry icons={ EvaIconsPack } />
@@ -154,6 +180,18 @@ export default () => {
                             />
                         </Layout>
                     }
+                    { view === 'ADD' &&
+                        <Layout style={ styles.addBar }>
+                            <Input
+                                autoCorrect={ false }
+                                style={ styles.addWordInput }
+                                placeholder='Type the word you want to enter'
+                                value={ addSearch }
+                                onChangeText={ nextValue => setAddSearchWrapper( nextValue ) }
+                                size={ 'large' }
+                            />
+                        </Layout>
+                    }
                     { showTopSpacer &&
                         <Layout style={ styles.topSpacer } />
                     }
@@ -164,10 +202,11 @@ export default () => {
                         {
                             view === 'ADD' &&
                             <>
-                                <Text style={ styles.text } category='h4'>Add new word</Text>
-
+                                { addSearchWords.map( ( word, index ) => {
+                                    return <Text key={ index }>{ word.de } - { word.en }</Text>;
+                                } )
+                                }
                             </>
-
                         }
                         { view === 'SETTINGS' &&
                             <>
