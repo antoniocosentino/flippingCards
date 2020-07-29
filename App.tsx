@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
     ApplicationProvider,
     IconRegistry,
@@ -7,6 +7,7 @@ import {
     Input
 } from '@ui-kitten/components';
 
+import { debounce } from 'lodash';
 import { Button } from 'react-native';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
@@ -131,15 +132,18 @@ export default () => {
     const [ shouldQuery, setShouldQuery ] = React.useState( false );
 
     const setAddSearchWrapper = ( word: string ) => {
-        setShouldQuery( true );
+        setShouldQueryDebounced( true );
         setAddSearch( word );
     };
+
+    const setShouldQueryDebounced = useCallback( debounce( setShouldQuery, 300 ), [] );
 
     const [ addSearchWords, setAddSearchWords ] = React.useState( [] as TSearchWords );
 
     const query = `select * from dictionary where de LIKE '${ addSearch }'`;
 
     if ( shouldQuery ) {
+        setShouldQuery( false );
         db.transaction( ( tx: any ) => {
 
             tx.executeSql( query, [], ( trans: any, results:any ) => {
@@ -161,7 +165,6 @@ export default () => {
                 }
 
                 setAddSearchWords( tempAddSearchWords );
-                setShouldQuery( false );
             },
             ( error: any ) => {
                 console.log( 'Errors with the query', error );
