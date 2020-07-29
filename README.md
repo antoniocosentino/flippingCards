@@ -1,2 +1,2 @@
 # flipCards
-Flashcards App for learning new words
+iOS & Android app for learning new words
