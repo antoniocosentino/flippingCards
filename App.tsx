@@ -42,6 +42,13 @@ type TAppData = {
     storeData: ( value: TWordsWallet ) => void
 };
 
+type TSearchWord = {
+    de: string,
+    en: string;
+}
+
+type TSearchWords = ReadonlyArray<TSearchWord>;
+
 export const AppContext = React.createContext( {} as TAppData );
 
 export default () => {
@@ -128,7 +135,7 @@ export default () => {
         setAddSearch( word );
     };
 
-    const [ addSearchWords, setAddSearchWords ] = React.useState( [] );
+    const [ addSearchWords, setAddSearchWords ] = React.useState( [] as TSearchWords );
 
     const query = `select * from dictionary where de LIKE '${ addSearch }'`;
 
@@ -153,7 +160,7 @@ export default () => {
                     tempAddSearchWords.push( tempObj );
                 }
 
-                setAddSearchWords( tempAddSearchWords as any ); // TODO: types
+                setAddSearchWords( tempAddSearchWords );
                 setShouldQuery( false );
             },
             ( error: any ) => {
@@ -195,7 +202,12 @@ export default () => {
                     { showTopSpacer &&
                         <Layout style={ styles.topSpacer } />
                     }
-                    <Layout style={ styles.mainBlock }>
+                    <Layout style={
+                        [
+                            styles.mainBlock,
+                            view === 'ADD' && styles.mainBlockShorter
+                        ]
+                    }>
                         { view === 'LIST' &&
                             <List />
                         }

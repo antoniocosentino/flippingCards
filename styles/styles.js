@@ -38,6 +38,9 @@ export const styles = StyleSheet.create( {
         marginTop: 10,
         overflow: 'scroll'
     },
+    mainBlockShorter: {
+        flex: 7
+    },
     bottomZone: {
         flex: 1.5,
         justifyContent: 'flex-start',
