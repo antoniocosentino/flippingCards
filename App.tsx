@@ -52,7 +52,8 @@ export const AppContext = React.createContext( {} as TAppData );
 export default () => {
     const [ selectedIndex, setSelectedIndex ] = React.useState( 0 );
 
-    const [ view, setView ] = React.useState( 'ADD' ); // LIST
+    // DEFAULT VIEW IS DEFINED HERE
+    const [ view, setView ] = React.useState( 'LIST' );
 
     useEffect( () => {
         setAddSearchWords( [] );
@@ -72,7 +73,13 @@ export default () => {
     };
 
     const addSingleWord = ( word: TSingleWord ) => {
-        console.log( 'I will add the word ' + word.de +  'to the list bro' );
+        // TODO: tackle duplicates
+
+        const walletCopy = [...wordsWallet ];
+        walletCopy.unshift( word );
+
+        storeData( walletCopy );
+        onMenuClick( 0 );
     };
 
     const getData = async () => {
