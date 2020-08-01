@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
     ApplicationProvider,
     IconRegistry,
@@ -56,6 +56,11 @@ export default () => {
     const [ selectedIndex, setSelectedIndex ] = React.useState( 0 );
 
     const [ view, setView ] = React.useState( 'ADD' ); // LIST
+
+    useEffect( () => {
+        setAddSearchWords( [] );
+        setAddSearch( '' );
+    }, [ view ] );
 
     const [ isDataUpdated, setDataUpdated ] = React.useState( false );
 
