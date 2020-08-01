@@ -22,7 +22,6 @@ export const styles = StyleSheet.create( {
         ...inputGlobalStyles,
         borderRadius: 21,
         marginBottom: 20
-
     },
     topSpacer: {
         flex: 1.5
@@ -32,14 +31,14 @@ export const styles = StyleSheet.create( {
     },
     mainBlock: {
         flex: 9,
-        justifyContent:
-        'flex-start',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         marginTop: 10,
         overflow: 'scroll'
     },
     mainBlockShorter: {
-        flex: 7
+        backgroundColor: 'gold',
+        flex: 8.5
     },
     bottomZone: {
         flex: 1.5,
@@ -82,5 +81,8 @@ export const styles = StyleSheet.create( {
         alignItems: 'flex-end',
         justifyContent: 'center',
         paddingRight: 10
+    },
+    searchResults: {
+        backgroundColor: 'beige'
     }
 } );

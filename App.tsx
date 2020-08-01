@@ -3,7 +3,6 @@ import {
     ApplicationProvider,
     IconRegistry,
     Layout,
-    Text,
     Input
 } from '@ui-kitten/components';
 
@@ -16,6 +15,7 @@ import { DEMO_WORDS } from './utils/demoData';
 import { styles } from './styles/styles';
 import { List } from './views/List';
 import { BottomMenu } from './views/BottomMenu';
+import { SearchResults } from './components/SearchResults';
 
 const SQLite = require( 'react-native-sqlite-storage' );
 
@@ -43,12 +43,12 @@ type TAppData = {
     storeData: ( value: TWordsWallet ) => void
 };
 
-type TSearchWord = {
+export type TSearchWord = {
     de: string,
     en: string;
 }
 
-type TSearchWords = ReadonlyArray<TSearchWord>;
+export type TSearchWords = ReadonlyArray<TSearchWord>;
 
 export const AppContext = React.createContext( {} as TAppData );
 
@@ -129,7 +129,7 @@ export default () => {
         storeData
     };
 
-    const showTopSpacer = view !== 'LIST';
+    const showTopSpacer = view !== 'LIST' && view !== 'ADD';
 
     // database stuff
 
@@ -222,12 +222,7 @@ export default () => {
                         }
                         {
                             view === 'ADD' &&
-                            <>
-                                { addSearchWords.map( ( word, index ) => {
-                                    return <Text key={ index }>{ word.de } - { word.en }</Text>;
-                                } )
-                                }
-                            </>
+                            <SearchResults results={ addSearchWords } />
                         }
                         { view === 'SETTINGS' &&
                             <>
