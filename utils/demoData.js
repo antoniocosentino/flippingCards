@@ -1,22 +1,27 @@
 export const DEMO_WORDS = [
     {
         de: 'zeigen',
-        en: 'to show'
+        en: 'to show',
+        wordType: 'v'
     },
     {
-        de: 'die Unterhaltung',
-        en: 'entertainment'
+        de: 'Unterhaltung',
+        en: 'entertainment',
+        wordType: 'f'
     },
     {
-        de: 'der Lebensabschnittpartner',
-        en: 'part-time lover'
+        de: 'Lebensabschnittpartner',
+        en: 'part-time lover',
+        wordType: 'm'
     },
     {
         de: 'liegen',
-        en: 'to lie, to be located'
+        en: 'to lie, to be located',
+        wordType: 'v'
     },
     {
         de: 'nennen',
-        en: 'to name, to call'
+        en: 'to name, to call',
+        wordType: 'v'
     }
 ];

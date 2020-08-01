@@ -37,7 +37,6 @@ export const styles = StyleSheet.create( {
         overflow: 'scroll'
     },
     mainBlockShorter: {
-        backgroundColor: 'gold',
         flex: 8.5
     },
     bottomZone: {
@@ -83,6 +82,21 @@ export const styles = StyleSheet.create( {
         paddingRight: 10
     },
     searchResults: {
-        backgroundColor: 'beige'
+        width: '100%'
+    },
+    singleSearchResult: {
+        width: '91%',
+        marginLeft: '4.5%',
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderBottomColor: '#eee',
+        borderBottomWidth: 2
+    },
+    singleSearchResultMainWord: {
+        fontSize: 18
+    },
+    singleSearchResultArticle: {
+        fontSize: 18,
+        fontWeight: 'bold'
     }
 } );

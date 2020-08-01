@@ -29,9 +29,10 @@ const errorCallback = () => {
 
 const db = SQLite.openDatabase( { name: 'dictionary.db', createFromLocation: 1 }, okCallback, errorCallback );
 
-type TSingleWord = {
+export type TSingleWord = {
     de: string,
-    en: string
+    en: string,
+    wordType: string // TODO: we can be more specific here with types
 }
 
 export type TWordsWallet = ReadonlyArray<TSingleWord>
@@ -43,12 +44,7 @@ type TAppData = {
     storeData: ( value: TWordsWallet ) => void
 };
 
-export type TSearchWord = {
-    de: string,
-    en: string;
-}
-
-export type TSearchWords = ReadonlyArray<TSearchWord>;
+export type TSearchWords = ReadonlyArray<TSingleWord>;
 
 export const AppContext = React.createContext( {} as TAppData );
 
@@ -134,6 +130,13 @@ export default () => {
     // database stuff
 
     const [ addSearch, setAddSearch ] = React.useState( '' );
+
+    useEffect( () => {
+        if ( addSearch === '' ) {
+            setAddSearchWords( [] );
+        }
+    }, [ addSearch ] );
+
     const [ shouldQuery, setShouldQuery ] = React.useState( false );
 
     const setAddSearchWrapper = ( word: string ) => {
@@ -145,9 +148,9 @@ export default () => {
 
     const [ addSearchWords, setAddSearchWords ] = React.useState( [] as TSearchWords );
 
-    const query = `select * from dictionary where de LIKE '${ addSearch }%' LIMIT 10`;
+    const query = `select * from dictionary where de LIKE '${ addSearch }%' LIMIT 7`;
 
-    if ( shouldQuery ) {
+    if ( shouldQuery && addSearch !== '' ) {
         setShouldQuery( false );
         db.transaction( ( tx: any ) => {
 
@@ -163,7 +166,8 @@ export default () => {
 
                     const tempObj = {
                         de: row.de,
-                        en: row.en
+                        en: row.en,
+                        wordType: row.wordType
                     };
 
                     tempAddSearchWords.push( tempObj );

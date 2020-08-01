@@ -1,18 +1,23 @@
 import React from 'react';
 import { Text, Layout } from '@ui-kitten/components';
-import { TSearchWords } from '../App';
+import { TSingleWord } from '../App';
 import { styles } from './../styles/styles';
+import { getArticle } from '../utils/utils';
 
 type TSingleSearchResultProps = {
-    word: TSearchWords
+    word: TSingleWord
 };
-// WIP!!!
+
 export const SingleSearchResult = ( props: TSingleSearchResultProps ) => {
     const { word } = props;
 
     return (
-        <Layout>
-            <Text>ciaone</Text>
+        <Layout style={ styles.singleSearchResult }>
+            <Text>
+                <Text style={ styles.singleSearchResultArticle }>{ getArticle( word ) }</Text>
+                <Text style={ styles.singleSearchResultMainWord }>{ word.de }</Text>
+            </Text>
+            <Text>{ word.en }</Text>
         </Layout>
     );
 };
