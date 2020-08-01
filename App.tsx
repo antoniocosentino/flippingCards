@@ -42,6 +42,7 @@ type TAppData = {
     selectedIndex: number,
     onMenuClick: ( index: number ) => void,
     storeData: ( value: TWordsWallet ) => void
+    addSingleWord: ( word: TSingleWord ) => void
 };
 
 export type TSearchWords = ReadonlyArray<TSingleWord>;
@@ -68,6 +69,10 @@ export default () => {
         } catch ( e ) {
             console.error( 'Error:', e );
         }
+    };
+
+    const addSingleWord = ( word: TSingleWord ) => {
+        console.log( 'I will add the word ' + word.de +  'to the list bro' );
     };
 
     const getData = async () => {
@@ -122,7 +127,8 @@ export default () => {
         wordsWallet,
         selectedIndex,
         onMenuClick,
-        storeData
+        storeData,
+        addSingleWord
     };
 
     const showTopSpacer = view !== 'LIST' && view !== 'ADD';

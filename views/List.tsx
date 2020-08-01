@@ -7,6 +7,7 @@ import { AppContext } from '../App';
 import { styles } from '../styles/styles';
 
 import { SwipeListView } from 'react-native-swipe-list-view';
+import { getArticle } from '../utils/utils';
 
 
 export const DeleteIcon = ( props: IconProps ) => <Icon { ...props } fill='crimson'  width={ 32 } height={ 32 } name='trash-2-outline' />;
@@ -48,10 +49,17 @@ export const List = () => {
                 <Card
                     style={ styles.wordCard }
                 >
-                    <Text
-                        style={ styles.mainWord }
-                    >
-                        { data.item.de }
+                    <Text>
+                        <Text
+                            style={ styles.mainWord }
+                        >
+                            { getArticle( data.item ) }
+                        </Text>
+                        <Text
+                            style={ styles.mainWord }
+                        >
+                            { data.item.de }
+                        </Text>
                     </Text>
                     <Text
                         style={ styles.translationWord }
