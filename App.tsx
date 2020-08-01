@@ -193,6 +193,7 @@ export default () => {
                     { view === 'ADD' &&
                         <Layout style={ styles.addBar }>
                             <Input
+                                autoFocus={ true }
                                 autoCorrect={ false }
                                 style={ styles.addWordInput }
                                 placeholder='Type the word you want to enter'
