@@ -3,11 +3,12 @@ import {
     ApplicationProvider,
     IconRegistry,
     Layout,
-    Input
+    Input,
+    Icon
 } from '@ui-kitten/components';
 
 import { debounce } from 'lodash';
-import { Button } from 'react-native';
+import { Button, TouchableWithoutFeedback } from 'react-native';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -195,6 +196,21 @@ export default () => {
         } );
     }
 
+    const wipeSearch = () => {
+        setAddSearch( '' );
+    };
+
+    const renderCloseIcon = ( props: any ) => { // TODO: types
+        if ( addSearchWords.length < 1 ) {
+            return <></>;
+        }
+
+        return (
+            <TouchableWithoutFeedback onPress={ wipeSearch }>
+                <Icon { ...props } fill='#8F9BB3' name={ 'close-circle-outline' } />
+            </TouchableWithoutFeedback>
+        );
+    };
 
     return (
         <>
@@ -222,6 +238,7 @@ export default () => {
                                 value={ addSearch }
                                 onChangeText={ nextValue => setAddSearchWrapper( nextValue ) }
                                 size={ 'large' }
+                                accessoryRight={ renderCloseIcon }
                             />
                         </Layout>
                     }
