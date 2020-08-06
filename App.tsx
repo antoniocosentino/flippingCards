@@ -201,13 +201,13 @@ export default () => {
     };
 
     const renderCloseIcon = ( props: any ) => { // TODO: types
-        if ( addSearchWords.length < 1 ) {
+        if ( addSearch.length < 1 ) {
             return <></>;
         }
 
         return (
             <TouchableWithoutFeedback onPress={ wipeSearch }>
-                <Icon { ...props } fill='#8F9BB3' name={ 'close-circle-outline' } />
+                <Icon { ...props } width={ 22 } height={ 22 } fill='#ccc' name={ 'close-circle' } />
             </TouchableWithoutFeedback>
         );
     };
