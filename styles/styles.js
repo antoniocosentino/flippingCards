@@ -82,7 +82,8 @@ export const styles = StyleSheet.create( {
         paddingRight: 10
     },
     searchResults: {
-        width: '100%'
+        width: '100%',
+        flex: 1
     },
     singleSearchResult: {
         width: '91%',
@@ -98,5 +99,8 @@ export const styles = StyleSheet.create( {
     singleSearchResultArticle: {
         fontSize: 18,
         fontWeight: 'bold'
+    },
+    enWord: {
+        marginTop: 4
     }
 } );

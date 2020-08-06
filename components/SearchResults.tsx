@@ -1,8 +1,8 @@
 import React from 'react';
-import { Layout } from '@ui-kitten/components';
 import { TSearchWords } from '../App';
 import { styles } from './../styles/styles';
 import { SingleSearchResult } from './SingleSearchResult';
+import { SafeAreaView, ScrollView } from 'react-native';
 
 type TSearchResultsProps = {
     results: TSearchWords
@@ -12,13 +12,17 @@ export const SearchResults = ( props: TSearchResultsProps ) => {
     const { results } = props;
 
     return (
-        <Layout style={ styles.searchResults }>
-            {
-                results.map( ( word, index ) => {
-                    return <SingleSearchResult word={ word } key={ index } />;
-                } )
-            }
-        </Layout>
+        <SafeAreaView style={ styles.searchResults }>
+            <ScrollView
+                keyboardShouldPersistTaps={ 'always' }
+            >
+                {
+                    results.map( ( word, index ) => {
+                        return <SingleSearchResult word={ word } key={ index } />;
+                    } )
+                }
+            </ScrollView>
+        </SafeAreaView>
     );
 };
 

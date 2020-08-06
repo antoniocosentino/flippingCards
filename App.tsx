@@ -162,7 +162,7 @@ export default () => {
 
     const [ addSearchWords, setAddSearchWords ] = React.useState( [] as TSearchWords );
 
-    const query = `select * from dictionary where de LIKE '${ addSearch }%' LIMIT 7`;
+    const query = `select * from dictionary where de LIKE '${ addSearch }%' LIMIT 10`;
 
     if ( shouldQuery && addSearch !== '' ) {
         setShouldQuery( false );

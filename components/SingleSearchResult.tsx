@@ -17,12 +17,16 @@ export const SingleSearchResult = ( props: TSingleSearchResultProps ) => {
     const { addSingleWord } = appData;
 
     return (
-        <TouchableOpacity onPress={ () => addSingleWord( word ) } style={ styles.singleSearchResult }>
+        <TouchableOpacity
+            onPress={ () => addSingleWord( word ) }
+            style={ styles.singleSearchResult }
+            activeOpacity={ 0.9 }
+        >
             <Text>
                 <Text style={ styles.singleSearchResultArticle }>{ getArticle( word ) }</Text>
                 <Text style={ styles.singleSearchResultMainWord }>{ word.de }</Text>
             </Text>
-            <Text>{ word.en }</Text>
+            <Text style={ styles.enWord } >{ word.en }</Text>
         </TouchableOpacity>
     );
 };
