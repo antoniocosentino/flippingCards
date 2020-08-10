@@ -20,7 +20,7 @@ const PlusIcon = () => {
     );
 };
 const PlayIcon = ( props: IconProps ) => <Icon { ...props } name='award-outline' />;
-const SettingsIcon = ( props: IconProps ) => <Icon { ...props } name='settings-2-outline' />;
+const InfoIcon = ( props: IconProps ) => <Icon { ...props } name='info-outline' />;
 
 export const BottomMenu = () => {
 
@@ -38,7 +38,7 @@ export const BottomMenu = () => {
             <BottomNavigationTab icon={ CardsIcon } />
             <BottomNavigationTab icon={ PlusIcon } />
             <BottomNavigationTab icon={ PlayIcon } />
-            <BottomNavigationTab icon={ SettingsIcon } />
+            <BottomNavigationTab icon={ InfoIcon } />
         </BottomNavigation>
     );
 };

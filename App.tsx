@@ -17,6 +17,7 @@ import { styles } from './styles/styles';
 import { List } from './views/List';
 import { BottomMenu } from './views/BottomMenu';
 import { SearchResults } from './components/SearchResults';
+import { removeArticle } from './utils/utils';
 
 const SQLite = require( 'react-native-sqlite-storage' );
 
@@ -162,7 +163,7 @@ export default () => {
 
     const [ addSearchWords, setAddSearchWords ] = React.useState( [] as TSearchWords );
 
-    const query = `select * from dictionary where de LIKE '${ addSearch }%' LIMIT 10`;
+    const query = `select * from dictionary where de LIKE '${ removeArticle( addSearch ) }%' LIMIT 10`;
 
     if ( shouldQuery && addSearch !== '' ) {
         setShouldQuery( false );

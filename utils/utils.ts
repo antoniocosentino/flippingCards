@@ -19,3 +19,10 @@ export const getArticle = ( word: TSingleWord ) => {
     }
 };
 
+export const removeArticle = ( searchString: string ) => {
+
+    const searchRegex = /^(das|der|die) /i;
+
+    return searchString.replace( searchRegex, '' );
+};
+
