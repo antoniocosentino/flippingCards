@@ -72,7 +72,11 @@ if (($handle = fopen($file, "r")) !== FALSE) {
 
         $temp = [];
 
-        $temp['de'] = $cleandeword;
+        $articlesRegex = '/^(das|der|die) /i';
+
+        $cleandewordWithoutArticle = preg_replace( $articlesRegex, '', $cleandeword );
+
+        $temp['de'] = $cleandewordWithoutArticle;
         $temp['en'] = trim($singularenwordarr[0]);
         $temp['wordType'] = $type;
 
