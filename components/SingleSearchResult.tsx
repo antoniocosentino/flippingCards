@@ -3,7 +3,7 @@ import { Text } from '@ui-kitten/components';
 import { TSingleWord, AppContext } from '../App';
 import { styles } from './../styles/styles';
 import { getArticle } from '../utils/utils';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 
 type TSingleSearchResultProps = {
     word: TSingleWord
@@ -22,11 +22,16 @@ export const SingleSearchResult = ( props: TSingleSearchResultProps ) => {
             style={ styles.singleSearchResult }
             activeOpacity={ 0.9 }
         >
-            <Text>
-                <Text style={ styles.singleSearchResultArticle }>{ getArticle( word ) }</Text>
-                <Text style={ styles.singleSearchResultMainWord }>{ word.de }</Text>
-            </Text>
-            <Text style={ styles.enWord } >{ word.en }</Text>
+            <View style={ styles.searchResultWordBlock }>
+                <Text>
+                    <Text style={ styles.singleSearchResultArticle }>{ getArticle( word ) }</Text>
+                    <Text style={ styles.singleSearchResultMainWord }>{ word.de }</Text>
+                </Text>
+                <Text style={ styles.enWord } >{ word.en }</Text>
+            </View>
+            <View style={ styles.searchResultTypeOfWordBlock }>
+                <Text style={ styles.typeOfWord } >NOUN</Text>
+            </View>
         </TouchableOpacity>
     );
 };

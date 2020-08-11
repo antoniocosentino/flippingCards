@@ -91,7 +91,9 @@ export const styles = StyleSheet.create( {
         paddingTop: 10,
         paddingBottom: 10,
         borderBottomColor: '#eee',
-        borderBottomWidth: 2
+        borderBottomWidth: 2,
+        display: 'flex',
+        flexDirection: 'row'
     },
     singleSearchResultMainWord: {
         fontSize: 18
@@ -102,5 +104,21 @@ export const styles = StyleSheet.create( {
     },
     enWord: {
         marginTop: 4
+    },
+    searchResultWordBlock: {
+        flex: 8.5
+    },
+    searchResultTypeOfWordBlock: {
+        flex: 1.5,
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
+    typeOfWord: {
+        backgroundColor: mainColor,
+        fontSize: 11,
+        color: '#fff',
+        textAlign: 'center',
+        paddingTop: 3,
+        paddingBottom: 3
     }
 } );
