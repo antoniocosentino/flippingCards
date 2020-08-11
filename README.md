@@ -1,2 +1,2 @@
-# flipCards
-iOS & Android app for learning new words
+# flipCards 🃏
+iOS & Android app for learning new German words (WIP).
