@@ -114,11 +114,19 @@ export const styles = StyleSheet.create( {
         justifyContent: 'center'
     },
     typeOfWord: {
-        backgroundColor: mainColor,
         fontSize: 11,
         color: '#fff',
         textAlign: 'center',
         paddingTop: 3,
         paddingBottom: 3
+    },
+    'typeOfWord--Noun': {
+        backgroundColor: mainColor
+    },
+    'typeOfWord--Verb': {
+        backgroundColor: '#FF4A4A'
+    },
+    'typeOfWord--Adj': {
+        backgroundColor: '#45D3BA'
     }
 } );
