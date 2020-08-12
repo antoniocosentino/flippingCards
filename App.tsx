@@ -18,6 +18,7 @@ import { List } from './views/List';
 import { BottomMenu } from './views/BottomMenu';
 import { SearchResults } from './components/SearchResults';
 import { removeArticle } from './utils/utils';
+import { Cards } from './views/Cards';
 
 const SQLite = require( 'react-native-sqlite-storage' );
 
@@ -252,6 +253,9 @@ export default () => {
                             view === 'ADD' && styles.mainBlockShorter
                         ]
                     }>
+                        { view === 'CARDS' &&
+                            <Cards />
+                        }
                         { view === 'LIST' &&
                             <List />
                         }

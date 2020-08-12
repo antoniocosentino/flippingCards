@@ -128,5 +128,12 @@ export const styles = StyleSheet.create( {
     },
     'typeOfWord--Adj': {
         backgroundColor: '#45D3BA'
+    },
+    singleCard: {
+        height: 192,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'gold',
+        width: '100%'
     }
 } );
