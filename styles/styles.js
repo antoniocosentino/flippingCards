@@ -129,11 +129,17 @@ export const styles = StyleSheet.create( {
     'typeOfWord--Adj': {
         backgroundColor: '#45D3BA'
     },
-    singleCard: {
-        height: 192,
-        alignItems: 'center',
+    sliderWrapper: {
+        backgroundColor: 'gold'
+    },
+    singleSlide: {
+        flex: 1,
         justifyContent: 'center',
-        backgroundColor: 'gold',
-        width: '100%'
+        alignItems: 'center',
+        backgroundColor: 'gold'
+    },
+    slideText: {
+        color: '#fff',
+        fontSize: 20
     }
 } );
