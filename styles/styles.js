@@ -135,11 +135,33 @@ export const styles = StyleSheet.create( {
     singleSlide: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'gold'
+        alignItems: 'center'
     },
     slideText: {
         color: '#fff',
-        fontSize: 20
+        fontSize: 22,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    singleCardWrapper: {
+        height: 400,
+        width: 300
+    },
+    singleCard: {},
+    cardFront: {
+        backgroundColor: mainColor,
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        borderRadius: 10
+    },
+    cardBack: {
+        backgroundColor: mainColor,
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        borderRadius: 10
     }
 } );
