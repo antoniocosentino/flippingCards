@@ -14,10 +14,15 @@ export const Cards = ( props: TCardsProps ) => {
         <Swiper
             showsButtons={ false }
             showsPagination={ false }
+            horizontal={ false }
         >
             <View style={ styles.singleSlide }>
                 <View style={ styles.singleCardWrapper }>
-                    <FlipCard style={ styles.singleCard }>
+                    <FlipCard
+                        style={ styles.singleCard }
+                        flipHorizontal={ true }
+                        flipVertical={ false }
+                    >
                         <View style={ styles.cardFront }>
                             <Text style={ styles.slideText }>the English word - 1</Text>
                         </View>
@@ -31,7 +36,11 @@ export const Cards = ( props: TCardsProps ) => {
 
             <View style={ styles.singleSlide }>
                 <View style={ styles.singleCardWrapper }>
-                    <FlipCard style={ styles.singleCard }>
+                    <FlipCard
+                        style={ styles.singleCard }
+                        flipHorizontal={ true }
+                        flipVertical={ false }
+                    >
                         <View style={ styles.cardFront }>
                             <Text style={ styles.slideText }>the English word - 2</Text>
                         </View>
@@ -45,7 +54,11 @@ export const Cards = ( props: TCardsProps ) => {
 
             <View style={ styles.singleSlide }>
                 <View style={ styles.singleCardWrapper }>
-                    <FlipCard style={ styles.singleCard }>
+                    <FlipCard
+                        style={ styles.singleCard }
+                        flipHorizontal={ true }
+                        flipVertical={ false }
+                    >
                         <View style={ styles.cardFront }>
                             <Text style={ styles.slideText }>the English word - 3</Text>
                         </View>
