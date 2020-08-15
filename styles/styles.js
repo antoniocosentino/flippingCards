@@ -130,7 +130,8 @@ export const styles = StyleSheet.create( {
         backgroundColor: '#45D3BA'
     },
     sliderWrapper: {
-        backgroundColor: 'gold'
+        marginTop: 0,
+        height: '100%'
     },
     singleSlide: {
         flex: 1,
