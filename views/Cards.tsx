@@ -65,8 +65,8 @@ export const Cards = ( props: TCardsProps ) => {
             <Carousel
                 ref={ carouselRef }
                 data={ carouselItems }
-                sliderHeight={ 500 }
-                itemHeight={ 420 }
+                sliderHeight={ 740 }
+                itemHeight={ 400 }
                 vertical={ true }
                 layout={ 'default' }
                 loop={ true }

@@ -141,7 +141,7 @@ export default () => {
         addSingleWord
     };
 
-    const showTopSpacer = view !== 'LIST' && view !== 'ADD';
+    const showTopSpacer = view !== 'LIST' && view !== 'ADD' && view !== 'CARDS';
 
     // database stuff
 

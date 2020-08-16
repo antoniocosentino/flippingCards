@@ -146,7 +146,7 @@ export const styles = StyleSheet.create( {
     },
     singleCardWrapper: {
         height: 400,
-        width: 300
+        width: 320
     },
     singleCard: {},
     cardFront: {
