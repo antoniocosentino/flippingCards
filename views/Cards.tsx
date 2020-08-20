@@ -1,27 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useContext } from 'react';
 import { Text } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
 import Carousel from 'react-native-snap-carousel';
-
-type TCardsProps = any; // TODO: types
+import { AppContext } from '../App';
 
 import { View } from 'react-native';
 import FlipCard from 'react-native-flip-card';
-
-const carouselItems = [
-    {
-        de: 'das Deutsche wort - A',
-        en: 'the English Word - A '
-    },
-    {
-        de: 'das Deutsche wort - B',
-        en: 'the English Word - B '
-    },
-    {
-        de: 'das Deutsche wort - C',
-        en: 'the English Word - C'
-    }
-];
 
 type TRenderCardProps = {
     item: any,
@@ -29,7 +13,7 @@ type TRenderCardProps = {
 };
 
 const renderCard = ( props: TRenderCardProps ) => {
-    const { item, index } = props;
+    const { item } = props;
 
     return (
         <View style={ styles.singleSlide }>
@@ -52,11 +36,19 @@ const renderCard = ( props: TRenderCardProps ) => {
     );
 };
 
-export const Cards = ( props: TCardsProps ) => {
+export const Cards = () => {
 
     const carouselRef = useRef( null );
 
-    const [ activeIndex, setActiveIndex ] = useState( 0 );
+    const appData = useContext( AppContext );
+
+    const { wordsWallet } = appData;
+
+    const shuffled = wordsWallet
+        .map( ( a ) => ( { sort: Math.random(), value: a } ) )
+        .sort( ( a, b ) => a.sort - b.sort )
+        .map( ( a ) => a.value );
+
 
     return (
         <View
@@ -64,14 +56,13 @@ export const Cards = ( props: TCardsProps ) => {
         >
             <Carousel
                 ref={ carouselRef }
-                data={ carouselItems }
+                data={ shuffled }
                 sliderHeight={ 740 }
                 itemHeight={ 400 }
                 vertical={ true }
                 layout={ 'default' }
                 loop={ true }
                 renderItem={ renderCard }
-                onSnapToItem = { index => setActiveIndex( index ) }
             />
         </View>
     );
