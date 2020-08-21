@@ -7,7 +7,7 @@ import { AppContext } from '../App';
 import { styles } from '../styles/styles';
 
 import { SwipeListView } from 'react-native-swipe-list-view';
-import { getArticle } from '../utils/utils';
+import { getArticle, getTypeOfWord } from '../utils/utils';
 
 
 export const DeleteIcon = ( props: IconProps ) => <Icon { ...props } fill='crimson'  width={ 32 } height={ 32 } name='trash-2-outline' />;
@@ -39,35 +39,38 @@ export const List = () => {
         };
     } );
 
-
     return (
         <SwipeListView
             showsVerticalScrollIndicator={ false }
             data={ wordsWalletWithKeys }
             style={ styles.cardsScrollView }
-            renderItem={ ( data ) => (
-                <Card
-                    style={ styles.wordCard }
-                >
-                    <Text>
-                        <Text
-                            style={ styles.mainWord }
-                        >
-                            { getArticle( data.item ) }
-                        </Text>
-                        <Text
-                            style={ styles.mainWord }
-                        >
-                            { data.item.de }
-                        </Text>
-                    </Text>
-                    <Text
-                        style={ styles.translationWord }
+            renderItem={ ( data ) => {
+
+                const typeOfWord = getTypeOfWord( data.item );
+
+                return (
+                    <Card
+                        style={ [ styles.wordCard, styles[ typeOfWord.class ] ] }
                     >
-                        { data.item.en }
-                    </Text>
-                </Card>
-            ) }
+                        <Text>
+                            <Text
+                                style={ styles.mainWord }
+                            >
+                                { getArticle( data.item ) }
+                            </Text>
+                            <Text
+                                style={ styles.mainWord }
+                            >
+                                { data.item.de }
+                            </Text>
+                        </Text>
+                        <Text
+                            style={ styles.translationWord }
+                        >
+                            { data.item.en }
+                        </Text>
+                    </Card>
+                ); } }
             renderHiddenItem={ ( data, rowMap ) => (
                 <View style={ styles.deleteAction } >
                     <Text>

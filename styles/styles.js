@@ -143,7 +143,7 @@ export const styles = StyleSheet.create( {
     },
     slideText: {
         color: '#fff',
-        fontSize: 22,
+        fontSize: 26,
         fontWeight: 'bold',
         textAlign: 'center'
     },
@@ -152,20 +152,13 @@ export const styles = StyleSheet.create( {
         width: 320
     },
     singleCard: {},
-    cardFront: {
+    cardFrontAndBack: {
         backgroundColor: mainColor,
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        borderRadius: 10
-    },
-    cardBack: {
-        backgroundColor: mainColor,
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        borderRadius: 10
+        borderRadius: 10,
+        padding: 20
     }
 } );
