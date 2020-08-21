@@ -250,7 +250,8 @@ export default () => {
                     <Layout style={
                         [
                             styles.mainBlock,
-                            view === 'ADD' && styles.mainBlockShorter
+                            view === 'ADD' && styles.mainBlockShorter,
+                            view === 'CARDS' && styles.mainBlockLonger
                         ]
                     }>
                         { view === 'CARDS' &&

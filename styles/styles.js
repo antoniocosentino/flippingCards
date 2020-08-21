@@ -39,6 +39,9 @@ export const styles = StyleSheet.create( {
     mainBlockShorter: {
         flex: 8.5
     },
+    mainBlockLonger: {
+        flex: 10.5
+    },
     bottomZone: {
         flex: 1.5,
         justifyContent: 'flex-start',
