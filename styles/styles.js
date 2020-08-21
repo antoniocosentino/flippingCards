@@ -7,7 +7,9 @@ const inputGlobalStyles = {
     borderRadius: 14
 };
 
-const mainColor = '#3466FF';
+export const mainColor = '#F08A5D';
+export const secondColor = '#B83B5E';
+export const thirdColor = '#6A2C70';
 
 export const styles = StyleSheet.create( {
     topSearch: {
@@ -127,10 +129,10 @@ export const styles = StyleSheet.create( {
         backgroundColor: mainColor
     },
     'typeOfWord--Verb': {
-        backgroundColor: '#FF4A4A'
+        backgroundColor: secondColor
     },
     'typeOfWord--Adj': {
-        backgroundColor: '#45D3BA'
+        backgroundColor: thirdColor
     },
     sliderWrapper: {
         marginTop: 0,
