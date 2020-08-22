@@ -145,7 +145,7 @@ export const styles = StyleSheet.create( {
     },
     slideText: {
         color: '#fff',
-        fontSize: 26,
+        fontSize: 28,
         fontWeight: 'bold',
         textAlign: 'center'
     },

@@ -32,7 +32,9 @@ const renderCard = ( props: TRenderCardProps ) => {
                         <Text style={ styles.slideText }>{ item.en }</Text>
                     </View>
 
-                    <View style={ styles.cardFrontAndBack }>
+                    <View style={
+                        [ styles.cardFrontAndBack, styles[ typeOfWord.class ] ]
+                    }>
                         <Text style={ styles.slideText }>{ getArticle( item ) } { item.de }</Text>
                     </View>
                 </FlipCard>
