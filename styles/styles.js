@@ -163,5 +163,11 @@ export const styles = StyleSheet.create( {
         justifyContent: 'center',
         borderRadius: 10,
         padding: 20
+    },
+    instructions: {
+        width: '85%',
+        position: 'absolute',
+        top: 80,
+        borderColor: '#fff'
     }
 } );

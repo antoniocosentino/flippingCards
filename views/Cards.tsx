@@ -1,8 +1,8 @@
-import React, { useRef, useContext } from 'react';
-import { Text } from '@ui-kitten/components';
+import React, { useRef, useState } from 'react';
+import { Text, Card } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
 import Carousel from 'react-native-snap-carousel';
-import { AppContext } from '../App';
+import { TWordsWallet } from '../App';
 
 import { View } from 'react-native';
 import FlipCard from 'react-native-flip-card';
@@ -12,6 +12,10 @@ type TRenderCardProps = {
     item: any,
     index: number
 };
+
+type TCardsProps = {
+    shuffled: TWordsWallet;
+}
 
 const renderCard = ( props: TRenderCardProps ) => {
     const { item } = props;
@@ -39,24 +43,42 @@ const renderCard = ( props: TRenderCardProps ) => {
     );
 };
 
-export const Cards = () => {
+export const Cards = ( props: TCardsProps ) => {
 
     const carouselRef = useRef( null );
 
-    const appData = useContext( AppContext );
+    const { shuffled } = props;
 
-    const { wordsWallet } = appData;
+    const [ showInstructions, setShowInstructions ] = useState( true );
 
-    const shuffled = wordsWallet
-        .map( ( a ) => ( { sort: Math.random(), value: a } ) )
-        .sort( ( a, b ) => a.sort - b.sort )
-        .map( ( a ) => a.value );
 
+    const onCarouselScroll = () => {
+        if ( showInstructions ) {
+            setShowInstructions( false );
+        }
+    };
+
+    const onSnap = ( index: number ) => {
+        if ( index === 0 ) {
+            setShowInstructions( true );
+        }
+    };
 
     return (
         <View
             style={ styles.sliderWrapper }
         >
+            { showInstructions &&
+                <Card
+                    style={ styles.instructions }
+                >
+                    <Text>
+                        Swipe up to scroll through the cards.
+                        Tap card to flip it.
+                    </Text>
+                </Card>
+            }
+
             <Carousel
                 ref={ carouselRef }
                 data={ shuffled }
@@ -64,8 +86,10 @@ export const Cards = () => {
                 itemHeight={ 400 }
                 vertical={ true }
                 layout={ 'default' }
-                loop={ true }
+                loop={ false }
                 renderItem={ renderCard }
+                onScroll={ onCarouselScroll }
+                onSnapToItem={ onSnap }
             />
         </View>
     );

@@ -56,7 +56,7 @@ export default () => {
     const [ selectedIndex, setSelectedIndex ] = React.useState( 0 );
 
     // DEFAULT VIEW IS DEFINED HERE
-    const [ view, setView ] = React.useState( 'CARDS' );
+    const [ view, setView ] = React.useState( 'LIST' );
 
     useEffect( () => {
         setAddSearchWords( [] );
@@ -278,6 +278,11 @@ export default () => {
         ...colorOverrides
     };
 
+    const shuffled = wordsWallet
+        .map( ( a ) => ( { sort: Math.random(), value: a } ) )
+        .sort( ( a, b ) => a.sort - b.sort )
+        .map( ( a ) => a.value );
+
 
     return (
         <>
@@ -320,7 +325,7 @@ export default () => {
                         ]
                     }>
                         { view === 'CARDS' &&
-                            <Cards />
+                            <Cards shuffled={ shuffled } />
                         }
                         { view === 'LIST' &&
                             <List />
