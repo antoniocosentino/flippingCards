@@ -7,7 +7,7 @@ import { AppContext } from '../App';
 import { styles } from '../styles/styles';
 
 import { SwipeListView } from 'react-native-swipe-list-view';
-import { getArticle, getTypeOfWord } from '../utils/utils';
+import { getArticle } from '../utils/utils';
 
 
 export const DeleteIcon = ( props: IconProps ) => <Icon { ...props } fill='crimson'  width={ 32 } height={ 32 } name='trash-2-outline' />;
@@ -46,11 +46,11 @@ export const List = () => {
             style={ styles.cardsScrollView }
             renderItem={ ( data ) => {
 
-                const typeOfWord = getTypeOfWord( data.item );
+                // const typeOfWord = getTypeOfWord( data.item );
 
                 return (
                     <Card
-                        style={ [ styles.wordCard, styles[ typeOfWord.class ] ] }
+                        style={ styles.wordCard }
                     >
                         <Text>
                             <Text

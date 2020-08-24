@@ -7,9 +7,10 @@ const inputGlobalStyles = {
     borderRadius: 14
 };
 
-export const mainColor = '#F08A5D';
-export const secondColor = '#B83B5E';
+export const mainColor = '#B83B5E';
+export const secondColor = '#F08A5D';
 export const thirdColor = '#6A2C70';
+export const fourthColor = '#EEECDA';
 
 export const styles = StyleSheet.create( {
     topSearch: {

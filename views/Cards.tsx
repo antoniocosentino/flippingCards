@@ -6,7 +6,7 @@ import { AppContext } from '../App';
 
 import { View } from 'react-native';
 import FlipCard from 'react-native-flip-card';
-import { getTypeOfWord, getArticle } from '../utils/utils';
+import { getArticle } from '../utils/utils';
 
 type TRenderCardProps = {
     item: any,
@@ -16,7 +16,7 @@ type TRenderCardProps = {
 const renderCard = ( props: TRenderCardProps ) => {
     const { item } = props;
 
-    const typeOfWord = getTypeOfWord( item );
+    // const typeOfWord = getTypeOfWord( item );
 
     return (
         <View style={ styles.singleSlide }>
@@ -26,15 +26,11 @@ const renderCard = ( props: TRenderCardProps ) => {
                     flipHorizontal={ true }
                     flipVertical={ false }
                 >
-                    <View style={
-                        [ styles.cardFrontAndBack, styles[ typeOfWord.class ] ]
-                    }>
+                    <View style={ styles.cardFrontAndBack }>
                         <Text style={ styles.slideText }>{ item.en }</Text>
                     </View>
 
-                    <View style={
-                        [ styles.cardFrontAndBack, styles[ typeOfWord.class ] ]
-                    }>
+                    <View style={ styles.cardFrontAndBack }>
                         <Text style={ styles.slideText }>{ getArticle( item ) } { item.de }</Text>
                     </View>
                 </FlipCard>
