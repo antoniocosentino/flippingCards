@@ -165,9 +165,25 @@ export const styles = StyleSheet.create( {
         padding: 20
     },
     instructions: {
-        width: '85%',
+        width: '100%',
+        height: 130,
+        display: 'flex',
+        justifyContent: 'flex-end',
         position: 'absolute',
-        top: 80,
-        borderColor: '#fff'
+        left: 0,
+        marginLeft: -28, // TODO: why tho
+        top: 0,
+        borderColor: '#fff',
+        zIndex: 2
+    },
+    ctaContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        flexWrap: 'wrap'
+    },
+    ctaButton: {
+        margin: 2,
+        backgroundColor: secondColor,
+        borderColor: secondColor
     }
 } );

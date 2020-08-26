@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Text, Card } from '@ui-kitten/components';
+import React, { useRef } from 'react';
+import { Text, Card, Button, Layout } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
 import Carousel from 'react-native-snap-carousel';
 import { TWordsWallet } from '../App';
@@ -49,35 +49,25 @@ export const Cards = ( props: TCardsProps ) => {
 
     const { shuffled } = props;
 
-    const [ showInstructions, setShowInstructions ] = useState( true );
-
-
-    const onCarouselScroll = () => {
-        if ( showInstructions ) {
-            setShowInstructions( false );
-        }
-    };
-
-    const onSnap = ( index: number ) => {
-        if ( index === 0 ) {
-            setShowInstructions( true );
-        }
-    };
-
     return (
         <View
             style={ styles.sliderWrapper }
         >
-            { showInstructions &&
-                <Card
-                    style={ styles.instructions }
-                >
-                    <Text>
-                        Swipe up to scroll through the cards.
-                        Tap card to flip it.
-                    </Text>
-                </Card>
-            }
+            <Card
+                style={ styles.instructions }
+            >
+                <Layout style={ styles.ctaContainer } level='1'>
+
+                    <Button style={ styles.ctaButton }>
+                        SHUFFLE
+                    </Button>
+
+                    <Button style={ styles.ctaButton }>
+                        GENERATE NEW DECK
+                    </Button>
+
+                </Layout>
+            </Card>
 
             <Carousel
                 ref={ carouselRef }
@@ -88,8 +78,6 @@ export const Cards = ( props: TCardsProps ) => {
                 layout={ 'default' }
                 loop={ false }
                 renderItem={ renderCard }
-                onScroll={ onCarouselScroll }
-                onSnapToItem={ onSnap }
             />
         </View>
     );

@@ -56,7 +56,7 @@ export default () => {
     const [ selectedIndex, setSelectedIndex ] = React.useState( 0 );
 
     // DEFAULT VIEW IS DEFINED HERE
-    const [ view, setView ] = React.useState( 'LIST' );
+    const [ view, setView ] = React.useState( 'CARDS' );
 
     useEffect( () => {
         setAddSearchWords( [] );
@@ -248,8 +248,8 @@ export default () => {
         'color-primary-200': '#D9E4FF',
         'color-primary-300': '#A6C1FF',
         'color-primary-400': '#598BFF',
-        'color-primary-500': mainColor, // this is the only color I'm customizing for now
-        'color-primary-600': '#274BDB',
+        'color-primary-500': mainColor,
+        'color-primary-600': mainColor, // this is the onPress color. Can be customized
         'color-primary-700': '#1A34B8',
         'color-primary-800': '#102694',
         'color-primary-900': '#091C7A',
@@ -278,11 +278,13 @@ export default () => {
         ...colorOverrides
     };
 
-    const shuffled = wordsWallet
+    const allShuffled = wordsWallet
         .map( ( a ) => ( { sort: Math.random(), value: a } ) )
         .sort( ( a, b ) => a.sort - b.sort )
         .map( ( a ) => a.value );
 
+
+    const tenShuffled = allShuffled.slice( 0, 10 );
 
     return (
         <>
@@ -325,7 +327,7 @@ export default () => {
                         ]
                     }>
                         { view === 'CARDS' &&
-                            <Cards shuffled={ shuffled } />
+                            <Cards shuffled={ tenShuffled } />
                         }
                         { view === 'LIST' &&
                             <List />
