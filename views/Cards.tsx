@@ -66,7 +66,7 @@ export const Cards = ( props: TCardsProps ) => {
 
     const carouselRef = useRef( null );
 
-    const [ viewMode, setMode ] = useState( 'cards' );
+    const [ viewMode, setMode ] = useState( 'instructions' );
 
     const { shuffled } = props;
 

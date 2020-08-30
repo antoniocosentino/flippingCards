@@ -56,7 +56,7 @@ export default () => {
     const [ selectedIndex, setSelectedIndex ] = React.useState( 0 );
 
     // DEFAULT VIEW IS DEFINED HERE
-    const [ view, setView ] = React.useState( 'CARDS' );
+    const [ view, setView ] = React.useState( 'LIST' );
 
     useEffect( () => {
         setAddSearchWords( [] );
