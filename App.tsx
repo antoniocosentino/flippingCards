@@ -286,6 +286,12 @@ export default () => {
 
     const tenShuffled = allShuffled.slice( 0, 10 );
 
+    tenShuffled.unshift( {
+        de: '___firstItem___',
+        en: '___firstItem___',
+        wordType: '___firstItem___'
+    } );
+
     return (
         <>
             <IconRegistry icons={ EvaIconsPack } />

@@ -55,7 +55,10 @@ export const styles = StyleSheet.create( {
     },
     text: {
         textAlign: 'center',
-        color: '#000000'
+        color: '#333'
+    },
+    titleText: {
+        color: mainColor
     },
     plusIcon: {
         marginLeft: -1
@@ -135,10 +138,7 @@ export const styles = StyleSheet.create( {
     'typeOfWord--Adj': {
         backgroundColor: thirdColor
     },
-    sliderWrapper: {
-        marginTop: 0,
-        height: '100%'
-    },
+    sliderWrapper: {},
     singleSlide: {
         flex: 1,
         justifyContent: 'center',
@@ -165,25 +165,27 @@ export const styles = StyleSheet.create( {
         padding: 20
     },
     instructions: {
-        width: '100%',
-        height: 130,
-        display: 'flex',
-        justifyContent: 'flex-end',
-        position: 'absolute',
-        left: 0,
-        marginLeft: -28, // TODO: why tho
-        top: 0,
-        borderColor: '#fff',
-        zIndex: 2
+        marginTop: 60,
+        paddingLeft: 30,
+        paddingRight: 30
     },
-    ctaContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        flexWrap: 'wrap'
+    instructionsText: {
+        marginTop: 20,
+        marginBottom: 20,
+        textAlign: 'left'
     },
     ctaButton: {
-        margin: 2,
-        backgroundColor: secondColor,
-        borderColor: secondColor
+        margin: 10,
+        backgroundColor: mainColor,
+        borderColor: mainColor
+    },
+    cardsTopNav: {
+        marginTop: 40
+    },
+    firstSlideText: {
+        fontSize: 16,
+        fontWeight: 'normal',
+        maxWidth: '90%',
+        marginLeft: '5%'
     }
 } );
