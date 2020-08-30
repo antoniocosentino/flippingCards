@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     ApplicationProvider,
     IconRegistry,
@@ -17,7 +17,7 @@ import { styles, mainColor } from './styles/styles';
 import { List } from './views/List';
 import { BottomMenu } from './views/BottomMenu';
 import { SearchResults } from './components/SearchResults';
-import { removeArticle } from './utils/utils';
+import { removeArticle, getShuffledCards } from './utils/utils';
 import { Cards } from './views/Cards';
 
 const SQLite = require( 'react-native-sqlite-storage' );
@@ -57,6 +57,7 @@ export default () => {
 
     // DEFAULT VIEW IS DEFINED HERE
     const [ view, setView ] = React.useState( 'LIST' );
+    const [ cardsView, setCardsView ] = React.useState( 'instructions' );
 
     useEffect( () => {
         setAddSearchWords( [] );
@@ -278,19 +279,11 @@ export default () => {
         ...colorOverrides
     };
 
-    const allShuffled = wordsWallet
-        .map( ( a ) => ( { sort: Math.random(), value: a } ) )
-        .sort( ( a, b ) => a.sort - b.sort )
-        .map( ( a ) => a.value );
+    const [ stateCards, setStateCards ] = useState( [] as TSearchWords );
 
-
-    const tenShuffled = allShuffled.slice( 0, 10 );
-
-    tenShuffled.unshift( {
-        de: '___firstItem___',
-        en: '___firstItem___',
-        wordType: '___firstItem___'
-    } );
+    useEffect( () => {
+        setStateCards(  getShuffledCards( wordsWallet ) );
+    }, [ wordsWallet, stateCards.length ] );
 
     return (
         <>
@@ -333,7 +326,12 @@ export default () => {
                         ]
                     }>
                         { view === 'CARDS' &&
-                            <Cards shuffled={ tenShuffled } />
+                            <Cards
+                                shuffled={ stateCards }
+                                cardsView={ cardsView }
+                                setCardsView={ setCardsView }
+                                setStateCards={ setStateCards }
+                            />
                         }
                         { view === 'LIST' &&
                             <List />

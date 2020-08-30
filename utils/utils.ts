@@ -1,4 +1,4 @@
-import { TSingleWord } from '../App';
+import { TSingleWord, TSearchWords } from '../App';
 
 type TTypeOfWord = {
     name: string,
@@ -58,4 +58,22 @@ export const getTypeOfWord = ( word: TSingleWord ): TTypeOfWord => {
                 name: 'ADJ'
             };
     }
+};
+
+export const getShuffledCards = ( words: TSearchWords ) => {
+    const allShuffled = words
+        .map( ( a ) => ( { sort: Math.random(), value: a } ) )
+        .sort( ( a, b ) => a.sort - b.sort )
+        .map( ( a ) => a.value );
+
+
+    const tenShuffled = allShuffled.slice( 0, 10 );
+
+    tenShuffled.unshift( {
+        de: '___firstItem___',
+        en: '___firstItem___',
+        wordType: '___firstItem___'
+    } );
+
+    return tenShuffled;
 };

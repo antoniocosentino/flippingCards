@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, Dispatch, SetStateAction, useContext } from 'react';
 import { Text, Icon, Button, Layout, IconProps, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
 import Carousel from 'react-native-snap-carousel';
-import { TWordsWallet } from '../App';
+import { TWordsWallet, AppContext, TSearchWords } from '../App';
 
 import { View } from 'react-native';
 import FlipCard from 'react-native-flip-card';
@@ -15,6 +15,9 @@ type TRenderCardProps = {
 
 type TCardsProps = {
     shuffled: TWordsWallet;
+    cardsView: string,
+    setCardsView: Dispatch<SetStateAction<string>>
+    setStateCards: Dispatch<SetStateAction<TSearchWords>>
 }
 
 const renderCard = ( props: TRenderCardProps ) => {
@@ -66,16 +69,14 @@ export const Cards = ( props: TCardsProps ) => {
 
     const carouselRef = useRef( null );
 
-    const [ viewMode, setMode ] = useState( 'instructions' );
-
-    const { shuffled } = props;
+    const { shuffled, cardsView, setCardsView, setStateCards } = props;
 
     const goToDeck = () => {
-        setMode( 'cards' );
+        setCardsView( 'cards' );
     };
 
     const goToMainPage = () => {
-        setMode( 'instructions' );
+        setCardsView( 'instructions' );
     };
 
     const BackIcon = ( backIconProps: IconProps ) => (
@@ -86,7 +87,15 @@ export const Cards = ( props: TCardsProps ) => {
         <TopNavigationAction onPress={ goToMainPage } icon={ BackIcon } />
     );
 
-    if ( viewMode === 'instructions' ) {
+    const appData = useContext( AppContext );
+    const { wordsWallet } = appData;
+
+    const generateNewDeck = () => {
+        setStateCards( wordsWallet );
+        setCardsView( 'cards' );
+    };
+
+    if ( cardsView === 'instructions' ) {
         return (
             <Layout level='1' style={ styles.instructions }>
 
@@ -104,7 +113,7 @@ export const Cards = ( props: TCardsProps ) => {
                     GO TO DECK
                 </Button>
 
-                <Button style={ styles.ctaButton } accessoryLeft={ ShuffleIcon }>
+                <Button onPress={ generateNewDeck } style={ styles.ctaButton } accessoryLeft={ ShuffleIcon }>
                     GENERATE NEW DECK
                 </Button>
             </Layout>
