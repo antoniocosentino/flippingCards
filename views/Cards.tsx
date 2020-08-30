@@ -28,9 +28,16 @@ const renderCard = ( props: TRenderCardProps ) => {
     if ( item.de  === '___firstItem___' ) {
         return (
             <View style={ styles.cardFrontAndBack }>
-                <Text style={ styles.slideText }>· Start ·</Text>
+                <Text style={ styles.whiteText } category='s1'>START</Text>
                 <Text style={ [ styles.slideText, styles.firstSlideText ] }>This is the beginning of your deck.</Text>
                 <Text style={ [ styles.slideText, styles.firstSlideText ] }>Scroll through the cards and tap to flip them.</Text>
+                <View style={ styles.centeredView }>
+                    <Icon
+                        fill='#fff'
+                        name='arrow-downward-outline'
+                        style={ styles.icon }
+                    />
+                </View>
             </View>
         );
     }
@@ -48,7 +55,7 @@ const renderCard = ( props: TRenderCardProps ) => {
                         <Text style={ styles.slideText }>{ item.en }</Text>
                     </View>
 
-                    <View style={ styles.cardFrontAndBack }>
+                    <View style={ [ styles.cardFrontAndBack, styles.cardBack ] }>
                         <Text style={ styles.slideText }>{ getArticle( item ) } { item.de }</Text>
                     </View>
                 </FlipCard>

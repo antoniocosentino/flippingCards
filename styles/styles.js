@@ -57,11 +57,26 @@ export const styles = StyleSheet.create( {
         textAlign: 'center',
         color: '#333'
     },
+    whiteText: {
+        textAlign: 'center',
+        color: '#fff'
+    },
     titleText: {
         color: mainColor
     },
+    centeredView: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 20
+    },
     plusIcon: {
         marginLeft: -1
+    },
+    icon: {
+        width: 32,
+        height: 32,
+        textAlign: 'center'
     },
     cardsScrollView: {
         width: '91%',
@@ -163,6 +178,9 @@ export const styles = StyleSheet.create( {
         justifyContent: 'center',
         borderRadius: 10,
         padding: 20
+    },
+    cardBack: {
+        backgroundColor: secondColor
     },
     instructions: {
         marginTop: 60,
