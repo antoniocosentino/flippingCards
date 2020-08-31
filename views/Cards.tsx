@@ -132,7 +132,7 @@ export const Cards = ( props: TCardsProps ) => {
             <TopNavigation
                 style={ styles.cardsTopNav }
                 accessoryLeft={ BackAction }
-                title='Back to deck configuration'
+                title='Deck Info'
             />
             <View
                 style={ styles.sliderWrapper }
