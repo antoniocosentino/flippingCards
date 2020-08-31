@@ -26,10 +26,11 @@ const okCallback = () => {
     console.log( 'connected to DB' );
 };
 
-const errorCallback = () => {
-    console.log( 'DB connection error' );
+const errorCallback = ( error: any ) => {
+    console.log( 'DB connection error', error );
 };
 
+// TODO: if it's Android I need to use 2 as parameter and re-create the DB manually
 const db = SQLite.openDatabase( { name: 'dictionary.db', createFromLocation: 1 }, okCallback, errorCallback );
 
 export type TSingleWord = {
