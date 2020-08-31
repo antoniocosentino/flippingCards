@@ -73,11 +73,9 @@ export const List = () => {
                 ); } }
             renderHiddenItem={ ( data, rowMap ) => (
                 <View style={ styles.deleteAction } >
-                    <Text>
-                        <DeleteIcon
-                            onPress={ () => { deleteWord( data.item.de, rowMap, data.item.key ); } }
-                        />
-                    </Text>
+                    <DeleteIcon
+                        onPress={ () => { deleteWord( data.item.de, rowMap, data.item.key ); } }
+                    />
                 </View>
             ) }
             rightOpenValue={ -75 }

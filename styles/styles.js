@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { isAndroid } from '../utils/utils';
 
 const inputGlobalStyles = {
     width: '91%',
@@ -14,7 +15,7 @@ export const fourthColor = '#EEECDA';
 
 export const styles = StyleSheet.create( {
     topSearch: {
-        flex: 1.5,
+        flex: isAndroid ? 1 : 1.5,
         justifyContent: 'flex-end'
     },
     addBar: {
@@ -27,13 +28,13 @@ export const styles = StyleSheet.create( {
         marginBottom: 20
     },
     topSpacer: {
-        flex: 1.5
+        flex: isAndroid ? 1 : 1.5
     },
     topSearchInput: {
         ...inputGlobalStyles
     },
     mainBlock: {
-        flex: 9,
+        flex: isAndroid ? 9.5 : 9,
         justifyContent: 'flex-start',
         alignItems: 'center',
         marginTop: 10,
@@ -198,7 +199,7 @@ export const styles = StyleSheet.create( {
         borderColor: mainColor
     },
     cardsTopNav: {
-        marginTop: 40
+        marginTop: isAndroid ? 0 : 40
     },
     firstSlideText: {
         fontSize: 16,

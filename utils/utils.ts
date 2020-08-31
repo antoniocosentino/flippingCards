@@ -1,9 +1,12 @@
 import { TSingleWord, TSearchWords } from '../App';
+import { Platform } from 'react-native';
 
 type TTypeOfWord = {
     name: string,
     class: 'typeOfWord--Noun' | 'typeOfWord--Verb' | 'typeOfWord--Adj'
 }
+
+export const isAndroid = Platform.OS === 'android';
 
 export const getArticle = ( word: TSingleWord ) => {
 
