@@ -20,7 +20,7 @@ export const styles = StyleSheet.create( {
     },
     addBar: {
         backgroundColor: mainColor,
-        paddingTop: 60
+        paddingTop: isAndroid ? 30 : 60
     },
     addWordInput: {
         ...inputGlobalStyles,
