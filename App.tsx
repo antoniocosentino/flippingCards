@@ -39,7 +39,11 @@ export type TSingleWord = {
     wordType: string // TODO: we can be more specific here with types
 }
 
-export type TWordsWallet = ReadonlyArray<TSingleWord>
+export type TSingleWalletWord = TSingleWord & { dateAdded: number }
+
+export type TWords = ReadonlyArray<TSingleWord>
+
+export type TWordsWallet = ReadonlyArray<TSingleWalletWord>
 
 type TAppData = {
     wordsWallet: TWordsWallet,
@@ -49,7 +53,7 @@ type TAppData = {
     addSingleWord: ( word: TSingleWord ) => void
 };
 
-export type TSearchWords = ReadonlyArray<TSingleWord>;
+export type TSearchWords = TWords;
 
 export const AppContext = React.createContext( {} as TAppData );
 
@@ -78,7 +82,7 @@ export default () => {
         }
     };
 
-    const storeDeckData = async ( value: TWordsWallet ) => {
+    const storeDeckData = async ( value: TWords ) => {
         const shuffledCards = getShuffledCards( value );
         setDeckDataUpdated( false );
         try {
@@ -91,9 +95,14 @@ export default () => {
 
     const addSingleWord = ( word: TSingleWord ) => {
         // TODO: tackle duplicates
-
         const walletCopy = [...wordsWallet ];
-        walletCopy.unshift( word );
+
+        const wordWithCurrentTimestamp = {
+            ...word,
+            dateAdded: ( new Date() ).getTime()
+        };
+
+        walletCopy.unshift( wordWithCurrentTimestamp );
 
         storeData( walletCopy );
         onMenuClick( 0 );
@@ -125,7 +134,7 @@ export default () => {
 
     const [ wordsWallet, setWordsWallet ] = React.useState( [] as TWordsWallet );
 
-    const [ deck, setDeck ] = React.useState( [] as TWordsWallet );
+    const [ deck, setDeck ] = React.useState( [] as TWords );
 
     if ( !isDataUpdated ){
         getData();

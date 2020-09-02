@@ -2,7 +2,7 @@ import React, { useRef, Dispatch, SetStateAction, useContext } from 'react';
 import { Text, Icon, Button, Layout, IconProps, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
 import Carousel from 'react-native-snap-carousel';
-import { TWordsWallet, AppContext } from '../App';
+import { AppContext, TWords } from '../App';
 
 import { View } from 'react-native';
 import FlipCard from 'react-native-flip-card';
@@ -14,10 +14,10 @@ type TRenderCardProps = {
 };
 
 type TCardsProps = {
-    deck: TWordsWallet;
+    deck: TWords;
     cardsView: string,
     setCardsView: Dispatch<SetStateAction<string>>
-    storeDeckData: ( value: TWordsWallet ) => void;
+    storeDeckData: ( value: TWords ) => void;
 }
 
 const renderCard = ( props: TRenderCardProps ) => {
