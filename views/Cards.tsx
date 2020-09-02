@@ -2,7 +2,7 @@ import React, { useRef, Dispatch, SetStateAction, useContext } from 'react';
 import { Text, Icon, Button, Layout, IconProps, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
 import Carousel from 'react-native-snap-carousel';
-import { TWordsWallet, AppContext, TSearchWords } from '../App';
+import { TWordsWallet, AppContext } from '../App';
 
 import { View } from 'react-native';
 import FlipCard from 'react-native-flip-card';
@@ -14,10 +14,10 @@ type TRenderCardProps = {
 };
 
 type TCardsProps = {
-    shuffled: TWordsWallet;
+    deck: TWordsWallet;
     cardsView: string,
     setCardsView: Dispatch<SetStateAction<string>>
-    setStateCards: Dispatch<SetStateAction<TSearchWords>>
+    storeDeckData: ( value: TWordsWallet ) => void;
 }
 
 const renderCard = ( props: TRenderCardProps ) => {
@@ -76,7 +76,7 @@ export const Cards = ( props: TCardsProps ) => {
 
     const carouselRef = useRef( null );
 
-    const { shuffled, cardsView, setCardsView, setStateCards } = props;
+    const { deck, cardsView, setCardsView, storeDeckData } = props;
 
     const goToDeck = () => {
         setCardsView( 'cards' );
@@ -98,9 +98,11 @@ export const Cards = ( props: TCardsProps ) => {
     const { wordsWallet } = appData;
 
     const generateNewDeck = () => {
-        setStateCards( wordsWallet );
+        storeDeckData( wordsWallet );
         setCardsView( 'cards' );
     };
+
+    const deckButtonExtraProp = deck.length === 0;
 
     if ( cardsView === 'instructions' ) {
         return (
@@ -116,7 +118,7 @@ export const Cards = ( props: TCardsProps ) => {
                     A deck is randomly generated with words coming from your words wallet. You can customize the size of the deck in the Settings page.
                 </Text>
 
-                <Button onPress={ goToDeck } style={ styles.ctaButton } accessoryLeft={ CardsIcon }>
+                <Button disabled={ deckButtonExtraProp } onPress={ goToDeck } style={ styles.ctaButton } accessoryLeft={ CardsIcon }>
                     GO TO DECK
                 </Button>
 
@@ -139,7 +141,7 @@ export const Cards = ( props: TCardsProps ) => {
             >
                 <Carousel
                     ref={ carouselRef }
-                    data={ shuffled }
+                    data={ deck }
                     sliderHeight={ 600 } // TODO: this needs to be dynamic
                     itemHeight={ 400 } // TODO: this needs to be dynamic
                     vertical={ true }

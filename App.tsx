@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
     ApplicationProvider,
     IconRegistry,
@@ -66,12 +66,24 @@ export default () => {
     }, [ view ] );
 
     const [ isDataUpdated, setDataUpdated ] = React.useState( false );
+    const [ isDeckDataUpdated, setDeckDataUpdated ] = React.useState( false );
 
     const storeData = async ( value: TWordsWallet ) => {
         setDataUpdated( false );
         try {
             const jsonValue = JSON.stringify( value );
             await AsyncStorage.setItem( '@wordsWallet', jsonValue );
+        } catch ( e ) {
+            console.error( 'Error:', e );
+        }
+    };
+
+    const storeDeckData = async ( value: TWordsWallet ) => {
+        const shuffledCards = getShuffledCards( value );
+        setDeckDataUpdated( false );
+        try {
+            const jsonValue = JSON.stringify( shuffledCards );
+            await AsyncStorage.setItem( '@deck', jsonValue );
         } catch ( e ) {
             console.error( 'Error:', e );
         }
@@ -99,11 +111,30 @@ export default () => {
         }
     };
 
+    const getDeckData = async () => {
+        try {
+            const value = await AsyncStorage.getItem( '@deck' );
+
+            if ( value !== null ) {
+                setDeck( JSON.parse( value ) );
+            }
+        } catch ( e ) {
+            // error reading value
+        }
+    };
+
     const [ wordsWallet, setWordsWallet ] = React.useState( [] as TWordsWallet );
+
+    const [ deck, setDeck ] = React.useState( [] as TWordsWallet );
 
     if ( !isDataUpdated ){
         getData();
         setDataUpdated( true );
+    }
+
+    if ( !isDeckDataUpdated ){
+        getDeckData();
+        setDeckDataUpdated( true );
     }
 
     const onMenuClick = ( index: number ) => {
@@ -216,12 +247,6 @@ export default () => {
         );
     };
 
-    const [ stateCards, setStateCards ] = useState( [] as TSearchWords );
-
-    useEffect( () => {
-        setStateCards(  getShuffledCards( wordsWallet ) );
-    }, [ wordsWallet, stateCards.length ] );
-
     return (
         <>
             <IconRegistry icons={ EvaIconsPack } />
@@ -264,10 +289,10 @@ export default () => {
                     }>
                         { view === 'CARDS' &&
                             <Cards
-                                shuffled={ stateCards }
+                                deck={ deck }
                                 cardsView={ cardsView }
                                 setCardsView={ setCardsView }
-                                setStateCards={ setStateCards }
+                                storeDeckData={ storeDeckData }
                             />
                         }
                         { view === 'LIST' &&
