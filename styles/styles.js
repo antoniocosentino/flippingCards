@@ -20,12 +20,26 @@ export const styles = StyleSheet.create( {
     },
     addBar: {
         backgroundColor: mainColor,
-        paddingTop: isAndroid ? 30 : 60
+        paddingTop: isAndroid ? 30 : 40,
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    addBarLeft: {
+        backgroundColor: mainColor,
+        flex: 1,
+        justifyContent: 'center',
+        paddingLeft: 10
+
+    },
+    addBarRight: {
+        backgroundColor: mainColor,
+        flex: 18,
+        paddingTop: 20
     },
     addWordInput: {
         ...inputGlobalStyles,
         borderRadius: 21,
-        marginBottom: 20
+        marginBottom: 14
     },
     topSpacer: {
         flex: isAndroid ? 1 : 1.5

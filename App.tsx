@@ -274,16 +274,27 @@ export default () => {
                     }
                     { view === 'ADD' &&
                         <Layout style={ styles.addBar }>
-                            <Input
-                                autoFocus={ true }
-                                autoCorrect={ false }
-                                style={ styles.addWordInput }
-                                placeholder='Type the word you want to enter'
-                                value={ addSearch }
-                                onChangeText={ nextValue => setAddSearchWrapper( nextValue ) }
-                                size={ 'large' }
-                                accessoryRight={ renderCloseIcon }
-                            />
+                            <Layout style={ styles.addBarLeft }>
+                                <Icon
+                                    onPress={ () => setView( 'LIST' )  }
+                                    width={ 22 }
+                                    height={ 22 }
+                                    fill='#fff'
+                                    name={ 'close' }
+                                />
+                            </Layout>
+                            <Layout style={ styles.addBarRight }>
+                                <Input
+                                    autoFocus={ true }
+                                    autoCorrect={ false }
+                                    style={ styles.addWordInput }
+                                    placeholder='Type the word you want to enter'
+                                    value={ addSearch }
+                                    onChangeText={ nextValue => setAddSearchWrapper( nextValue ) }
+                                    size={ 'large' }
+                                    accessoryRight={ renderCloseIcon }
+                                />
+                            </Layout>
                         </Layout>
                     }
                     { showTopSpacer &&
