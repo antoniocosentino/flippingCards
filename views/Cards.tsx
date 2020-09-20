@@ -114,13 +114,15 @@ export const Cards = ( props: TCardsProps ) => {
                     Cards view allows you to train your vocabulary. Just scroll through the cards, and tap a card to flip it and see the translation.
                 </Text>
 
-                <Text style={ [ styles.text, styles.instructionsText ] }>
-                    A deck is randomly generated with words coming from your words wallet. You can customize the size of the deck in the Settings page.
+                <Text style={ [ styles.text, styles.instructionsText, styles.instructionsTextExtraBlock  ] }>
+                    A deck is randomly generated with words coming from your words wallet.
                 </Text>
 
-                <Button disabled={ deckButtonExtraProp } onPress={ goToDeck } style={ styles.ctaButton } accessoryLeft={ CardsIcon }>
-                    GO TO DECK
-                </Button>
+                { deck.length > 0 &&
+                    <Button disabled={ deckButtonExtraProp } onPress={ goToDeck } style={ styles.ctaButton } accessoryLeft={ CardsIcon }>
+                        GO TO DECK
+                    </Button>
+                }
 
                 <Button onPress={ generateNewDeck } style={ styles.ctaButton } accessoryLeft={ ShuffleIcon }>
                     GENERATE NEW DECK

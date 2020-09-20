@@ -63,7 +63,8 @@ export const styles = StyleSheet.create( {
         color: '#fff'
     },
     titleText: {
-        color: mainColor
+        color: mainColor,
+        fontWeight: '400'
     },
     centeredView: {
         display: 'flex',
@@ -192,6 +193,9 @@ export const styles = StyleSheet.create( {
         marginTop: 20,
         marginBottom: 20,
         textAlign: 'left'
+    },
+    instructionsTextExtraBlock: {
+        marginTop: 0
     },
     ctaButton: {
         margin: 10,

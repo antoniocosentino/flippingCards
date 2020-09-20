@@ -206,7 +206,7 @@ export default () => {
 
     const [ addSearchWords, setAddSearchWords ] = React.useState( [] as TSearchWords );
 
-    const query = `select * from words where words MATCH '${ removeArticle( addSearch ) }*' AND rank MATCH 'bm25(10.0, 1.0)' ORDER BY rank LIMIT 10`;
+    const query = `select * from words where words MATCH '${ removeArticle( addSearch ) }*' AND rank MATCH 'bm25(10.0, 1.0)' ORDER BY ( de = '${ addSearch }' ) desc, rank LIMIT 10`;
 
     if ( shouldQuery && addSearch !== '' ) {
         setShouldQuery( false );
@@ -320,6 +320,10 @@ export default () => {
                                 <Button
                                     title='Wipe Everything'
                                     onPress={ () => storeData( [] ) }
+                                />
+                                <Button
+                                    title='Wipe Deck'
+                                    onPress={ () => storeDeckData( [] ) }
                                 />
                             </>
                         }
