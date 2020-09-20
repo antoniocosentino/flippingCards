@@ -1,4 +1,4 @@
-import React, { useRef, Dispatch, SetStateAction, useContext } from 'react';
+import React, { useRef, Dispatch, SetStateAction, useContext, useState } from 'react';
 import { Text, Icon, Button, Layout, IconProps, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
 import Carousel from 'react-native-snap-carousel';
@@ -102,7 +102,8 @@ export const Cards = ( props: TCardsProps ) => {
         setCardsView( 'cards' );
     };
 
-    const deckButtonExtraProp = deck.length === 0;
+
+    const [ cardWrapperDimensions, setCardWrapperDimensions ] = useState( { width: 0, height: 0 } );
 
     if ( cardsView === 'instructions' ) {
         return (
@@ -118,8 +119,8 @@ export const Cards = ( props: TCardsProps ) => {
                     A deck is randomly generated with words coming from your words wallet.
                 </Text>
 
-                { deck.length > 0 &&
-                    <Button disabled={ deckButtonExtraProp } onPress={ goToDeck } style={ styles.ctaButton } accessoryLeft={ CardsIcon }>
+                { deck.length > 1 &&
+                    <Button onPress={ goToDeck } style={ styles.ctaButton } accessoryLeft={ CardsIcon }>
                         GO TO DECK
                     </Button>
                 }
@@ -140,18 +141,24 @@ export const Cards = ( props: TCardsProps ) => {
             />
             <View
                 style={ styles.sliderWrapper }
+                onLayout={ ( event ) => {
+                    const { height, width } = event.nativeEvent.layout;
+                    setCardWrapperDimensions( { width, height } );
+                } }
             >
-                <Carousel
-                    ref={ carouselRef }
-                    data={ deck }
-                    sliderHeight={ 600 } // TODO: this needs to be dynamic
-                    itemHeight={ 400 } // TODO: this needs to be dynamic
-                    vertical={ true }
-                    layout={ 'default' }
-                    loop={ false }
-                    renderItem={ renderCard }
-                    firstItem={ 1 }
-                />
+                { cardWrapperDimensions.height > 0 &&
+                    <Carousel
+                        ref={ carouselRef }
+                        data={ deck }
+                        sliderHeight={ cardWrapperDimensions.height }
+                        itemHeight={ cardWrapperDimensions.height * ( 1 - 0.4 ) }
+                        vertical={ true }
+                        layout={ 'default' }
+                        loop={ false }
+                        renderItem={ renderCard }
+                        firstItem={ 1 }
+                    />
+                }
             </View>
         </>
     );

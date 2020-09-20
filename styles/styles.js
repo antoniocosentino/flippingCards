@@ -155,7 +155,9 @@ export const styles = StyleSheet.create( {
     'typeOfWord--Adj': {
         backgroundColor: thirdColor
     },
-    sliderWrapper: {},
+    sliderWrapper: {
+        flex: 2
+    },
     singleSlide: {
         flex: 1,
         justifyContent: 'center',
