@@ -22,6 +22,16 @@ export const styles = StyleSheet.create( {
         flex: 1,
         margin: 2
     },
+    labelText: {
+        flex: 7
+    },
+    smallSelect: {
+        flex: 3,
+        margin: 2
+    },
+    sectionLabel: {
+        marginBottom: 10
+    },
     rowContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',

@@ -144,19 +144,19 @@ export const Cards = ( props: TCardsProps ) => {
                     </>
                 }
 
-                <Text style={ styles.text } category='label'>DECK SETTINGS</Text>
+                <Text style={ [ styles.text, styles.sectionLabel ] } category='label'>DECK SETTINGS</Text>
 
                 <Layout style={ styles.rowContainer } level='1'>
 
-                    <Text>Max n. of cards:</Text>
+                    <Text style={ styles.labelText }>Max n. of cards:</Text>
 
                     <Select
-                        style={ styles.select }
+                        style={ [ styles.select, styles.smallSelect ] }
                         value={ displayDeckSizeValue }
                         selectedIndex={ selectedDeckSizeIndex }
                         onSelect={ index => setSelectedDeckSizeIndex( index as any ) }
                     >
-                        { deckSizeData.map( ( title, k) => renderDeckSizeOption( title, k ) ) }
+                        { deckSizeData.map( ( title, k ) => renderDeckSizeOption( title, k ) ) }
                     </Select>
 
                 </Layout>
