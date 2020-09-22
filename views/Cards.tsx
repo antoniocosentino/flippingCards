@@ -109,11 +109,21 @@ export const Cards = ( props: TCardsProps ) => {
         '30'
     ];
 
-    const [selectedDeckSizeIndex, setSelectedDeckSizeIndex] = React.useState( new IndexPath( 0 ) );
+    const wordsFreshnessData = [
+        'All words',
+        'Last Day',
+        'Last 3 Days',
+        'Last Week',
+        'Last Month'
+    ];
 
+    const [selectedDeckSizeIndex, setSelectedDeckSizeIndex] = React.useState( new IndexPath( 0 ) );
     const displayDeckSizeValue = deckSizeData[selectedDeckSizeIndex.row];
 
-    const renderDeckSizeOption = ( title: string, index: number ) => (
+    const [selectedWordsFreshnessIndex, setSelectedWordsFreshnessIndex] = React.useState( new IndexPath( 0 ) );
+    const displayWordsFreshnessValue = wordsFreshnessData[selectedWordsFreshnessIndex.row];
+
+    const renderSizeOption = ( title: string, index: number ) => (
         <SelectItem key={ index } title={ title }/>
     );
 
@@ -156,7 +166,22 @@ export const Cards = ( props: TCardsProps ) => {
                         selectedIndex={ selectedDeckSizeIndex }
                         onSelect={ index => setSelectedDeckSizeIndex( index as any ) }
                     >
-                        { deckSizeData.map( ( title, k ) => renderDeckSizeOption( title, k ) ) }
+                        { deckSizeData.map( ( title, k ) => renderSizeOption( title, k ) ) }
+                    </Select>
+
+                </Layout>
+
+                <Layout style={ styles.rowContainer } level='1'>
+
+                    <Text style={ styles.labelText }>Words Freshness:</Text>
+
+                    <Select
+                        style={ [ styles.select, styles.smallSelect ] }
+                        value={ displayWordsFreshnessValue }
+                        selectedIndex={ selectedWordsFreshnessIndex }
+                        onSelect={ index => setSelectedWordsFreshnessIndex( index as any ) }
+                    >
+                        { wordsFreshnessData.map( ( title, k ) => renderSizeOption( title, k ) ) }
                     </Select>
 
                 </Layout>

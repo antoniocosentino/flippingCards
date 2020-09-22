@@ -23,10 +23,10 @@ export const styles = StyleSheet.create( {
         margin: 2
     },
     labelText: {
-        flex: 7
+        flex: 1
     },
     smallSelect: {
-        flex: 3,
+        flex: 1,
         margin: 2
     },
     sectionLabel: {
