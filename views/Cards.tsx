@@ -1,5 +1,5 @@
 import React, { useRef, Dispatch, SetStateAction, useContext, useState } from 'react';
-import { Text, Icon, Button, Layout, IconProps, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
+import { Text, Icon, Button, IndexPath, Layout, IconProps, TopNavigation, TopNavigationAction, Divider, Select, SelectItem } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
 import Carousel from 'react-native-snap-carousel';
 import { AppContext, TWords } from '../App';
@@ -103,6 +103,21 @@ export const Cards = ( props: TCardsProps ) => {
     };
 
 
+    const deckSizeData = [
+        '10',
+        '20',
+        '30'
+    ];
+
+    const [selectedDeckSizeIndex, setSelectedDeckSizeIndex] = React.useState( new IndexPath( 0 ) );
+
+    const displayDeckSizeValue = deckSizeData[selectedDeckSizeIndex.row];
+
+    const renderDeckSizeOption = ( title: string, index: number ) => (
+        <SelectItem key={ index } title={ title }/>
+    );
+
+
     const [ cardWrapperDimensions, setCardWrapperDimensions ] = useState( { width: 0, height: 0 } );
 
     if ( cardsView === 'instructions' ) {
@@ -120,10 +135,32 @@ export const Cards = ( props: TCardsProps ) => {
                 </Text>
 
                 { deck.length > 1 &&
-                    <Button onPress={ goToDeck } style={ styles.ctaButton } accessoryLeft={ CardsIcon }>
-                        GO TO DECK
-                    </Button>
+                    <>
+                        <Button onPress={ goToDeck } style={ styles.ctaButton } accessoryLeft={ CardsIcon }>
+                            GO TO DECK
+                        </Button>
+
+                        <Divider style={ styles.commonDivider } />
+                    </>
                 }
+
+                <Text style={ styles.text } category='label'>DECK SETTINGS</Text>
+
+                <Layout style={ styles.rowContainer } level='1'>
+
+                    <Text>Max n. of cards:</Text>
+
+                    <Select
+                        style={ styles.select }
+                        value={ displayDeckSizeValue }
+                        selectedIndex={ selectedDeckSizeIndex }
+                        onSelect={ index => setSelectedDeckSizeIndex( index as any ) }
+                    >
+                        { deckSizeData.map( ( title, k) => renderDeckSizeOption( title, k ) ) }
+                    </Select>
+
+                </Layout>
+
 
                 <Button onPress={ generateNewDeck } style={ styles.ctaButton } accessoryLeft={ ShuffleIcon }>
                     GENERATE NEW DECK

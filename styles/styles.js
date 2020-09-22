@@ -18,6 +18,19 @@ export const styles = StyleSheet.create( {
         flex: isAndroid ? 1 : 1.5,
         justifyContent: 'flex-end'
     },
+    select: {
+        flex: 1,
+        margin: 2
+    },
+    rowContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    commonDivider: {
+        marginTop: 10,
+        marginBottom: 10
+    },
     addBar: {
         backgroundColor: mainColor,
         paddingTop: isAndroid ? 30 : 40,
