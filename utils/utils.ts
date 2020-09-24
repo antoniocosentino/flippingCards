@@ -6,6 +6,21 @@ type TTypeOfWord = {
     class: 'typeOfWord--Noun' | 'typeOfWord--Verb' | 'typeOfWord--Adj'
 }
 
+export const DECK_SIZE_DATA = [
+    '5',
+    '10',
+    '20',
+    '30'
+];
+
+export const WORDS_FRESHNESS_DATA = [
+    'All words',
+    'Last Day',
+    'Last 3 Days',
+    'Last Week',
+    'Last Month'
+];
+
 export const isAndroid = Platform.OS === 'android';
 
 export const getArticle = ( word: TSingleWord ) => {
@@ -63,14 +78,14 @@ export const getTypeOfWord = ( word: TSingleWord ): TTypeOfWord => {
     }
 };
 
-export const getShuffledCards = ( words: TSearchWords ) => {
+export const getShuffledCards = ( words: TSearchWords, nOfCards: number ) => {
     const allShuffled = words
         .map( ( a ) => ( { sort: Math.random(), value: a } ) )
         .sort( ( a, b ) => a.sort - b.sort )
         .map( ( a ) => a.value );
 
 
-    const tenShuffled = allShuffled.slice( 0, 10 );
+    const tenShuffled = allShuffled.slice( 0, nOfCards );
 
     tenShuffled.unshift( {
         de: '___firstItem___',

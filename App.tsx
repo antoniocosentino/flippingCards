@@ -82,8 +82,8 @@ export default () => {
         }
     };
 
-    const storeDeckData = async ( value: TWords ) => {
-        const shuffledCards = getShuffledCards( value );
+    const storeDeckData = async ( value: TWords, nOfCards: number ) => {
+        const shuffledCards = getShuffledCards( value, nOfCards );
         setDeckDataUpdated( false );
         try {
             const jsonValue = JSON.stringify( shuffledCards );
@@ -334,7 +334,7 @@ export default () => {
                                 />
                                 <Button
                                     title='Wipe Deck'
-                                    onPress={ () => storeDeckData( [] ) }
+                                    onPress={ () => storeDeckData( [], 0 ) }
                                 />
                             </>
                         }

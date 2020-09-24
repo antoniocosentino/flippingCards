@@ -6,7 +6,7 @@ import { AppContext, TWords } from '../App';
 
 import { View } from 'react-native';
 import FlipCard from 'react-native-flip-card';
-import { getArticle } from '../utils/utils';
+import { DECK_SIZE_DATA, getArticle, WORDS_FRESHNESS_DATA } from '../utils/utils';
 
 type TRenderCardProps = {
     item: any,
@@ -17,7 +17,7 @@ type TCardsProps = {
     deck: TWords;
     cardsView: string,
     setCardsView: Dispatch<SetStateAction<string>>
-    storeDeckData: ( value: TWords ) => void;
+    storeDeckData: ( value: TWords, nOfCards: number ) => void;
 }
 
 const renderCard = ( props: TRenderCardProps ) => {
@@ -97,31 +97,16 @@ export const Cards = ( props: TCardsProps ) => {
     const appData = useContext( AppContext );
     const { wordsWallet } = appData;
 
-    const generateNewDeck = () => {
-        storeDeckData( wordsWallet );
+    const generateNewDeck = ( nOfCards: number ) => {
+        storeDeckData( wordsWallet, nOfCards );
         setCardsView( 'cards' );
     };
 
-
-    const deckSizeData = [
-        '10',
-        '20',
-        '30'
-    ];
-
-    const wordsFreshnessData = [
-        'All words',
-        'Last Day',
-        'Last 3 Days',
-        'Last Week',
-        'Last Month'
-    ];
-
-    const [selectedDeckSizeIndex, setSelectedDeckSizeIndex] = React.useState( new IndexPath( 0 ) );
-    const displayDeckSizeValue = deckSizeData[selectedDeckSizeIndex.row];
+    const [selectedDeckSizeIndex, setSelectedDeckSizeIndex] = React.useState( new IndexPath( 1 ) );
+    const displayDeckSizeValue = DECK_SIZE_DATA[selectedDeckSizeIndex.row];
 
     const [selectedWordsFreshnessIndex, setSelectedWordsFreshnessIndex] = React.useState( new IndexPath( 0 ) );
-    const displayWordsFreshnessValue = wordsFreshnessData[selectedWordsFreshnessIndex.row];
+    const displayWordsFreshnessValue = WORDS_FRESHNESS_DATA[selectedWordsFreshnessIndex.row];
 
     const renderSizeOption = ( title: string, index: number ) => (
         <SelectItem key={ index } title={ title }/>
@@ -137,7 +122,7 @@ export const Cards = ( props: TCardsProps ) => {
                 <Text style={ [ styles.text, styles.titleText ] } category='h4'>Cards view</Text>
 
                 <Text style={ [ styles.text, styles.instructionsText ] }>
-                    Cards view allows you to train your vocabulary. Just scroll through the cards, and tap a card to flip it and see the translation.
+                    Cards view allows you to train your vocabulary by swiping cards and flipping them to check the translation.
                 </Text>
 
                 <Text style={ [ styles.text, styles.instructionsText, styles.instructionsTextExtraBlock  ] }>
@@ -166,7 +151,7 @@ export const Cards = ( props: TCardsProps ) => {
                         selectedIndex={ selectedDeckSizeIndex }
                         onSelect={ index => setSelectedDeckSizeIndex( index as any ) }
                     >
-                        { deckSizeData.map( ( title, k ) => renderSizeOption( title, k ) ) }
+                        { DECK_SIZE_DATA.map( ( title, k ) => renderSizeOption( title, k ) ) }
                     </Select>
 
                 </Layout>
@@ -181,13 +166,13 @@ export const Cards = ( props: TCardsProps ) => {
                         selectedIndex={ selectedWordsFreshnessIndex }
                         onSelect={ index => setSelectedWordsFreshnessIndex( index as any ) }
                     >
-                        { wordsFreshnessData.map( ( title, k ) => renderSizeOption( title, k ) ) }
+                        { WORDS_FRESHNESS_DATA.map( ( title, k ) => renderSizeOption( title, k ) ) }
                     </Select>
 
                 </Layout>
 
 
-                <Button onPress={ generateNewDeck } style={ styles.ctaButton } accessoryLeft={ ShuffleIcon }>
+                <Button onPress={ () => generateNewDeck( parseInt( DECK_SIZE_DATA[ selectedDeckSizeIndex.row ], 10 ) ) } style={ styles.ctaButton } accessoryLeft={ ShuffleIcon }>
                     GENERATE NEW DECK
                 </Button>
             </Layout>
@@ -213,7 +198,7 @@ export const Cards = ( props: TCardsProps ) => {
                         ref={ carouselRef }
                         data={ deck }
                         sliderHeight={ cardWrapperDimensions.height }
-                        itemHeight={ cardWrapperDimensions.height * ( 1 - 0.4 ) }
+                        itemHeight={ cardWrapperDimensions.height * ( 1 - 0.35 ) }
                         vertical={ true }
                         layout={ 'default' }
                         loop={ false }

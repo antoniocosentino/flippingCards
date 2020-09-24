@@ -237,7 +237,8 @@ export const styles = StyleSheet.create( {
         marginTop: 0
     },
     ctaButton: {
-        margin: 10,
+        marginTop: 10,
+        marginBottom: 10,
         backgroundColor: mainColor,
         borderColor: mainColor
     },
