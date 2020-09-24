@@ -277,8 +277,8 @@ export default () => {
                             <Layout style={ styles.addBarLeft }>
                                 <Icon
                                     onPress={ () => setView( 'LIST' )  }
-                                    width={ 22 }
-                                    height={ 22 }
+                                    width={ 30 }
+                                    height={ 30 }
                                     fill='#fff'
                                     name={ 'close' }
                                 />
