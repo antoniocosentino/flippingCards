@@ -1,4 +1,4 @@
-import { TSingleWord, TSearchWords } from '../App';
+import { TSingleWord, TSearchWords, TWordsWallet } from '../App';
 import { Platform } from 'react-native';
 
 type TTypeOfWord = {
@@ -13,6 +13,8 @@ export const DECK_SIZE_DATA = [
     '30'
 ];
 
+export type TWordsFreshnessValues = typeof WORDS_FRESHNESS_DATA[ number ];
+
 export const WORDS_FRESHNESS_DATA = [
     'All words',
     'Last Day',
@@ -23,7 +25,7 @@ export const WORDS_FRESHNESS_DATA = [
 
 export const isAndroid = Platform.OS === 'android';
 
-export const getArticle = ( word: TSingleWord ) => {
+export const getArticle = ( word: TSingleWord ): string => {
 
     const { wordType } = word;
 
@@ -78,8 +80,9 @@ export const getTypeOfWord = ( word: TSingleWord ): TTypeOfWord => {
     }
 };
 
-export const getShuffledCards = ( words: TSearchWords, nOfCards: number ) => {
-    const allShuffled = words
+export const getShuffledCards = ( words: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ): TSearchWords => {
+
+    const allShuffled = getWalletWordsInGivenPeriod( words, wordsFreshness )
         .map( ( a ) => ( { sort: Math.random(), value: a } ) )
         .sort( ( a, b ) => a.sort - b.sort )
         .map( ( a ) => a.value );
@@ -94,4 +97,44 @@ export const getShuffledCards = ( words: TSearchWords, nOfCards: number ) => {
     } );
 
     return tenShuffled;
+};
+
+const getWalletWordsInGivenPeriod = ( words: TWordsWallet, wordsFreshness: TWordsFreshnessValues ): TSearchWords => {
+    if ( wordsFreshness === 'All Words' ) {
+        return words;
+    }
+
+    const startDate = new Date();
+
+    switch ( wordsFreshness ) {
+        case 'Last Day':
+            startDate.setDate( startDate.getDate() - 1 );
+            break;
+
+        case 'Last 3 Days':
+            startDate.setDate( startDate.getDate() - 3 );
+            break;
+
+        case 'Last Week':
+            startDate.setDate( startDate.getDate() - 7 );
+            break;
+
+        case 'Last Month':
+            startDate.setDate( startDate.getDate() - 31 );
+            break;
+
+    }
+
+    const wordsResult = words.filter( ( singleWord ) => {
+        const jsonDate = new Date( singleWord.dateAdded );
+
+        if ( jsonDate >= startDate ){
+            return true;
+        }
+        return false;
+
+    } ).map( ( singleWord ) => singleWord );
+
+    return wordsResult;
+
 };

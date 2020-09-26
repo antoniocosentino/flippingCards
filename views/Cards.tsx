@@ -2,11 +2,11 @@ import React, { useRef, Dispatch, SetStateAction, useContext, useState } from 'r
 import { Text, Icon, Button, IndexPath, Layout, IconProps, TopNavigation, TopNavigationAction, Divider, Select, SelectItem } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
 import Carousel from 'react-native-snap-carousel';
-import { AppContext, TWords } from '../App';
+import { AppContext, TWords, TWordsWallet } from '../App';
 
 import { View } from 'react-native';
 import FlipCard from 'react-native-flip-card';
-import { DECK_SIZE_DATA, getArticle, WORDS_FRESHNESS_DATA } from '../utils/utils';
+import { DECK_SIZE_DATA, getArticle, TWordsFreshnessValues, WORDS_FRESHNESS_DATA } from '../utils/utils';
 
 type TRenderCardProps = {
     item: any,
@@ -17,7 +17,7 @@ type TCardsProps = {
     deck: TWords;
     cardsView: string,
     setCardsView: Dispatch<SetStateAction<string>>
-    storeDeckData: ( value: TWords, nOfCards: number ) => void;
+    storeDeckData: ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ) => void;
 }
 
 const renderCard = ( props: TRenderCardProps ) => {
@@ -97,8 +97,8 @@ export const Cards = ( props: TCardsProps ) => {
     const appData = useContext( AppContext );
     const { wordsWallet } = appData;
 
-    const generateNewDeck = ( nOfCards: number ) => {
-        storeDeckData( wordsWallet, nOfCards );
+    const generateNewDeck = ( nOfCards: number, wordsFreshness: TWordsFreshnessValues ) => {
+        storeDeckData( wordsWallet, nOfCards, wordsFreshness );
         setCardsView( 'cards' );
     };
 
@@ -172,7 +172,7 @@ export const Cards = ( props: TCardsProps ) => {
                 </Layout>
 
 
-                <Button onPress={ () => generateNewDeck( parseInt( DECK_SIZE_DATA[ selectedDeckSizeIndex.row ], 10 ) ) } style={ styles.ctaButton } accessoryLeft={ ShuffleIcon }>
+                <Button onPress={ () => generateNewDeck( parseInt( DECK_SIZE_DATA[ selectedDeckSizeIndex.row ], 10 ), WORDS_FRESHNESS_DATA[ selectedWordsFreshnessIndex.row ] ) } style={ styles.ctaButton } accessoryLeft={ ShuffleIcon }>
                     GENERATE NEW DECK
                 </Button>
             </Layout>

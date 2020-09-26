@@ -17,7 +17,7 @@ import { styles } from './styles/styles';
 import { List } from './views/List';
 import { BottomMenu } from './views/BottomMenu';
 import { SearchResults } from './components/SearchResults';
-import { removeArticle, getShuffledCards } from './utils/utils';
+import { removeArticle, getShuffledCards, TWordsFreshnessValues } from './utils/utils';
 import { Cards } from './views/Cards';
 import { customTheme } from './utils/customTheme';
 
@@ -82,8 +82,8 @@ export default () => {
         }
     };
 
-    const storeDeckData = async ( value: TWords, nOfCards: number ) => {
-        const shuffledCards = getShuffledCards( value, nOfCards );
+    const storeDeckData = async ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ) => {
+        const shuffledCards = getShuffledCards( value, nOfCards, wordsFreshness );
         setDeckDataUpdated( false );
         try {
             const jsonValue = JSON.stringify( shuffledCards );
@@ -334,7 +334,7 @@ export default () => {
                                 />
                                 <Button
                                     title='Wipe Deck'
-                                    onPress={ () => storeDeckData( [], 0 ) }
+                                    onPress={ () => storeDeckData( [], 0, 'All Words' ) }
                                 />
                             </>
                         }
