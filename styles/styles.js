@@ -50,7 +50,7 @@ export const styles = StyleSheet.create( {
     },
     addBarLeft: {
         backgroundColor: mainColor,
-        flex: 1,
+        flex: 1.5,
         justifyContent: 'center',
         paddingLeft: 10
 
