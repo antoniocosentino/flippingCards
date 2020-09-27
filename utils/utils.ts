@@ -16,7 +16,7 @@ export const DECK_SIZE_DATA = [
 export type TWordsFreshnessValues = typeof WORDS_FRESHNESS_DATA[ number ];
 
 export const WORDS_FRESHNESS_DATA = [
-    'All words',
+    'All Words',
     'Last Day',
     'Last 3 Days',
     'Last Week',
@@ -100,7 +100,7 @@ export const getShuffledCards = ( words: TWordsWallet, nOfCards: number, wordsFr
 };
 
 const getWalletWordsInGivenPeriod = ( words: TWordsWallet, wordsFreshness: TWordsFreshnessValues ): TSearchWords => {
-    if ( wordsFreshness === 'All Words' ) {
+    if ( wordsFreshness === WORDS_FRESHNESS_DATA[ 0 ] ) {
         return words;
     }
 
