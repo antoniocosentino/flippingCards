@@ -30,6 +30,7 @@ export const styles = StyleSheet.create( {
         margin: 2
     },
     sectionLabel: {
+        marginTop: 10,
         marginBottom: 10
     },
     rowContainer: {
@@ -76,6 +77,10 @@ export const styles = StyleSheet.create( {
         alignItems: 'center',
         marginTop: 10,
         overflow: 'scroll'
+    },
+    walletInstructions: {
+        paddingLeft: 30,
+        paddingRight: 30
     },
     mainBlockShorter: {
         flex: 8.5

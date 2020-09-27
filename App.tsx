@@ -4,7 +4,8 @@ import {
     IconRegistry,
     Layout,
     Input,
-    Icon
+    Icon,
+    Text
 } from '@ui-kitten/components';
 
 import { debounce } from 'lodash';
@@ -166,7 +167,7 @@ export default () => {
                 break;
 
             case 4:
-                setView( 'SETTINGS' );
+                setView( 'INFO' );
                 break;
         }
 
@@ -183,7 +184,7 @@ export default () => {
         addSingleWord
     };
 
-    const showTopSpacer = view !== 'LIST' && view !== 'ADD' && view !== 'CARDS';
+    const showTopSpacer = ( view === 'LIST' && wordsWallet.length === 0 ) || view === 'PLAY' || view === 'INFO';
 
     // database stuff
 
@@ -261,7 +262,7 @@ export default () => {
             <IconRegistry icons={ EvaIconsPack } />
             <ApplicationProvider { ...eva } theme={ customTheme }>
                 <AppContext.Provider value={ appData }>
-                    { view === 'LIST' &&
+                    { view === 'LIST' && wordsWallet.length > 0 &&
                         <Layout style={ styles.topSearch }>
                             <Input
                                 style={ styles.topSearchInput }
@@ -315,14 +316,27 @@ export default () => {
                                 storeDeckData={ storeDeckData }
                             />
                         }
-                        { view === 'LIST' &&
+                        { view === 'LIST' && wordsWallet.length > 0 &&
                             <List />
                         }
+
+                        { view === 'LIST' && wordsWallet.length === 0 &&
+                            <Layout style={ styles.walletInstructions }>
+                                <Text style={ [ styles.text, styles.titleText ] } category='h4'>Hello there! 👋</Text>
+
+                                <Text style={ [ styles.text, styles.instructionsText ] }>
+                                    This is your wallet view. All the words that you add in your wallet will show up here.
+                                    { '\n' } { '\n' }
+                                    To add your first word click on the ➕ icon at the bottom of this screen.
+                                </Text>
+                            </Layout>
+                        }
+
                         {
                             view === 'ADD' &&
                             <SearchResults results={ addSearchWords } />
                         }
-                        { view === 'SETTINGS' &&
+                        { view === 'INFO' &&
                             <>
                                 <Button
                                     title='Fill Wallet with Demo Words'

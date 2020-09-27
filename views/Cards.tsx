@@ -132,7 +132,7 @@ export const Cards = ( props: TCardsProps ) => {
                 { deck.length > 1 &&
                     <>
                         <Button onPress={ goToDeck } style={ styles.ctaButton } accessoryLeft={ CardsIcon }>
-                            GO TO DECK
+                            GO TO EXISTING DECK
                         </Button>
 
                         <Divider style={ styles.commonDivider } />
