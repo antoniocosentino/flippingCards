@@ -5,13 +5,18 @@ const inputGlobalStyles = {
     width: '91%',
     marginLeft: '4.5%',
     marginRight: '4.5%',
-    borderRadius: 14
+    borderRadius: 14,
+    fontFamily: customFontRegular
 };
 
 export const mainColor = '#B83B5E';
 export const secondColor = '#F08A5D';
 export const thirdColor = '#6A2C70';
 export const fourthColor = '#EEECDA';
+
+
+const customFontRegular = 'Nunito-Regular';
+const customFontBold = 'Nunito-SemiBold';
 
 export const styles = StyleSheet.create( {
     topSearch: {
@@ -23,7 +28,8 @@ export const styles = StyleSheet.create( {
         margin: 2
     },
     labelText: {
-        flex: 1
+        flex: 1,
+        fontFamily: customFontRegular
     },
     smallSelect: {
         flex: 1,
@@ -98,11 +104,13 @@ export const styles = StyleSheet.create( {
     },
     text: {
         textAlign: 'center',
-        color: '#333'
+        color: '#333',
+        fontFamily: customFontRegular
     },
     whiteText: {
         textAlign: 'center',
-        color: '#fff'
+        color: '#fff',
+        fontFamily: customFontRegular
     },
     titleText: {
         color: mainColor,
@@ -136,12 +144,14 @@ export const styles = StyleSheet.create( {
     },
     mainWord: {
         color: '#fff',
-        fontSize: 22
+        fontSize: 22,
+        fontFamily: customFontBold
     },
     translationWord: {
         color: '#fff',
         fontSize: 16,
-        marginTop: 8
+        marginTop: 8,
+        fontFamily: customFontRegular
     },
     deleteAction: {
         flex: 1,
@@ -164,14 +174,17 @@ export const styles = StyleSheet.create( {
         flexDirection: 'row'
     },
     singleSearchResultMainWord: {
-        fontSize: 18
+        fontSize: 18,
+        fontFamily: customFontRegular
     },
     singleSearchResultArticle: {
         fontSize: 18,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontFamily: customFontBold
     },
     enWord: {
-        marginTop: 4
+        marginTop: 4,
+        fontFamily: customFontRegular
     },
     searchResultWordBlock: {
         flex: 8.5
@@ -186,7 +199,8 @@ export const styles = StyleSheet.create( {
         color: '#fff',
         textAlign: 'center',
         paddingTop: 3,
-        paddingBottom: 3
+        paddingBottom: 3,
+        fontFamily: customFontRegular
     },
     'typeOfWord--Noun': {
         backgroundColor: mainColor
@@ -209,7 +223,8 @@ export const styles = StyleSheet.create( {
         color: '#fff',
         fontSize: 28,
         fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: customFontRegular
     },
     singleCardWrapper: {
         height: 400,
@@ -229,7 +244,6 @@ export const styles = StyleSheet.create( {
         backgroundColor: secondColor
     },
     instructions: {
-        marginTop: 60,
         paddingLeft: 30,
         paddingRight: 30
     },
@@ -245,10 +259,12 @@ export const styles = StyleSheet.create( {
         marginTop: 10,
         marginBottom: 10,
         backgroundColor: mainColor,
-        borderColor: mainColor
+        borderColor: mainColor,
+        fontFamily: customFontRegular
     },
     cardsTopNav: {
-        marginTop: isAndroid ? 0 : 40
+        marginTop: isAndroid ? 0 : 40,
+        fontFamily: customFontRegular
     },
     firstSlideText: {
         fontSize: 16,

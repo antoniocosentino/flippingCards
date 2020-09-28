@@ -184,7 +184,11 @@ export default () => {
         addSingleWord
     };
 
-    const showTopSpacer = ( view === 'LIST' && wordsWallet.length === 0 ) || view === 'PLAY' || view === 'INFO';
+    const showTopSpacer =
+        ( view === 'LIST' && wordsWallet.length === 0 ) ||
+        ( view === 'CARDS' && cardsView === 'instructions' ) ||
+        view === 'PLAY' ||
+        view === 'INFO';
 
     // database stuff
 
@@ -305,7 +309,7 @@ export default () => {
                         [
                             styles.mainBlock,
                             view === 'ADD' && styles.mainBlockShorter,
-                            view === 'CARDS' && styles.mainBlockLonger
+                            view === 'CARDS' && cardsView === 'cards' && styles.mainBlockLonger
                         ]
                     }>
                         { view === 'CARDS' &&
