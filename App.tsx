@@ -65,6 +65,10 @@ export default () => {
     const [ view, setView ] = React.useState( 'LIST' );
     const [ cardsView, setCardsView ] = React.useState( 'instructions' );
 
+    const [ wordsWallet, setWordsWallet ] = React.useState( [] as TWordsWallet );
+
+    const [ hasFetchedWallet, setHasFetchedWallet ] = React.useState( false );
+
     useEffect( () => {
         setAddSearchWords( [] );
         setAddSearch( '' );
@@ -115,6 +119,7 @@ export default () => {
 
             if ( value !== null ) {
                 setWordsWallet( JSON.parse( value ) );
+                setHasFetchedWallet( true );
             }
         } catch ( e ) {
             // error reading value
@@ -132,8 +137,6 @@ export default () => {
             // error reading value
         }
     };
-
-    const [ wordsWallet, setWordsWallet ] = React.useState( [] as TWordsWallet );
 
     const [ deck, setDeck ] = React.useState( [] as TWords );
 
@@ -266,7 +269,7 @@ export default () => {
             <IconRegistry icons={ EvaIconsPack } />
             <ApplicationProvider { ...eva } theme={ customTheme }>
                 <AppContext.Provider value={ appData }>
-                    { view === 'LIST' && wordsWallet.length > 0 &&
+                    { view === 'LIST' && hasFetchedWallet && wordsWallet.length > 0 &&
                         <Layout style={ styles.topSearch }>
                             <Input
                                 style={ styles.topSearchInput }
@@ -324,7 +327,7 @@ export default () => {
                             <List />
                         }
 
-                        { view === 'LIST' && wordsWallet.length === 0 &&
+                        { view === 'LIST' && hasFetchedWallet && wordsWallet.length === 0 &&
                             <Layout style={ styles.walletInstructions }>
                                 <Text style={ [ styles.text, styles.titleText ] } category='h4'>Hello there! 👋</Text>
 
