@@ -72,7 +72,7 @@ export const styles = StyleSheet.create( {
         marginBottom: 14
     },
     topSpacer: {
-        flex: isAndroid ? 1 : 1.5
+        flex: isAndroid ? 1 : 1
     },
     topSearchInput: {
         ...inputGlobalStyles
@@ -105,7 +105,8 @@ export const styles = StyleSheet.create( {
     text: {
         textAlign: 'center',
         color: '#333',
-        fontFamily: customFontRegular
+        fontFamily: customFontRegular,
+        fontSize: 16.5
     },
     whiteText: {
         textAlign: 'center',
@@ -114,7 +115,8 @@ export const styles = StyleSheet.create( {
     },
     titleText: {
         color: mainColor,
-        fontWeight: '400'
+        fontFamily: customFontBold,
+        fontSize: 30
     },
     centeredView: {
         display: 'flex',
