@@ -347,7 +347,7 @@ export default () => {
                                 </Button>
 
                                 <Text style={ [ styles.text, styles.instructionsText ] }>
-                                    You can always add new words by tapping the ⊕ icon at the bottom of this screen.
+                                    You can always add new words by tapping the + icon at the bottom of this screen.
                                 </Text>
                             </Layout>
                         }

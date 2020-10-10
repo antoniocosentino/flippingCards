@@ -89,12 +89,15 @@ export const Cards = ( props: TCardsProps ) => {
         setCardsView( 'instructions' );
     };
 
-    const BackIcon = ( backIconProps: IconProps ) => (
-        <Icon { ...backIconProps } name='arrow-back'/>
+    const SettingsIcon = ( settingsIconProps: IconProps ) => (
+        <Icon { ...settingsIconProps } name='settings-2-outline'/>
     );
 
     const BackAction = () => (
-        <TopNavigationAction onPress={ goToMainPage } icon={ BackIcon } />
+        <TopNavigationAction
+            onPress={ goToMainPage }
+            icon={ SettingsIcon }
+        />
     );
 
     const appData = useContext( AppContext );
@@ -200,7 +203,7 @@ export const Cards = ( props: TCardsProps ) => {
             <TopNavigation
                 style={ styles.cardsTopNav }
                 accessoryLeft={ BackAction }
-                title='Deck Info'
+                title='Deck Options'
             />
             <View
                 style={ styles.sliderWrapper }
