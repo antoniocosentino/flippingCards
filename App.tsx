@@ -5,11 +5,13 @@ import {
     Layout,
     Input,
     Icon,
-    Text
+    Text,
+    Button,
+    IconProps, Divider
 } from '@ui-kitten/components';
 
 import { debounce } from 'lodash';
-import { Button, TouchableWithoutFeedback } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -31,6 +33,10 @@ const okCallback = () => {
 const errorCallback = ( error: any ) => {
     console.log( 'DB connection error', error );
 };
+
+export const AddWordIcon = ( props: IconProps ) => (
+    <Icon { ...props } name='plus-outline' />
+);
 
 const db = SQLite.openDatabase( { name: 'dictionary.db', createFromLocation: 1 }, okCallback, errorCallback );
 
@@ -320,6 +326,7 @@ export default () => {
                                 deck={ deck }
                                 cardsView={ cardsView }
                                 setCardsView={ setCardsView }
+                                setView={ setView }
                                 storeDeckData={ storeDeckData }
                             />
                         }
@@ -333,8 +340,14 @@ export default () => {
 
                                 <Text style={ [ styles.text, styles.instructionsText ] }>
                                     This is your wallet view. All the words that you add in your wallet will show up here.
-                                    { '\n' } { '\n' }
-                                    To add your first word click on the ➕ icon at the bottom of this screen.
+                                </Text>
+
+                                <Button onPress={ () => setView( 'ADD' ) } style={ styles.ctaButton } accessoryLeft={ AddWordIcon }>
+                                    ADD YOUR FIRST WORD
+                                </Button>
+
+                                <Text style={ [ styles.text, styles.instructionsText ] }>
+                                    You can always add new words by tapping the ⊕ icon at the bottom of this screen.
                                 </Text>
                             </Layout>
                         }
@@ -346,17 +359,22 @@ export default () => {
                         { view === 'INFO' &&
                             <>
                                 <Button
-                                    title='Fill Wallet with Demo Words'
                                     onPress={ () => storeData( DEMO_WORDS ) }
-                                />
+                                >
+                                    Fill Wallet with Demo Words
+                                </Button>
+                                <Divider />
                                 <Button
-                                    title='Wipe Everything'
                                     onPress={ () => storeData( [] ) }
-                                />
+                                >
+                                    Wipe Wallet
+                                </Button>
+                                <Divider />
                                 <Button
-                                    title='Wipe Deck'
                                     onPress={ () => storeDeckData( [], 0, 'All Words' ) }
-                                />
+                                >
+                                    Wipe Deck
+                                </Button>
                             </>
                         }
                     </Layout>

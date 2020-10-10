@@ -8,6 +8,8 @@ import { View } from 'react-native';
 import FlipCard from 'react-native-flip-card';
 import { DECK_SIZE_DATA, getArticle, TWordsFreshnessValues, WORDS_FRESHNESS_DATA } from '../utils/utils';
 
+import { AddWordIcon } from '../App';
+
 type TRenderCardProps = {
     item: any,
     index: number
@@ -16,6 +18,7 @@ type TRenderCardProps = {
 type TCardsProps = {
     deck: TWords;
     cardsView: string,
+    setView: Dispatch<SetStateAction<string>>
     setCardsView: Dispatch<SetStateAction<string>>
     storeDeckData: ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ) => void;
 }
@@ -76,7 +79,7 @@ export const Cards = ( props: TCardsProps ) => {
 
     const carouselRef = useRef( null );
 
-    const { deck, cardsView, setCardsView, storeDeckData } = props;
+    const { deck, cardsView, setView, setCardsView, storeDeckData } = props;
 
     const goToDeck = () => {
         setCardsView( 'cards' );
@@ -119,15 +122,25 @@ export const Cards = ( props: TCardsProps ) => {
         return (
             <Layout level='1' style={ styles.instructions }>
 
-                <Text style={ [ styles.text, styles.titleText ] } category='h4'>Cards view</Text>
+                <Text style={ [ styles.text, styles.titleText ] } category='h4'>Training mode</Text>
 
                 <Text style={ [ styles.text, styles.instructionsText ] }>
-                    Cards view allows you to train your vocabulary by swiping cards and flipping them to check the translation.
+                    Training mode allows you to train your vocabulary by swiping cards and flipping them to check the correct translation.
+                    { '\n' } { '\n' }
+                    A card deck is randomly generated with words coming from your words wallet.
                 </Text>
 
-                <Text style={ [ styles.text, styles.instructionsText, styles.instructionsTextExtraBlock  ] }>
-                    A deck is randomly generated with words coming from your words wallet.
-                </Text>
+                { wordsWallet.length === 0 &&
+                    <>
+                        <Text style={ [ styles.text, styles.instructionsText ] }>
+                            To start, you first need to add some words into your wallet.
+                        </Text>
+
+                        <Button onPress={ () => setView( 'ADD' ) } style={ styles.ctaButton } accessoryLeft={ AddWordIcon }>
+                            ADD YOUR FIRST WORD
+                        </Button>
+                    </>
+                }
 
                 { deck.length > 1 &&
                     <>
@@ -138,43 +151,46 @@ export const Cards = ( props: TCardsProps ) => {
                         <Divider style={ styles.commonDivider } />
                     </>
                 }
+                { wordsWallet.length > 0 &&
+                    <>
+                        <Text style={ [ styles.text, styles.sectionLabel ] } category='label'>DECK SETTINGS</Text>
 
-                <Text style={ [ styles.text, styles.sectionLabel ] } category='label'>DECK SETTINGS</Text>
+                        <Layout style={ styles.rowContainer } level='1'>
 
-                <Layout style={ styles.rowContainer } level='1'>
+                            <Text style={ styles.labelText }>Max n. of cards:</Text>
 
-                    <Text style={ styles.labelText }>Max n. of cards:</Text>
+                            <Select
+                                style={ [ styles.select, styles.smallSelect ] }
+                                value={ displayDeckSizeValue }
+                                selectedIndex={ selectedDeckSizeIndex }
+                                onSelect={ index => setSelectedDeckSizeIndex( index as any ) }
+                            >
+                                { DECK_SIZE_DATA.map( ( title, k ) => renderSizeOption( title, k ) ) }
+                            </Select>
 
-                    <Select
-                        style={ [ styles.select, styles.smallSelect ] }
-                        value={ displayDeckSizeValue }
-                        selectedIndex={ selectedDeckSizeIndex }
-                        onSelect={ index => setSelectedDeckSizeIndex( index as any ) }
-                    >
-                        { DECK_SIZE_DATA.map( ( title, k ) => renderSizeOption( title, k ) ) }
-                    </Select>
+                        </Layout>
 
-                </Layout>
+                        <Layout style={ styles.rowContainer } level='1'>
 
-                <Layout style={ styles.rowContainer } level='1'>
+                            <Text style={ styles.labelText }>Words Freshness:</Text>
 
-                    <Text style={ styles.labelText }>Words Freshness:</Text>
+                            <Select
+                                style={ [ styles.select, styles.smallSelect ] }
+                                value={ displayWordsFreshnessValue }
+                                selectedIndex={ selectedWordsFreshnessIndex }
+                                onSelect={ index => setSelectedWordsFreshnessIndex( index as any ) }
+                            >
+                                { WORDS_FRESHNESS_DATA.map( ( title, k ) => renderSizeOption( title, k ) ) }
+                            </Select>
 
-                    <Select
-                        style={ [ styles.select, styles.smallSelect ] }
-                        value={ displayWordsFreshnessValue }
-                        selectedIndex={ selectedWordsFreshnessIndex }
-                        onSelect={ index => setSelectedWordsFreshnessIndex( index as any ) }
-                    >
-                        { WORDS_FRESHNESS_DATA.map( ( title, k ) => renderSizeOption( title, k ) ) }
-                    </Select>
-
-                </Layout>
+                        </Layout>
 
 
-                <Button onPress={ () => generateNewDeck( parseInt( DECK_SIZE_DATA[ selectedDeckSizeIndex.row ], 10 ), WORDS_FRESHNESS_DATA[ selectedWordsFreshnessIndex.row ] ) } style={ styles.ctaButton } accessoryLeft={ ShuffleIcon }>
-                    GENERATE NEW DECK
-                </Button>
+                        <Button onPress={ () => generateNewDeck( parseInt( DECK_SIZE_DATA[ selectedDeckSizeIndex.row ], 10 ), WORDS_FRESHNESS_DATA[ selectedWordsFreshnessIndex.row ] ) } style={ styles.ctaButton } accessoryLeft={ ShuffleIcon }>
+                            GENERATE NEW DECK
+                        </Button>
+                    </>
+                }
             </Layout>
         );
     }
