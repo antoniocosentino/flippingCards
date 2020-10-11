@@ -125,8 +125,12 @@ export default () => {
 
             if ( value !== null ) {
                 setWordsWallet( JSON.parse( value ) );
-                setHasFetchedWallet( true );
             }
+
+            // this needs to be executed anyway
+            // otherwise you will have an empty screen on first load
+            setHasFetchedWallet( true );
+
         } catch ( e ) {
             // error reading value
         }
