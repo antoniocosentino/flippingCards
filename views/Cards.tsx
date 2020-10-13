@@ -1,5 +1,5 @@
 import React, { useRef, Dispatch, SetStateAction, useContext, useState } from 'react';
-import { Text, Icon, Button, IndexPath, Layout, IconProps, TopNavigation, TopNavigationAction, Divider, Select, SelectItem } from '@ui-kitten/components';
+import { Text, Icon, Button, IndexPath, Layout, IconProps, Divider, Select, SelectItem } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
 import Carousel from 'react-native-snap-carousel';
 import { AppContext, TWords, TWordsWallet } from '../App';
@@ -84,21 +84,6 @@ export const Cards = ( props: TCardsProps ) => {
     const goToDeck = () => {
         setCardsView( 'cards' );
     };
-
-    const goToMainPage = () => {
-        setCardsView( 'instructions' );
-    };
-
-    const SettingsIcon = ( settingsIconProps: IconProps ) => (
-        <Icon { ...settingsIconProps } name='settings-2-outline'/>
-    );
-
-    const BackAction = () => (
-        <TopNavigationAction
-            onPress={ goToMainPage }
-            icon={ SettingsIcon }
-        />
-    );
 
     const appData = useContext( AppContext );
     const { wordsWallet } = appData;
@@ -200,11 +185,6 @@ export const Cards = ( props: TCardsProps ) => {
 
     return (
         <>
-            <TopNavigation
-                style={ styles.cardsTopNav }
-                accessoryLeft={ BackAction }
-                title='Deck Options'
-            />
             <View
                 style={ styles.sliderWrapper }
                 onLayout={ ( event ) => {

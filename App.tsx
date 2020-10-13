@@ -7,7 +7,10 @@ import {
     Icon,
     Text,
     Button,
-    IconProps, Divider
+    IconProps,
+    TopNavigation,
+    TopNavigationAction,
+    Divider
 } from '@ui-kitten/components';
 
 import { debounce } from 'lodash';
@@ -197,12 +200,6 @@ export default () => {
         addSingleWord
     };
 
-    const showTopSpacer =
-        ( view === 'LIST' && wordsWallet.length === 0 ) ||
-        ( view === 'CARDS' && cardsView === 'instructions' ) ||
-        view === 'PLAY' ||
-        view === 'INFO';
-
     // database stuff
 
     const [ addSearch, setAddSearch ] = React.useState( '' );
@@ -274,55 +271,83 @@ export default () => {
         );
     };
 
+    const goToMainPage = () => {
+        setCardsView( 'instructions' );
+    };
+
+    const SettingsIcon = ( settingsIconProps: IconProps ) => (
+        <Icon { ...settingsIconProps } name='settings-2-outline'/>
+    );
+
+    const BackAction = () => (
+        <TopNavigationAction
+            onPress={ goToMainPage }
+            icon={ SettingsIcon }
+        />
+    );
+
     return (
         <>
             <IconRegistry icons={ EvaIconsPack } />
             <ApplicationProvider { ...eva } theme={ customTheme }>
                 <AppContext.Provider value={ appData }>
-                    { view === 'LIST' && hasFetchedWallet && wordsWallet.length > 0 &&
-                        <Layout style={ styles.topSearch }>
-                            <Input
-                                style={ styles.topSearchInput }
-                                placeholder='Search'
-                                value={ searchValue }
-                                onChangeText={ nextValue => setSearchValue( nextValue ) }
-                                size={ 'small' }
-                            />
-                        </Layout>
-                    }
-                    { view === 'ADD' &&
-                        <Layout style={ styles.addBar }>
-                            <Layout style={ styles.addBarLeft }>
-                                <Icon
-                                    onPress={ () => setView( 'LIST' )  }
-                                    width={ 30 }
-                                    height={ 30 }
-                                    fill='#fff'
-                                    name={ 'close' }
-                                />
-                            </Layout>
-                            <Layout style={ styles.addBarRight }>
+
+
+                    <Layout style={ [
+                        styles.topContainer,
+                        view === 'ADD' && styles.coloredTopContainer
+                    ] }>
+
+                        { view === 'LIST' && hasFetchedWallet && wordsWallet.length > 0 &&
+                            <Layout style={ styles.transparentLayout } >
                                 <Input
-                                    autoFocus={ true }
-                                    autoCorrect={ false }
-                                    style={ styles.addWordInput }
-                                    placeholder='Type the word you want to enter'
-                                    value={ addSearch }
-                                    onChangeText={ nextValue => setAddSearchWrapper( nextValue ) }
-                                    size={ 'large' }
-                                    accessoryRight={ renderCloseIcon }
+                                    style={ styles.topSearchInput }
+                                    placeholder='Search'
+                                    value={ searchValue }
+                                    onChangeText={ nextValue => setSearchValue( nextValue ) }
+                                    size={ 'small' }
                                 />
                             </Layout>
-                        </Layout>
-                    }
-                    { showTopSpacer &&
-                        <Layout style={ styles.topSpacer } />
-                    }
+                        }
+
+                        { view === 'ADD' &&
+                            <Layout style={ styles.addBar }>
+                                <Layout style={ styles.addBarLeft }>
+                                    <Icon
+                                        onPress={ () => setView( 'LIST' )  }
+                                        width={ 30 }
+                                        height={ 30 }
+                                        fill='#fff'
+                                        name={ 'close' }
+                                    />
+                                </Layout>
+                                <Layout style={ styles.addBarRight }>
+                                    <Input
+                                        autoFocus={ true }
+                                        autoCorrect={ false }
+                                        style={ styles.addWordInput }
+                                        placeholder='Type the word you want to enter'
+                                        value={ addSearch }
+                                        onChangeText={ nextValue => setAddSearchWrapper( nextValue ) }
+                                        size={ 'large' }
+                                        accessoryRight={ renderCloseIcon }
+                                    />
+                                </Layout>
+                            </Layout>
+                        }
+
+                        { view === 'CARDS' && cardsView === 'cards' &&
+                            <TopNavigation
+                                style={ styles.cardsTopNav }
+                                accessoryLeft={ BackAction }
+                                title='Deck Options'
+                            />
+                        }
+                    </Layout>
+
                     <Layout style={
                         [
-                            styles.mainBlock,
-                            view === 'ADD' && styles.mainBlockShorter,
-                            view === 'CARDS' && cardsView === 'cards' && styles.mainBlockLonger
+                            styles.mainBlock
                         ]
                     }>
                         { view === 'CARDS' &&

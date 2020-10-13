@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { isAndroid } from '../utils/utils';
+//import { isAndroid } from '../utils/utils';
 
 const inputGlobalStyles = {
     width: '91%',
@@ -19,9 +19,17 @@ const customFontRegular = 'Nunito-Regular';
 const customFontBold = 'Nunito-SemiBold';
 
 export const styles = StyleSheet.create( {
-    topSearch: {
-        flex: isAndroid ? 1 : 1.5,
+    topContainer: {
+        flex: 1,
+        paddingTop: 20, //TODO: this should be device specific,
+        paddingBottom: 10,
         justifyContent: 'flex-end'
+    },
+    coloredTopContainer: {
+        backgroundColor: mainColor
+    },
+    transparentLayout: {
+        backgroundColor: 'transparent'
     },
     select: {
         flex: 1,
@@ -49,10 +57,9 @@ export const styles = StyleSheet.create( {
         marginBottom: 10
     },
     addBar: {
-        backgroundColor: mainColor,
-        paddingTop: isAndroid ? 30 : 40,
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        top: 7
     },
     addBarLeft: {
         backgroundColor: mainColor,
@@ -63,36 +70,25 @@ export const styles = StyleSheet.create( {
     },
     addBarRight: {
         backgroundColor: mainColor,
-        flex: 18,
-        paddingTop: 20
+        flex: 18
     },
     addWordInput: {
         ...inputGlobalStyles,
-        borderRadius: 21,
-        marginBottom: 14
-    },
-    topSpacer: {
-        flex: isAndroid ? 1 : 1
+        borderRadius: 17
     },
     topSearchInput: {
         ...inputGlobalStyles
     },
     mainBlock: {
-        flex: isAndroid ? 9.5 : 9,
+        flex: 10.5,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginTop: 10,
+        marginTop: 0,
         overflow: 'scroll'
     },
     walletInstructions: {
         paddingLeft: 30,
         paddingRight: 30
-    },
-    mainBlockShorter: {
-        flex: 8.5
-    },
-    mainBlockLonger: {
-        flex: 10.5
     },
     bottomZone: {
         flex: 1.5,
@@ -265,7 +261,7 @@ export const styles = StyleSheet.create( {
         fontFamily: customFontRegular
     },
     cardsTopNav: {
-        marginTop: isAndroid ? 0 : 40,
+        marginTop: 40,
         fontFamily: customFontRegular
     },
     firstSlideText: {
