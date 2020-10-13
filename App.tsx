@@ -8,8 +8,6 @@ import {
     Text,
     Button,
     IconProps,
-    TopNavigation,
-    TopNavigationAction,
     Divider
 } from '@ui-kitten/components';
 
@@ -276,14 +274,7 @@ export default () => {
     };
 
     const SettingsIcon = ( settingsIconProps: IconProps ) => (
-        <Icon { ...settingsIconProps } name='settings-2-outline'/>
-    );
-
-    const BackAction = () => (
-        <TopNavigationAction
-            onPress={ goToMainPage }
-            icon={ SettingsIcon }
-        />
+        <Icon { ...settingsIconProps } width={ 22 } height={ 22 } fill='#000' name='settings-2-outline'/>
     );
 
     return (
@@ -329,7 +320,7 @@ export default () => {
                                         placeholder='Type the word you want to enter'
                                         value={ addSearch }
                                         onChangeText={ nextValue => setAddSearchWrapper( nextValue ) }
-                                        size={ 'large' }
+                                        size={ 'medium' }
                                         accessoryRight={ renderCloseIcon }
                                     />
                                 </Layout>
@@ -337,11 +328,13 @@ export default () => {
                         }
 
                         { view === 'CARDS' && cardsView === 'cards' &&
-                            <TopNavigation
-                                style={ styles.cardsTopNav }
-                                accessoryLeft={ BackAction }
-                                title='Deck Options'
-                            />
+                            <Layout
+                                style={ styles.cardsTopNav }>
+                                <Text onPress={ goToMainPage } style={ styles.text } >
+                                    <SettingsIcon style={ styles.cardsTopIcon } />
+                                    Configure Deck
+                                </Text>
+                            </Layout>
                         }
                     </Layout>
 

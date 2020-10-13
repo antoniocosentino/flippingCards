@@ -20,7 +20,7 @@ const customFontBold = 'Nunito-SemiBold';
 
 export const styles = StyleSheet.create( {
     topContainer: {
-        flex: 1,
+        flex: 1.2,
         paddingTop: 20, //TODO: this should be device specific,
         paddingBottom: 10,
         justifyContent: 'flex-end'
@@ -59,14 +59,14 @@ export const styles = StyleSheet.create( {
     addBar: {
         display: 'flex',
         flexDirection: 'row',
-        top: 7
+        top: 3
     },
     addBarLeft: {
         backgroundColor: mainColor,
         flex: 1.5,
         justifyContent: 'center',
-        paddingLeft: 10
-
+        paddingLeft: 10,
+        paddingBottom: 5
     },
     addBarRight: {
         backgroundColor: mainColor,
@@ -74,13 +74,13 @@ export const styles = StyleSheet.create( {
     },
     addWordInput: {
         ...inputGlobalStyles,
-        borderRadius: 17
+        borderRadius: 18
     },
     topSearchInput: {
         ...inputGlobalStyles
     },
     mainBlock: {
-        flex: 10.5,
+        flex: 10,
         justifyContent: 'flex-start',
         alignItems: 'center',
         marginTop: 0,
@@ -91,7 +91,7 @@ export const styles = StyleSheet.create( {
         paddingRight: 30
     },
     bottomZone: {
-        flex: 1.5,
+        flex: 1.6,
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
@@ -261,8 +261,15 @@ export const styles = StyleSheet.create( {
         fontFamily: customFontRegular
     },
     cardsTopNav: {
-        marginTop: 40,
-        fontFamily: customFontRegular
+        paddingLeft: 20,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        top: -10
+    },
+    cardsTopIcon: {
+        top: 2,
+        marginRight: 6
     },
     firstSlideText: {
         fontSize: 16,
