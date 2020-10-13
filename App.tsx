@@ -274,7 +274,7 @@ export default () => {
     };
 
     const SettingsIcon = ( settingsIconProps: IconProps ) => (
-        <Icon { ...settingsIconProps } width={ 22 } height={ 22 } fill='#000' name='settings-2-outline'/>
+        <Icon { ...settingsIconProps } width={ 22 } height={ 22 } fill='#333' name='settings-2-outline'/>
     );
 
     return (

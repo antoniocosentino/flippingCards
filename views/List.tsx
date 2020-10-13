@@ -10,7 +10,7 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 import { getArticle } from '../utils/utils';
 
 
-export const DeleteIcon = ( props: IconProps ) => <Icon { ...props } fill='crimson'  width={ 32 } height={ 32 } name='trash-2-outline' />;
+export const DeleteIcon = ( props: IconProps ) => <Icon { ...props } fill='#333'  width={ 32 } height={ 32 } name='trash-2-outline' />;
 
 export const List = () => {
 
