@@ -24,6 +24,7 @@ import { SearchResults } from './components/SearchResults';
 import { removeArticle, getShuffledCards, TWordsFreshnessValues } from './utils/utils';
 import { Cards } from './views/Cards';
 import { customTheme } from './utils/customTheme';
+import { ChallengeMode } from './views/ChallengeMode';
 
 const SQLite = require( 'react-native-sqlite-storage' );
 
@@ -354,6 +355,10 @@ export default () => {
                         }
                         { view === 'LIST' && wordsWallet.length > 0 &&
                             <List />
+                        }
+
+                        { view === 'PLAY' &&
+                            <ChallengeMode />
                         }
 
                         { view === 'LIST' && hasFetchedWallet && wordsWallet.length === 0 &&
