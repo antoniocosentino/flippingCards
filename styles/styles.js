@@ -25,6 +25,11 @@ export const styles = StyleSheet.create( {
         paddingBottom: 10,
         justifyContent: 'flex-end'
     },
+    centeredElement: {
+        width: '80%',
+        marginLeft: '10%',
+        marginRight: '10%'
+    },
     coloredTopContainer: {
         backgroundColor: mainColor
     },
