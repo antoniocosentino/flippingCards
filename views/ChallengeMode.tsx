@@ -6,7 +6,7 @@ import { Image } from 'react-native';
 export const ChallengeMode = () => {
     return (
         <Layout>
-            <Text>this doesn't work on iOS (FML)</Text>
+            <Text>this now finally works on iOS</Text>
             <Image
                 source={ require( './../img/coming-soon.png' ) }
                 resizeMode={ 'contain' }
