@@ -386,7 +386,7 @@ export default () => {
                         }
 
                         { view === 'INFO' &&
-                            <InfoView />
+                            <InfoView setView={ setView } />
                         }
 
                         { view === 'DEBUG' &&

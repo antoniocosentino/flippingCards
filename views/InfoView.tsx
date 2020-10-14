@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import { Layout, Text, Icon, IconProps } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
@@ -7,7 +7,13 @@ const FlexiIcon = ( settingsIconProps: IconProps ) => (
     <Icon { ...settingsIconProps } width={ 22 } height={ 22 } fill='#333' />
 );
 
-export const InfoView = () => {
+type TInfoViewProps = {
+    setView: Dispatch<SetStateAction<string>>
+}
+
+export const InfoView = ( props: TInfoViewProps ) => {
+
+    const { setView } = props;
 
     return (
         <>
@@ -93,9 +99,9 @@ export const InfoView = () => {
                 style={ styles.backupDivider }
             />
 
-            <Layout style={ styles.versionBox }>
+            <Layout style={ styles.versionBox } >
                 <Text style={ [ styles.text, styles.boldText, styles.leftAlignedText, styles.biggerText ] }>1.0 Beta</Text>
-                <Text style={ [ styles.text, styles.leftAlignedText, styles.smallerText ] }>App version</Text>
+                <Text onPress={ () => setView( 'DEBUG' ) } style={ [ styles.text, styles.leftAlignedText, styles.smallerText ] }>App version</Text>
             </Layout>
         </>
     );
