@@ -25,6 +25,7 @@ import { removeArticle, getShuffledCards, TWordsFreshnessValues } from './utils/
 import { Cards } from './views/Cards';
 import { customTheme } from './utils/customTheme';
 import { ChallengeMode } from './views/ChallengeMode';
+import { InfoView } from './views/InfoView';
 
 const SQLite = require( 'react-native-sqlite-storage' );
 
@@ -70,7 +71,7 @@ export default () => {
     const [ selectedIndex, setSelectedIndex ] = React.useState( 0 );
 
     // DEFAULT VIEW IS DEFINED HERE
-    const [ view, setView ] = React.useState( 'LIST' );
+    const [ view, setView ] = React.useState( 'INFO' );
     const [ cardsView, setCardsView ] = React.useState( 'instructions' );
 
     const [ wordsWallet, setWordsWallet ] = React.useState( [] as TWordsWallet );
@@ -383,7 +384,12 @@ export default () => {
                             view === 'ADD' &&
                             <SearchResults results={ addSearchWords } />
                         }
+
                         { view === 'INFO' &&
+                            <InfoView />
+                        }
+
+                        { view === 'DEBUG' &&
                             <>
                                 <Button
                                     onPress={ () => storeData( DEMO_WORDS ) }

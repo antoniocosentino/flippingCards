@@ -61,6 +61,15 @@ export const styles = StyleSheet.create( {
         marginTop: 10,
         marginBottom: 10
     },
+    backupDivider: {
+        width: '91%',
+        marginLeft: '4.5%',
+        marginRight: '4.5%',
+        height: 1,
+        backgroundColor: '#ccc',
+        marginTop: 10,
+        marginBottom: 20
+    },
     addBar: {
         display: 'flex',
         flexDirection: 'row',
@@ -108,6 +117,22 @@ export const styles = StyleSheet.create( {
         color: '#333',
         fontFamily: customFontRegular,
         fontSize: 16.5
+    },
+    boldText: {
+        fontFamily: customFontBold,
+        fontWeight: '900'
+    },
+    biggerText: {
+        fontSize: 18
+    },
+    smallerText: {
+        fontSize: 11
+    },
+    leftAlignedText: {
+        textAlign: 'left'
+    },
+    lightText: {
+        color: '#666'
     },
     whiteText: {
         textAlign: 'center',
@@ -281,5 +306,33 @@ export const styles = StyleSheet.create( {
         fontWeight: 'normal',
         maxWidth: '90%',
         marginLeft: '5%'
+    },
+    infoContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: '91%',
+        marginLeft: '4.5%',
+        marginRight: '4.5%'
+    },
+    infoColOne: {
+        flex: 1,
+        backgroundColor: 'transparent',
+        paddingRight: 20,
+        paddingBottom: 18,
+        paddingTop: 1
+    },
+    infoColTwo: {
+        flex: 10,
+        backgroundColor: 'transparent',
+        alignItems: 'flex-start'
+    },
+    infoColThree: {
+        flex: 4,
+        backgroundColor: 'transparent'
+    },
+    versionBox: {
+        width: '91%',
+        marginLeft: '4.5%',
+        marginRight: '4.5%'
     }
 } );
