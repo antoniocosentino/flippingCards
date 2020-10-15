@@ -1,20 +1,58 @@
-import React, { Dispatch, SetStateAction } from 'react';
-
+import React, { useContext } from 'react';
+import { AppContext } from '../App';
 import { Layout, Text, Icon, IconProps } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
 import { Image } from 'react-native';
+
+import 'react-native-gesture-handler';
+
+import { createStackNavigator } from '@react-navigation/stack';
 
 const FlexiIcon = ( settingsIconProps: IconProps ) => (
     <Icon { ...settingsIconProps } width={ 22 } height={ 22 } fill='#333' />
 );
 
-type TInfoViewProps = {
-    setView: Dispatch<SetStateAction<string>>
-}
+const Stack = createStackNavigator();
 
-export const InfoView = ( props: TInfoViewProps ) => {
+export const InfoView = () => {
+    return (
+        <Layout style={ styles.stackNavigatorWrapper } >
+            <Stack.Navigator
+                screenOptions={ {
+                    cardStyle: { backgroundColor: '#fff' }
+                } }
+            >
+                <Stack.Screen
+                    name='infoMainView'
+                    component={ InfoMainView }
+                    options={ { title: '' } }
+                />
+                <Stack.Screen
+                    name='infoSecondView'
+                    component={ InfoSecondView }
+                    options={ { title: '' } }
+                />
+            </Stack.Navigator>
+        </Layout>
+    );
+};
 
-    const { setView } = props;
+
+const InfoSecondView = () => {
+
+    return (
+        <Layout>
+            <Text style={ styles.text }>some stuff will go here</Text>
+        </Layout>
+    );
+};
+
+const InfoMainView = ( props: any ) => { // TODO: types
+
+    const { navigation } = props;
+
+    const appData = useContext( AppContext );
+    const { setView } = appData;
 
     return (
         <>
@@ -88,7 +126,12 @@ export const InfoView = ( props: TInfoViewProps ) => {
                 </Layout>
 
                 <Layout style={ styles.infoColTwo }>
-                    <Text style={ [ styles.text, styles.boldText, styles.biggerText ] }>App info</Text>
+                    <Text
+                        style={ [ styles.text, styles.boldText, styles.biggerText ] }
+                        onPress={ () => navigation.navigate( 'infoSecondView' ) }
+                    >
+                        App info
+                    </Text>
                 </Layout>
 
                 <Layout style={ styles.infoColThree } />

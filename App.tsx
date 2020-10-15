@@ -28,6 +28,8 @@ import { ChallengeMode } from './views/ChallengeMode';
 import { InfoView } from './views/InfoView';
 import { ImageRenderer } from './views/ImageRenderer';
 
+import { NavigationContainer } from '@react-navigation/native';
+
 import SafeArea, { SafeAreaInsets } from 'react-native-safe-area';
 
 const SQLite = require( 'react-native-sqlite-storage' );
@@ -64,6 +66,7 @@ type TAppData = {
     onMenuClick: ( index: number ) => void,
     storeData: ( value: TWordsWallet ) => void
     addSingleWord: ( word: TSingleWord ) => void
+    setView: ( view: string ) => void
 };
 
 export type TSearchWords = TWords;
@@ -208,7 +211,8 @@ export default () => {
         selectedIndex,
         onMenuClick,
         storeData,
-        addSingleWord
+        addSingleWord,
+        setView
     };
 
     // database stuff
@@ -291,7 +295,7 @@ export default () => {
     );
 
     return (
-        <>
+        <NavigationContainer>
             <IconRegistry icons={ EvaIconsPack } />
             <ApplicationProvider { ...eva } theme={ customTheme }>
                 <AppContext.Provider value={ appData }>
@@ -400,7 +404,7 @@ export default () => {
                         }
 
                         { view === 'INFO' &&
-                            <InfoView setView={ setView } />
+                            <InfoView />
                         }
 
                         { view === 'DEBUG' &&
@@ -430,6 +434,6 @@ export default () => {
                     </Layout>
                 </AppContext.Provider>
             </ApplicationProvider>
-        </>
+        </NavigationContainer>
     );
 };

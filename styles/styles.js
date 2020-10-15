@@ -355,8 +355,11 @@ export const styles = StyleSheet.create( {
         height: undefined
     },
     iconImage: {
-        flex: 1,
         width: 100,
         height: 100
+    },
+    stackNavigatorWrapper: {
+        width: '100%',
+        flex: 1
     }
 } );
