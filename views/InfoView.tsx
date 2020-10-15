@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 
 import { Layout, Text, Icon, IconProps } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
+import { Image } from 'react-native';
 
 const FlexiIcon = ( settingsIconProps: IconProps ) => (
     <Icon { ...settingsIconProps } width={ 22 } height={ 22 } fill='#333' />
@@ -17,6 +18,26 @@ export const InfoView = ( props: TInfoViewProps ) => {
 
     return (
         <>
+            <Layout
+                style={ styles.centeredElement }
+            >
+                <Image
+                    source={ require( './../img/icon.png' ) }
+                    style={ styles.iconImage }
+                />
+                <Text style={ [ styles.text, styles.boldText, styles.biggerText, styles.textWithTopMargin ] }>
+                    Flipping Cards
+                </Text>
+
+                <Text style={ [ styles.text, styles.smallerText ] }>
+                    Antonio Cosentino © 2020
+                </Text>
+            </Layout>
+
+            <Layout
+                style={ styles.verticalSpacer }
+            />
+
             <Layout
                 style={ styles.infoContainer }
             >
@@ -49,6 +70,12 @@ export const InfoView = ( props: TInfoViewProps ) => {
                 </Layout>
             </Layout>
 
+            <Layout style={ styles.versionBox } >
+                <Text style={ [ styles.text, styles.leftAlignedText, styles.smallerText ] }>
+                    Flipping Cards is currently only available with German dictionary and English translation.
+                </Text>
+            </Layout>
+
             <Layout
                 style={ styles.backupDivider }
             />
@@ -75,21 +102,7 @@ export const InfoView = ( props: TInfoViewProps ) => {
                 </Layout>
 
                 <Layout style={ styles.infoColTwo }>
-                    <Text style={ [ styles.text, styles.boldText, styles.biggerText ] }>Source Code</Text>
-                </Layout>
-
-                <Layout style={ styles.infoColThree } />
-            </Layout>
-
-            <Layout
-                style={ styles.infoContainer }
-            >
-                <Layout style={ styles.infoColOne }>
-                    <FlexiIcon name='code-outline' />
-                </Layout>
-
-                <Layout style={ styles.infoColTwo }>
-                    <Text style={ [ styles.text, styles.boldText, styles.biggerText ] }>External Libraries</Text>
+                    <Text style={ [ styles.text, styles.boldText, styles.biggerText ] }>App Homepage</Text>
                 </Layout>
 
                 <Layout style={ styles.infoColThree } />

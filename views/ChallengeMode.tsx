@@ -6,7 +6,7 @@ import { styles } from '../styles/styles';
 
 export const ChallengeMode = () => {
 
-    const [ layoutWidth, setWidth ] = useState( 0 );
+    const [ layoutWidth, setWidth ] = useState( 300 );
 
     return (
         <Layout
@@ -18,17 +18,17 @@ export const ChallengeMode = () => {
         >
             <Text style={ [ styles.text, styles.titleText ] } category='h4'>Challenge mode</Text>
             <Image
-                source={ require( './../img/coming-soon.png' ) }
+                source={ require( './../img/work-in-progress.jpg' ) }
                 resizeMode={ 'contain' }
                 style={ {
                     width: layoutWidth,
-                    height: layoutWidth / 1.165
+                    height: layoutWidth
                 } }
             />
             <Text style={ [ styles.text, styles.instructionsText ] }>
                 Challenge mode will allow you to test your vocabulary with word quizzes.
                 { '\n' } { '\n' }
-                This feature is currently on development and will come with the next release of Flipping Cards.
+                This feature is currently under development and will come with the next release of Flipping Cards.
             </Text>
         </Layout>
     );

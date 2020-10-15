@@ -26,6 +26,9 @@ import { Cards } from './views/Cards';
 import { customTheme } from './utils/customTheme';
 import { ChallengeMode } from './views/ChallengeMode';
 import { InfoView } from './views/InfoView';
+import { ImageRenderer } from './views/ImageRenderer';
+
+import SafeArea, { SafeAreaInsets } from 'react-native-safe-area';
 
 const SQLite = require( 'react-native-sqlite-storage' );
 
@@ -71,17 +74,25 @@ export default () => {
     const [ selectedIndex, setSelectedIndex ] = React.useState( 0 );
 
     // DEFAULT VIEW IS DEFINED HERE
-    const [ view, setView ] = React.useState( 'INFO' );
+    const [ view, setView ] = React.useState( 'LIST' );
     const [ cardsView, setCardsView ] = React.useState( 'instructions' );
 
     const [ wordsWallet, setWordsWallet ] = React.useState( [] as TWordsWallet );
 
     const [ hasFetchedWallet, setHasFetchedWallet ] = React.useState( false );
 
+    const [ deviceNotchSize, setDeviceNotchSize ] = React.useState( 0 );
+
     useEffect( () => {
         setAddSearchWords( [] );
         setAddSearch( '' );
     }, [ view ] );
+
+    SafeArea.getSafeAreaInsetsForRootView()
+        .then( ( result: any ) => {
+            const safeAreaInsets: SafeAreaInsets = result.safeAreaInsets;
+            setDeviceNotchSize( safeAreaInsets.bottom );
+        } );
 
     const [ isDataUpdated, setDataUpdated ] = React.useState( false );
     const [ isDeckDataUpdated, setDeckDataUpdated ] = React.useState( false );
@@ -288,6 +299,7 @@ export default () => {
 
                     <Layout style={ [
                         styles.topContainer,
+                        deviceNotchSize > 0 ? styles['topContainer--withNotch'] : null,
                         view === 'ADD' && styles.coloredTopContainer
                     ] }>
 
@@ -370,11 +382,13 @@ export default () => {
                                     This is your wallet view. All the words that you add in your wallet will show up here.
                                 </Text>
 
+                                <ImageRenderer image={ 'start' } />
+
                                 <Button onPress={ () => setView( 'ADD' ) } style={ styles.ctaButton } accessoryLeft={ AddWordIcon }>
                                     ADD YOUR FIRST WORD
                                 </Button>
 
-                                <Text style={ [ styles.text, styles.instructionsText ] }>
+                                <Text style={ [ styles.text, styles.instructionsText, styles.smallerText ] }>
                                     You can always add new words by tapping the + icon at the bottom of this screen.
                                 </Text>
                             </Layout>

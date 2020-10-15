@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-//import { isAndroid } from '../utils/utils';
+import { isAndroid } from '../utils/utils';
 
 const inputGlobalStyles = {
     width: '91%',
@@ -21,14 +21,17 @@ const customFontBold = 'Nunito-SemiBold';
 export const styles = StyleSheet.create( {
     topContainer: {
         flex: 1.2,
-        paddingTop: 20, //TODO: this should be device specific,
         paddingBottom: 10,
         justifyContent: 'flex-end'
+    },
+    'topContainer--withNotch': {
+        paddingTop: 20
     },
     centeredElement: {
         width: '80%',
         marginLeft: '10%',
-        marginRight: '10%'
+        marginRight: '10%',
+        alignItems: 'center'
     },
     coloredTopContainer: {
         backgroundColor: mainColor
@@ -60,6 +63,11 @@ export const styles = StyleSheet.create( {
     commonDivider: {
         marginTop: 10,
         marginBottom: 10
+    },
+    verticalSpacer: {
+        marginTop: 10,
+        marginBottom: 10,
+        height: 20
     },
     backupDivider: {
         width: '91%',
@@ -94,7 +102,7 @@ export const styles = StyleSheet.create( {
         ...inputGlobalStyles
     },
     mainBlock: {
-        flex: 10,
+        flex: isAndroid ? 13 : 10,
         justifyContent: 'flex-start',
         alignItems: 'center',
         marginTop: 0,
@@ -126,13 +134,19 @@ export const styles = StyleSheet.create( {
         fontSize: 18
     },
     smallerText: {
-        fontSize: 11
+        fontSize: 13
     },
     leftAlignedText: {
         textAlign: 'left'
     },
+    centeredText: {
+        textAlign: 'center'
+    },
     lightText: {
         color: '#666'
+    },
+    textWithTopMargin: {
+        marginTop: 10
     },
     whiteText: {
         textAlign: 'center',
@@ -298,7 +312,7 @@ export const styles = StyleSheet.create( {
         top: -10
     },
     cardsTopIcon: {
-        top: 2,
+        top: isAndroid ? 5 : 2,
         marginRight: 6
     },
     firstSlideText: {
@@ -319,7 +333,7 @@ export const styles = StyleSheet.create( {
         backgroundColor: 'transparent',
         paddingRight: 20,
         paddingBottom: 18,
-        paddingTop: 1
+        paddingTop: 1.3
     },
     infoColTwo: {
         flex: 10,
@@ -334,5 +348,15 @@ export const styles = StyleSheet.create( {
         width: '91%',
         marginLeft: '4.5%',
         marginRight: '4.5%'
+    },
+    imageRenderer: {
+        flex: 1,
+        width: undefined,
+        height: undefined
+    },
+    iconImage: {
+        flex: 1,
+        width: 100,
+        height: 100
     }
 } );
