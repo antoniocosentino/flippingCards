@@ -25,12 +25,22 @@ export const InfoView = () => {
                 <Stack.Screen
                     name='infoMainView'
                     component={ InfoMainView }
-                    options={ { title: '' } }
+                    options={ {
+                        title: '',
+                        headerStyle: {
+                            shadowColor: 'transparent'
+                        }
+                    } }
                 />
                 <Stack.Screen
                     name='infoSecondView'
                     component={ InfoSecondView }
-                    options={ { title: '' } }
+                    options={ {
+                        title: 'App Info',
+                        headerStyle: {
+                            shadowColor: 'transparent'
+                        }
+                    } }
                 />
             </Stack.Navigator>
         </Layout>

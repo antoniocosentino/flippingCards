@@ -108,6 +108,9 @@ export const styles = StyleSheet.create( {
         marginTop: 0,
         overflow: 'scroll'
     },
+    mainBlockExtraSpacer: {
+        flex: 1.7
+    },
     walletInstructions: {
         paddingLeft: 30,
         paddingRight: 30

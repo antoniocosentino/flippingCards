@@ -274,7 +274,7 @@ export default () => {
         setAddSearch( '' );
     };
 
-    const renderCloseIcon = ( props: any ) => { // TODO: types
+    const renderCloseIcon = ( props: IconProps ) => {
         if ( addSearch.length < 1 ) {
             return <></>;
         }
@@ -300,67 +300,66 @@ export default () => {
             <ApplicationProvider { ...eva } theme={ customTheme }>
                 <AppContext.Provider value={ appData }>
 
+                    { view !== 'INFO' &&
+                        // since INFO is a special page, which uses react navigation,
+                        // we can't render the top container here
+                        <Layout style={ [
+                            styles.topContainer,
+                            deviceNotchSize > 0 ? styles['topContainer--withNotch'] : null,
+                            view === 'ADD' && styles.coloredTopContainer
+                        ] }>
 
-                    <Layout style={ [
-                        styles.topContainer,
-                        deviceNotchSize > 0 ? styles['topContainer--withNotch'] : null,
-                        view === 'ADD' && styles.coloredTopContainer
-                    ] }>
-
-                        { view === 'LIST' && hasFetchedWallet && wordsWallet.length > 0 &&
-                            <Layout style={ styles.transparentLayout } >
-                                <Input
-                                    style={ styles.topSearchInput }
-                                    placeholder='Search'
-                                    value={ searchValue }
-                                    onChangeText={ nextValue => setSearchValue( nextValue ) }
-                                    size={ 'small' }
-                                />
-                            </Layout>
-                        }
-
-                        { view === 'ADD' &&
-                            <Layout style={ styles.addBar }>
-                                <Layout style={ styles.addBarLeft }>
-                                    <Icon
-                                        onPress={ () => setView( 'LIST' )  }
-                                        width={ 30 }
-                                        height={ 30 }
-                                        fill='#fff'
-                                        name={ 'close' }
-                                    />
-                                </Layout>
-                                <Layout style={ styles.addBarRight }>
+                            { view === 'LIST' && hasFetchedWallet && wordsWallet.length > 0 &&
+                                <Layout style={ styles.transparentLayout } >
                                     <Input
-                                        autoFocus={ true }
-                                        autoCorrect={ false }
-                                        style={ styles.addWordInput }
-                                        placeholder='Type the word you want to enter'
-                                        value={ addSearch }
-                                        onChangeText={ nextValue => setAddSearchWrapper( nextValue ) }
-                                        size={ 'medium' }
-                                        accessoryRight={ renderCloseIcon }
+                                        style={ styles.topSearchInput }
+                                        placeholder='Search your wallet' // TODO: make this work!
+                                        value={ searchValue }
+                                        onChangeText={ nextValue => setSearchValue( nextValue ) }
+                                        size={ 'small' }
                                     />
                                 </Layout>
-                            </Layout>
-                        }
+                            }
 
-                        { view === 'CARDS' && cardsView === 'cards' &&
-                            <Layout
-                                style={ styles.cardsTopNav }>
-                                <Text onPress={ goToMainPage } style={ styles.text } >
-                                    <SettingsIcon style={ styles.cardsTopIcon } />
-                                    Configure Deck
-                                </Text>
-                            </Layout>
-                        }
-                    </Layout>
+                            { view === 'ADD' &&
+                                <Layout style={ styles.addBar }>
+                                    <Layout style={ styles.addBarLeft }>
+                                        <Icon
+                                            onPress={ () => setView( 'LIST' )  }
+                                            width={ 30 }
+                                            height={ 30 }
+                                            fill='#fff'
+                                            name={ 'close' }
+                                        />
+                                    </Layout>
+                                    <Layout style={ styles.addBarRight }>
+                                        <Input
+                                            autoFocus={ true }
+                                            autoCorrect={ false }
+                                            style={ styles.addWordInput }
+                                            placeholder='Type the word you want to enter'
+                                            value={ addSearch }
+                                            onChangeText={ nextValue => setAddSearchWrapper( nextValue ) }
+                                            size={ 'medium' }
+                                            accessoryRight={ renderCloseIcon }
+                                        />
+                                    </Layout>
+                                </Layout>
+                            }
 
-                    <Layout style={
-                        [
-                            styles.mainBlock
-                        ]
-                    }>
+                            { view === 'CARDS' && cardsView === 'cards' &&
+                                <Layout
+                                    style={ styles.cardsTopNav }>
+                                    <Text onPress={ goToMainPage } style={ styles.text } >
+                                        <SettingsIcon style={ styles.cardsTopIcon } />
+                                        Configure Deck
+                                    </Text>
+                                </Layout>
+                            }
+                        </Layout>
+                    }
+
+                    <Layout style={ styles.mainBlock }>
                         { view === 'CARDS' &&
                             <Cards
                                 deck={ deck }
@@ -429,6 +428,11 @@ export default () => {
                             </>
                         }
                     </Layout>
+
+                    { view === 'INFO' &&
+                        <Layout style={ styles.mainBlockExtraSpacer } />
+                    }
+
                     <Layout style={ styles.bottomZone }>
                         <BottomMenu />
                     </Layout>
