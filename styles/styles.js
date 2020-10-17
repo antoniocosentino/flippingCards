@@ -161,6 +161,9 @@ export const styles = StyleSheet.create( {
         fontFamily: customFontBold,
         fontSize: 30
     },
+    linkText: {
+        textDecorationLine: 'underline'
+    },
     centeredView: {
         display: 'flex',
         flexDirection: 'row',
