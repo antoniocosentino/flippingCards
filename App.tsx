@@ -62,6 +62,7 @@ export type TWordsWallet = ReadonlyArray<TSingleWalletWord>
 
 type TAppData = {
     wordsWallet: TWordsWallet,
+    filteredWordsWallet: TWordsWallet,
     selectedIndex: number,
     onMenuClick: ( index: number ) => void,
     storeData: ( value: TWordsWallet ) => void
@@ -81,6 +82,8 @@ export default () => {
     const [ cardsView, setCardsView ] = React.useState( 'instructions' );
 
     const [ wordsWallet, setWordsWallet ] = React.useState( [] as TWordsWallet );
+
+    const [ filteredWordsWallet, setFilteredWordsWallet ] = React.useState( [] as TWordsWallet );
 
     const [ hasFetchedWallet, setHasFetchedWallet ] = React.useState( false );
 
@@ -210,6 +213,7 @@ export default () => {
 
     const appData = {
         wordsWallet,
+        filteredWordsWallet,
         selectedIndex,
         onMenuClick,
         storeData,
@@ -226,6 +230,17 @@ export default () => {
             setAddSearchWords( [] );
         }
     }, [ addSearch ] );
+
+    useEffect( () => {
+        if ( searchValue === '' ) {
+            setFilteredWordsWallet( [] );
+        } else {
+            // here I'm applying the actual filtering
+            setFilteredWordsWallet( wordsWallet.slice( 3 ) );
+        }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ searchValue ] );
 
     const [ shouldQuery, setShouldQuery ] = React.useState( false );
 
@@ -276,6 +291,10 @@ export default () => {
         setAddSearch( '' );
     };
 
+    const wipeWalletSearch = () => {
+        setSearchValue( '' );
+    };
+
     const renderCloseIcon = ( props: IconProps ) => {
         if ( addSearch.length < 1 ) {
             return <></>;
@@ -283,6 +302,18 @@ export default () => {
 
         return (
             <TouchableWithoutFeedback onPress={ wipeSearch }>
+                <Icon { ...props } width={ 22 } height={ 22 } fill='#ccc' name={ 'close-circle' } />
+            </TouchableWithoutFeedback>
+        );
+    };
+
+    const renderCloseIconForWalletSearch = ( props: IconProps ) => {
+        if ( searchValue.length < 1 ) {
+            return <></>;
+        }
+
+        return (
+            <TouchableWithoutFeedback onPress={ wipeWalletSearch }>
                 <Icon { ...props } width={ 22 } height={ 22 } fill='#ccc' name={ 'close-circle' } />
             </TouchableWithoutFeedback>
         );
@@ -319,6 +350,7 @@ export default () => {
                                         value={ searchValue }
                                         onChangeText={ nextValue => setSearchValue( nextValue ) }
                                         size={ 'small' }
+                                        accessoryRight={ renderCloseIconForWalletSearch }
                                     />
                                 </Layout>
                             }
