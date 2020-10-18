@@ -118,7 +118,7 @@ export const styles = StyleSheet.create( {
         alignItems: 'center'
     },
     'bottomZone--specialCase': {
-        flex: 1.4
+        flex: 1.365
     },
     bottomWrapper: {
         paddingTop: 16
