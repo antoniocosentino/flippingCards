@@ -25,7 +25,7 @@ export const styles = StyleSheet.create( {
         justifyContent: 'flex-end'
     },
     'topContainer--withNotch': {
-        paddingTop: 20
+        paddingTop: 10
     },
     centeredElement: {
         width: '80%',
