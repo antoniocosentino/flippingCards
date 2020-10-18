@@ -108,9 +108,6 @@ export const styles = StyleSheet.create( {
         marginTop: 0,
         overflow: 'scroll'
     },
-    mainBlockExtraSpacer: {
-        flex: 1.7
-    },
     walletInstructions: {
         paddingLeft: 30,
         paddingRight: 30
@@ -119,6 +116,9 @@ export const styles = StyleSheet.create( {
         flex: 1.6,
         justifyContent: 'flex-start',
         alignItems: 'center'
+    },
+    'bottomZone--specialCase': {
+        flex: 1.4
     },
     bottomWrapper: {
         paddingTop: 16

@@ -52,10 +52,9 @@ const InfoSecondView = () => {
 
     return (
         <>
-            <Layout style={ styles.verticalSpacer } />
             <Layout style={ styles.infoContainer }>
                 <Text style={ [ styles.text, styles.leftAlignedText, styles.smallerText ] }>
-                    { '\n\n' }
+                    { '\n\n\n' }
                     Flipping Cards is an iOS/Android app that allows you to learn words faster, with the Flash Cards method.
                     { '\n\n' }
                     <Text style={ [ styles.boldText ] }>App Development, UI/UX, Icon Design:</Text>

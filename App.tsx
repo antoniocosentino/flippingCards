@@ -390,10 +390,6 @@ export default () => {
                                 <Button onPress={ () => setView( 'ADD' ) } style={ styles.ctaButton } accessoryLeft={ AddWordIcon }>
                                     ADD YOUR FIRST WORD
                                 </Button>
-
-                                <Text style={ [ styles.text, styles.instructionsText, styles.smallerText ] }>
-                                    You can always add new words by tapping the + icon at the bottom of this screen.
-                                </Text>
                             </Layout>
                         }
 
@@ -429,11 +425,12 @@ export default () => {
                         }
                     </Layout>
 
-                    { view === 'INFO' &&
-                        <Layout style={ styles.mainBlockExtraSpacer } />
-                    }
-
-                    <Layout style={ styles.bottomZone }>
+                    <Layout
+                        style={ [
+                            styles.bottomZone,
+                            view === 'INFO' && styles['bottomZone--specialCase']
+                        ] }
+                    >
                         <BottomMenu />
                     </Layout>
                 </AppContext.Provider>
