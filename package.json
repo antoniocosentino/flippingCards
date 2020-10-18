@@ -22,6 +22,7 @@
     "@ui-kitten/eva-icons": "5.0.0",
     "babel-plugin-inline-import": "^3.0.0",
     "eslint-config-prettier": "^6.11.0",
+    "fuse.js": "^6.4.1",
     "lodash": "^4.17.19",
     "react": "16.11.0",
     "react-native": "0.63.2",

@@ -32,6 +32,8 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import SafeArea, { SafeAreaInsets } from 'react-native-safe-area';
 
+import Fuse from 'fuse.js';
+
 const SQLite = require( 'react-native-sqlite-storage' );
 
 const okCallback = () => {
@@ -84,6 +86,11 @@ export default () => {
     const [ wordsWallet, setWordsWallet ] = React.useState( [] as TWordsWallet );
 
     const [ filteredWordsWallet, setFilteredWordsWallet ] = React.useState( [] as TWordsWallet );
+
+    const walletFuseInstance = new Fuse( wordsWallet, {
+        keys: ['de', 'en'],
+        threshold: 0.2
+    } );
 
     const [ hasFetchedWallet, setHasFetchedWallet ] = React.useState( false );
 
@@ -232,15 +239,19 @@ export default () => {
     }, [ addSearch ] );
 
     useEffect( () => {
+        updateWalletFilter();
+
         if ( searchValue === '' ) {
             setFilteredWordsWallet( [] );
-        } else {
-            // here I'm applying the actual filtering
-            setFilteredWordsWallet( wordsWallet.slice( 3 ) );
         }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ searchValue ] );
+
+    const updateWalletFilter = () => {
+        const fuseResult = walletFuseInstance.search( searchValue );
+        setFilteredWordsWallet( fuseResult.map( ( result ) => result.item ) );
+    };
 
     const [ shouldQuery, setShouldQuery ] = React.useState( false );
 
