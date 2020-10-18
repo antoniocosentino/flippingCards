@@ -357,7 +357,7 @@ export default () => {
                                 <Layout style={ styles.transparentLayout } >
                                     <Input
                                         style={ styles.topSearchInput }
-                                        placeholder='Search your wallet' // TODO: make this work!
+                                        placeholder='Search your wallet'
                                         value={ searchValue }
                                         onChangeText={ nextValue => setSearchValue( nextValue ) }
                                         size={ 'small' }
