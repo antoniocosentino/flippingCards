@@ -1,5 +1,5 @@
 import React, { useRef, Dispatch, SetStateAction, useContext, useState } from 'react';
-import { Text, Icon, Button, IndexPath, Layout, IconProps, Divider, Select, SelectItem } from '@ui-kitten/components';
+import { Text, Icon, Button, IndexPath, Layout, IconProps, Divider, Select, SelectItem, Modal, Card } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
 import Carousel from 'react-native-snap-carousel';
 import { AppContext, TWords, TWordsWallet } from '../App';
@@ -20,7 +20,7 @@ type TCardsProps = {
     cardsView: string,
     setView: Dispatch<SetStateAction<string>>
     setCardsView: Dispatch<SetStateAction<string>>
-    storeDeckData: ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ) => void;
+    storeDeckData: ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ) => Promise<number>;
 }
 
 const renderCard = ( props: TRenderCardProps ) => {
@@ -80,6 +80,7 @@ export const Cards = ( props: TCardsProps ) => {
     const carouselRef = useRef( null );
 
     const { deck, cardsView, setView, setCardsView, storeDeckData } = props;
+    const [modalVisible, setModalVisible] = React.useState( false );
 
     const goToDeck = () => {
         setCardsView( 'cards' );
@@ -89,8 +90,15 @@ export const Cards = ( props: TCardsProps ) => {
     const { wordsWallet } = appData;
 
     const generateNewDeck = ( nOfCards: number, wordsFreshness: TWordsFreshnessValues ) => {
-        storeDeckData( wordsWallet, nOfCards, wordsFreshness );
-        setCardsView( 'cards' );
+        const deckSizePromise = storeDeckData( wordsWallet, nOfCards, wordsFreshness );
+
+        Promise.resolve( deckSizePromise ).then( ( result: number ) => {
+            if ( result > 1 ){
+                setCardsView( 'cards' );
+            } else {
+                setModalVisible( true );
+            }
+        } );
     };
 
     const [selectedDeckSizeIndex, setSelectedDeckSizeIndex] = React.useState( new IndexPath( 1 ) );
@@ -172,6 +180,25 @@ export const Cards = ( props: TCardsProps ) => {
                             </Select>
 
                         </Layout>
+
+                        <Modal
+                            visible={ modalVisible }
+                            style={ styles.standardModal }
+                            backdropStyle={ styles.standardModalBackdrop }
+                        >
+                            <Card disabled={ true }>
+                                <Text style={ styles.text }>
+                                    { '\n' }
+                                    The card deck can't be created.
+                                    { '\n' }{ '\n' }
+                                    Make sure that your wallet contains words in the selected period of time.
+                                    { '\n' }{ '\n' }
+                                </Text>
+                                <Button onPress={ () => setModalVisible( false ) }>
+                                    OK
+                                </Button>
+                            </Card>
+                        </Modal>
 
 
                         <Button onPress={ () => generateNewDeck( parseInt( DECK_SIZE_DATA[ selectedDeckSizeIndex.row ], 10 ), WORDS_FRESHNESS_DATA[ selectedWordsFreshnessIndex.row ] ) } style={ styles.ctaButton } accessoryLeft={ ShuffleIcon }>

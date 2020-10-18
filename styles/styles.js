@@ -372,5 +372,12 @@ export const styles = StyleSheet.create( {
     stackNavigatorWrapper: {
         width: '100%',
         flex: 1
+    },
+    standardModal: {
+        width: '90%'
+    },
+    standardModalBackdrop: {
+        backgroundColor: 'black',
+        opacity: 0.8
     }
 } );

@@ -110,7 +110,7 @@ export default () => {
         }
     };
 
-    const storeDeckData = async ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ) => {
+    const storeDeckData = async ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ): Promise<number> => {
         const shuffledCards = getShuffledCards( value, nOfCards, wordsFreshness );
         setDeckDataUpdated( false );
         try {
@@ -119,6 +119,8 @@ export default () => {
         } catch ( e ) {
             console.error( 'Error:', e );
         }
+
+        return shuffledCards.length;
     };
 
     const addSingleWord = ( word: TSingleWord ) => {

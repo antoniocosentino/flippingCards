@@ -8,7 +8,7 @@ import 'react-native-gesture-handler';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-const FlexiIcon = ( settingsIconProps: IconProps ) => (
+export const FlexiIcon = ( settingsIconProps: IconProps ) => (
     <Icon { ...settingsIconProps } width={ 22 } height={ 22 } fill='#333' />
 );
 
