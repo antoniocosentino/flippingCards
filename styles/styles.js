@@ -161,6 +161,11 @@ export const styles = StyleSheet.create( {
         fontFamily: customFontBold,
         fontSize: 30
     },
+    titleTextSmall: {
+        color: mainColor,
+        fontFamily: customFontBold,
+        fontSize: 24
+    },
     linkText: {
         textDecorationLine: 'underline'
     },

@@ -52,9 +52,11 @@ const InfoSecondView = () => {
 
     return (
         <>
-            <Layout style={ styles.infoContainer }>
+            <Layout style={ styles.versionBox }>
+                <Text>{ '\n' }</Text>
+                <Text style={ [ styles.text, styles.titleTextSmall ] } category='h1'>About Flipping Cards</Text>
                 <Text style={ [ styles.text, styles.leftAlignedText, styles.smallerText ] }>
-                    { '\n\n\n' }
+                    { '\n' }
                     Flipping Cards is an iOS/Android app that allows you to learn words faster, with the Flash Cards method and with your own selection of words.
                     { '\n\n' }
                     <Text style={ [ styles.boldText ] }>App Development, UI/UX, Icon Design:</Text>
@@ -164,11 +166,11 @@ const InfoMainView = ( props: any ) => { // TODO: types
                 style={ styles.infoContainer }
             >
                 <Layout style={ styles.infoColOne }>
-                    <FlexiIcon name='globe-outline' />
+                    <FlexiIcon name='star-outline' />
                 </Layout>
 
                 <Layout style={ styles.infoColTwo }>
-                    <Text style={ [ styles.text, styles.boldText, styles.biggerText ] }>Translation Language</Text>
+                    <Text style={ [ styles.text, styles.boldText, styles.biggerText ] }>Your Language</Text>
                 </Layout>
 
                 <Layout style={ styles.infoColThree }>
@@ -178,7 +180,7 @@ const InfoMainView = ( props: any ) => { // TODO: types
 
             <Layout style={ styles.versionBox } >
                 <Text style={ [ styles.text, styles.leftAlignedText, styles.smallerText ] }>
-                    Flipping Cards is currently only available with German dictionary and English translation.
+                    Currently only German dictionary and English translations are available. More languages are coming soon.
                 </Text>
             </Layout>
 
