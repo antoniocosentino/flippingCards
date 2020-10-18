@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { AppContext } from '../App';
+import React from 'react';
 import { Layout, Text, Icon, IconProps } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
 import { Image, Linking } from 'react-native';
@@ -122,9 +121,6 @@ const InfoMainView = ( props: any ) => { // TODO: types
 
     const { navigation } = props;
 
-    const appData = useContext( AppContext );
-    const { setView } = appData;
-
     return (
         <>
             <Layout
@@ -228,7 +224,10 @@ const InfoMainView = ( props: any ) => { // TODO: types
 
             <Layout style={ styles.versionBox } >
                 <Text style={ [ styles.text, styles.boldText, styles.leftAlignedText, styles.biggerText ] }>1.0 Beta</Text>
-                <Text onPress={ () => setView( 'DEBUG' ) } style={ [ styles.text, styles.leftAlignedText, styles.smallerText ] }>App version</Text>
+                <Text
+                    style={ [ styles.text, styles.leftAlignedText, styles.smallerText ] }>
+                        App version
+                </Text>
             </Layout>
         </>
     );
