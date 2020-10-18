@@ -28,7 +28,7 @@ export const ChallengeMode = () => {
             <Text style={ [ styles.text, styles.instructionsText ] }>
                 Challenge mode will allow you to test your vocabulary with word quizzes.
                 { '\n' } { '\n' }
-                This feature is currently under development and will come with the next release of Flipping Cards.
+                This feature is currently under development and will be shipped with the next release of Flipping Cards.
             </Text>
         </Layout>
     );
