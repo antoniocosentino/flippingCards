@@ -28,7 +28,8 @@ export const InfoView = () => {
                     options={ {
                         title: '',
                         headerStyle: {
-                            shadowColor: 'transparent'
+                            shadowColor: 'transparent',
+                            elevation: 0
                         }
                     } }
                 />
