@@ -67,9 +67,11 @@ type TAppData = {
     filteredWordsWallet: TWordsWallet,
     selectedIndex: number,
     onMenuClick: ( index: number ) => void,
-    storeData: ( value: TWordsWallet ) => void
-    addSingleWord: ( word: TSingleWord ) => void
-    setView: ( view: string ) => void
+    storeData: ( value: TWordsWallet ) => void,
+    addSingleWord: ( word: TSingleWord ) => void,
+    setView: ( view: string ) => void,
+    wipeWalletSearch: () => void,
+    increaseTapsCount: () => void
 };
 
 export type TSearchWords = TWords;
@@ -82,6 +84,17 @@ export default () => {
     // DEFAULT VIEW IS DEFINED HERE
     const [ view, setView ] = React.useState( 'LIST' );
     const [ cardsView, setCardsView ] = React.useState( 'instructions' );
+
+    // dev feature to enable debug mode
+    const [ tapsCount, setTapsCount ] = React.useState( 0 );
+
+    const increaseTapsCount = () => {
+        setTapsCount( tapsCount + 1 );
+    };
+
+    if ( tapsCount >= 10 && view !== 'DEBUG' ){
+        setView( 'DEBUG' );
+    }
 
     const [ wordsWallet, setWordsWallet ] = React.useState( [] as TWordsWallet );
 
@@ -214,18 +227,30 @@ export default () => {
         }
 
         setSelectedIndex( index );
+
+        setTapsCount( 0 );
     };
 
     const [ searchValue, setSearchValue ] = React.useState( '' );
 
-    const appData = {
+    const wipeSearch = () => {
+        setAddSearch( '' );
+    };
+
+    const wipeWalletSearch = () => {
+        setSearchValue( '' );
+    };
+
+    const appData: TAppData = {
         wordsWallet,
         filteredWordsWallet,
         selectedIndex,
         onMenuClick,
         storeData,
         addSingleWord,
-        setView
+        setView,
+        wipeWalletSearch,
+        increaseTapsCount
     };
 
     // database stuff
@@ -298,14 +323,6 @@ export default () => {
         } );
     }
 
-    const wipeSearch = () => {
-        setAddSearch( '' );
-    };
-
-    const wipeWalletSearch = () => {
-        setSearchValue( '' );
-    };
-
     const renderCloseIcon = ( props: IconProps ) => {
         if ( addSearch.length < 1 ) {
             return <></>;
@@ -327,6 +344,12 @@ export default () => {
             <TouchableWithoutFeedback onPress={ wipeWalletSearch }>
                 <Icon { ...props } width={ 22 } height={ 22 } fill='#ccc' name={ 'close-circle' } />
             </TouchableWithoutFeedback>
+        );
+    };
+
+    const renderFilterIcon = ( props: IconProps ) => {
+        return (
+            <Icon { ...props } width={ 22 } height={ 22 } fill='#ccc' name={ 'search-outline' } />
         );
     };
 
@@ -362,6 +385,7 @@ export default () => {
                                         onChangeText={ nextValue => setSearchValue( nextValue ) }
                                         size={ 'small' }
                                         accessoryRight={ renderCloseIconForWalletSearch }
+                                        accessoryLeft={ renderFilterIcon }
                                     />
                                 </Layout>
                             }
@@ -382,7 +406,7 @@ export default () => {
                                             autoFocus={ true }
                                             autoCorrect={ false }
                                             style={ styles.addWordInput }
-                                            placeholder='Type the word you want to enter'
+                                            placeholder='Type the word you want to add'
                                             value={ addSearch }
                                             onChangeText={ nextValue => setAddSearchWrapper( nextValue ) }
                                             size={ 'medium' }
@@ -423,18 +447,22 @@ export default () => {
                         }
 
                         { view === 'LIST' && hasFetchedWallet && wordsWallet.length === 0 &&
-                            <Layout style={ styles.walletInstructions }>
-                                <Text style={ [ styles.text, styles.titleText ] } category='h4'>Hello there! 👋</Text>
+                            <Layout style={ styles.walletInstructionsWrapper }>
+                                <Layout style={ styles.walletInstructions }>
+                                    <Text style={ [ styles.text, styles.titleText ] } category='h4'>Hello there! 👋</Text>
 
-                                <Text style={ [ styles.text, styles.instructionsText ] }>
-                                    This is your wallet view. All the words that you add in your wallet will show up here.
-                                </Text>
+                                    <Text style={ [ styles.text, styles.instructionsText ] }>
+                                        This is your wallet view. All the words that you add in your wallet will show up here.
+                                    </Text>
 
-                                <ImageRenderer image={ 'start' } />
+                                    <ImageRenderer image={ 'start' } />
+                                </Layout>
 
-                                <Button onPress={ () => setView( 'ADD' ) } style={ styles.ctaButton } accessoryLeft={ AddWordIcon }>
-                                    ADD YOUR FIRST WORD
-                                </Button>
+                                <Layout style={ styles.walletInstructions }>
+                                    <Button onPress={ () => setView( 'ADD' ) } style={ styles.ctaButton } accessoryLeft={ AddWordIcon }>
+                                        ADD YOUR FIRST WORD
+                                    </Button>
+                                </Layout>
                             </Layout>
                         }
 

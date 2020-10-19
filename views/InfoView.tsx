@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Layout, Text, Icon, IconProps } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
 import { Image, Linking } from 'react-native';
+import { AppContext } from '../App';
 
 import 'react-native-gesture-handler';
 
 import { createStackNavigator } from '@react-navigation/stack';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 export const FlexiIcon = ( settingsIconProps: IconProps ) => (
     <Icon { ...settingsIconProps } width={ 22 } height={ 22 } fill='#333' />
@@ -57,7 +59,7 @@ const InfoSecondView = () => {
                 <Text style={ [ styles.text, styles.titleTextSmall ] } category='h1'>About Flipping Cards</Text>
                 <Text style={ [ styles.text, styles.leftAlignedText, styles.smallerText ] }>
                     { '\n' }
-                    Flipping Cards is an iOS/Android app that allows you to learn words faster, with the Flash Cards method and with your own selection of words.
+                    Flipping Cards is an iOS/Android app that allows you to learn German words faster by creating flash cards with your own selection of words.
                     { '\n\n' }
                     <Text style={ [ styles.boldText ] }>App Development, UI/UX, Icon Design:</Text>
                     { '\n' }
@@ -119,6 +121,10 @@ const InfoSecondView = () => {
 
 const InfoMainView = ( props: any ) => { // TODO: types
 
+    const appData = useContext( AppContext );
+
+    const { increaseTapsCount } = appData;
+
     const { navigation } = props;
 
     return (
@@ -126,10 +132,13 @@ const InfoMainView = ( props: any ) => { // TODO: types
             <Layout
                 style={ styles.centeredElement }
             >
-                <Image
-                    source={ require( './../img/icon.png' ) }
-                    style={ styles.iconImage }
-                />
+                <TouchableWithoutFeedback onPress={ increaseTapsCount }>
+                    <Image
+                        source={ require( './../img/icon.png' ) }
+                        style={ styles.iconImage }
+                    />
+                </TouchableWithoutFeedback>
+
                 <Text style={ [ styles.text, styles.boldText, styles.biggerText, styles.textWithTopMargin ] }>
                     Flipping Cards
                 </Text>
@@ -208,11 +217,19 @@ const InfoMainView = ( props: any ) => { // TODO: types
                 style={ styles.infoContainer }
             >
                 <Layout style={ styles.infoColOne }>
-                    <FlexiIcon name='external-link-outline' />
+                    <FlexiIcon
+                        name='external-link-outline'
+                        onPress={ () => Linking.openURL( 'https://github.com/antoniocosentino/flipCards' ) }
+                    />
                 </Layout>
 
                 <Layout style={ styles.infoColTwo }>
-                    <Text style={ [ styles.text, styles.boldText, styles.biggerText ] }>App Homepage</Text>
+                    <Text
+                        style={ [ styles.text, styles.boldText, styles.biggerText ] }
+                        onPress={ () => Linking.openURL( 'https://github.com/antoniocosentino/flipCards' ) }
+                    >
+                        App Homepage
+                    </Text>
                 </Layout>
 
                 <Layout style={ styles.infoColThree } />

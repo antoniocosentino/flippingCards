@@ -15,7 +15,7 @@ export const List = () => {
 
     const appData = useContext( AppContext );
 
-    const { wordsWallet, filteredWordsWallet, storeData } = appData;
+    const { wordsWallet, filteredWordsWallet, storeData, wipeWalletSearch } = appData;
 
     const wordsWalletToShow = filteredWordsWallet.length > 0 ? filteredWordsWallet : wordsWallet;
 
@@ -25,11 +25,13 @@ export const List = () => {
             rowMap[rowKey].closeRow();
         }
 
-        const updatedWallet = wordsWalletToShow.filter( ( singleWord ) => {
+        const updatedWallet = wordsWallet.filter( ( singleWord ) => {
             return singleWord.de !== word;
         } );
 
         storeData( updatedWallet );
+
+        wipeWalletSearch();
 
     };
 
@@ -42,6 +44,7 @@ export const List = () => {
 
     return (
         <SwipeListView
+            keyboardDismissMode={ 'on-drag' }
             showsVerticalScrollIndicator={ false }
             data={ wordsWalletWithKeys }
             style={ styles.cardsScrollView }

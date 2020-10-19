@@ -108,6 +108,9 @@ export const styles = StyleSheet.create( {
         marginTop: 0,
         overflow: 'scroll'
     },
+    walletInstructionsWrapper: {
+        backgroundColor: 'blue'
+    },
     walletInstructions: {
         paddingLeft: 30,
         paddingRight: 30
@@ -118,7 +121,7 @@ export const styles = StyleSheet.create( {
         alignItems: 'center'
     },
     'bottomZone--specialCase': {
-        flex: 1.365
+        flex: 1.39 // TODO: this doesn't look super reliable
     },
     bottomWrapper: {
         paddingTop: 16
@@ -359,11 +362,6 @@ export const styles = StyleSheet.create( {
         width: '91%',
         marginLeft: '4.5%',
         marginRight: '4.5%'
-    },
-    imageRenderer: {
-        flex: 1,
-        width: undefined,
-        height: undefined
     },
     iconImage: {
         width: 100,
