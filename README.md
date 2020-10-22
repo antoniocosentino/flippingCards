@@ -37,6 +37,15 @@ The Alpha version of the app is currently bein reviewed by Google. If you want t
 
 ---
 
+## Credits
+Flipping cards is built with [React Native](https://reactnative.dev/) and [UI Kitten](https://akveo.github.io/react-native-ui-kitten/).
+
+German dictionary is from [http://dict.tu-chemnitz.de](http://dict.tu-chemnitz.de) (Frank Richter © 1995 - 2016).
+
+Illustrations are from [manypixels.co](https://manypixels.co) (except the icon, which is designed by me 🙂 ).
+
+---
+
 ## Coming soon:
 - Challenge mode: test your words knowledge.
 - Reminders.
