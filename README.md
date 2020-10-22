@@ -21,7 +21,7 @@ Flipping Cards is currently only available with German words. Additional languag
 
 ## Main Features:
 - All the functionality is available even offline, thanks to the locally stored dictionary.
-- Super simple UI: add a word in less then 5 seconds!
+- Super simple UI: add a word in less than 5 seconds!
 - Create a deck with a configurable size and with selected "freshness" of the words (e.g. only words added in the last week).
 - Test your knowledge of the words by swiping and flipping your cards.
 
