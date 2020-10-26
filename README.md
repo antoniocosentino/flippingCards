@@ -28,11 +28,7 @@ Flipping Cards is currently only available with German words. Additional languag
 ---
 
 ## Current State:
-### iOS
-The app is currently in beta testing, with a selected group of testers on TestFlight. If you want to join the testing phase, just fill [this form](https://antoniocosentino1.typeform.com/to/fRXYTkS9).
-
-### Android
-The Alpha version of the app is currently being reviewed by Google. If you want to receive an invitation to closed testing just fill [this form](https://antoniocosentino1.typeform.com/to/fRXYTkS9).
+The app is currently in beta testing on both platforms (iOS & Android) with a selected group of testers. If you want to join the testing phase, just fill [this form](https://antoniocosentino1.typeform.com/to/fRXYTkS9).
 
 
 ---
