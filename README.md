@@ -38,7 +38,7 @@ Flipping cards is built with [React Native](https://reactnative.dev/) and [UI Ki
 
 German dictionary is from [http://dict.tu-chemnitz.de](http://dict.tu-chemnitz.de) (Frank Richter © 1995 - 2016).
 
-Illustrations are from [manypixels.co](https://manypixels.co) (except the icon, which is designed by me 🙂 ).
+Illustrations are from [manypixels.co](https://manypixels.co).
 
 ---
 
