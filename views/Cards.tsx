@@ -229,7 +229,7 @@ export const Cards = ( props: TCardsProps ) => {
                         layout={ 'default' }
                         loop={ false }
                         renderItem={ renderCard }
-                        firstItem={ 1 }
+                        firstItem={ 0 }
                     />
                 }
             </View>
