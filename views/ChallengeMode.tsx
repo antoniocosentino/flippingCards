@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Layout, Text } from '@ui-kitten/components';
 import { Image } from 'react-native';
@@ -6,23 +6,16 @@ import { styles } from '../styles/styles';
 
 export const ChallengeMode = () => {
 
-    const [ layoutWidth, setWidth ] = useState( 300 );
-
     return (
-        <Layout
-            style={ styles.centeredElement }
-            onLayout={ ( event ) => {
-                const { width } = event.nativeEvent.layout;
-                setWidth( width );
-            } }
-        >
+        <Layout style={ styles.centeredElement }>
             <Text style={ [ styles.text, styles.titleText ] } category='h4'>Challenge mode</Text>
             <Image
                 source={ require( './../img/work-in-progress.jpg' ) }
                 resizeMode={ 'contain' }
+                // eslint-disable-next-line react-native/no-inline-styles
                 style={ {
-                    width: layoutWidth,
-                    height: layoutWidth
+                    width: 250,
+                    height: 250
                 } }
             />
             <Text style={ [ styles.text, styles.instructionsText ] }>

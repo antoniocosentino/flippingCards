@@ -12,7 +12,7 @@ import {
 } from '@ui-kitten/components';
 
 import { debounce } from 'lodash';
-import { TouchableWithoutFeedback } from 'react-native';
+import { TouchableWithoutFeedback, View } from 'react-native';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -26,13 +26,13 @@ import { Cards } from './views/Cards';
 import { customTheme } from './utils/customTheme';
 import { ChallengeMode } from './views/ChallengeMode';
 import { InfoView } from './views/InfoView';
-import { ImageRenderer } from './views/ImageRenderer';
 
 import { NavigationContainer } from '@react-navigation/native';
 
 import SafeArea, { SafeAreaInsets } from 'react-native-safe-area';
 
 import Fuse from 'fuse.js';
+import { Image } from 'react-native';
 
 const SQLite = require( 'react-native-sqlite-storage' );
 
@@ -455,7 +455,19 @@ export default () => {
                                         This is your wallet view. All the words that you add in your wallet will show up here.
                                     </Text>
 
-                                    <ImageRenderer image={ 'start' } />
+                                    <View
+                                        style={ styles.centeredSimpleView }
+                                    >
+                                        <Image
+                                            source={ require( './img/start-page.jpg' ) }
+                                            resizeMode={ 'contain' }
+                                            // eslint-disable-next-line react-native/no-inline-styles
+                                            style={ {
+                                                width: 250,
+                                                height: 249 // this small hack fixes an issue with an unwanted border on Android
+                                            } }
+                                        />
+                                    </View>
                                 </Layout>
 
                                 <Layout style={ styles.walletInstructions }>

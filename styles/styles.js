@@ -33,6 +33,10 @@ export const styles = StyleSheet.create( {
         marginRight: '10%',
         alignItems: 'center'
     },
+    centeredSimpleView: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     coloredTopContainer: {
         backgroundColor: mainColor
     },
