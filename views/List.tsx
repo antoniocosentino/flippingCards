@@ -3,7 +3,7 @@ import { View } from 'react-native';
 
 import { Text, Card, IconProps, Icon } from '@ui-kitten/components';
 
-import { AppContext } from '../App';
+import { AppContext, TSingleWalletWord } from '../App';
 import { styles } from '../styles/styles';
 
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -19,14 +19,14 @@ export const List = () => {
 
     const wordsWalletToShow = filteredWordsWallet.length > 0 ? filteredWordsWallet : wordsWallet;
 
-    const deleteWord = ( word: string, rowMap: any, rowKey: string ) => {
+    const deleteWord = ( word: TSingleWalletWord, rowMap: any, rowKey: string ) => {
 
         if ( rowMap[rowKey] ) {
             rowMap[rowKey].closeRow();
         }
 
         const updatedWallet = wordsWallet.filter( ( singleWord ) => {
-            return singleWord.de !== word;
+            return ( !( singleWord.de === word.de && singleWord.en === word.en ) );
         } );
 
         storeData( updatedWallet );
@@ -78,7 +78,7 @@ export const List = () => {
             renderHiddenItem={ ( data, rowMap ) => (
                 <View style={ styles.deleteAction } >
                     <DeleteIcon
-                        onPress={ () => { deleteWord( data.item.de, rowMap, data.item.key ); } }
+                        onPress={ () => { deleteWord( data.item, rowMap, data.item.key ); } }
                     />
                 </View>
             ) }
