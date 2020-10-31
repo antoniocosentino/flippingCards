@@ -6,11 +6,12 @@ import { getArticle, getTypeOfWord } from '../utils/utils';
 import { TouchableOpacity, View } from 'react-native';
 
 type TSingleSearchResultProps = {
-    word: TSingleWord
+    word: TSingleWord,
+    isAlreadyThere: boolean
 };
 
 export const SingleSearchResult = ( props: TSingleSearchResultProps ) => {
-    const { word } = props;
+    const { word, isAlreadyThere } = props;
 
     const appData = useContext( AppContext );
 
@@ -18,13 +19,22 @@ export const SingleSearchResult = ( props: TSingleSearchResultProps ) => {
 
     const typeOfWord = getTypeOfWord( word );
 
+    const addSmartHandler = ( passedWord: TSingleWord ) => {
+        if ( !isAlreadyThere ) {
+            addSingleWord( passedWord );
+        }
+    };
+
     return (
         <TouchableOpacity
-            onPress={ () => addSingleWord( word ) }
+            onPress={ () => addSmartHandler( word ) }
             style={ styles.singleSearchResult }
             activeOpacity={ 0.9 }
         >
-            <View style={ styles.searchResultWordBlock }>
+            <View style={ [
+                styles.searchResultWordBlock,
+                isAlreadyThere && styles['searchResultWordBlock--Disabled']
+            ] }>
                 <Text>
                     <Text style={ styles.singleSearchResultArticle }>{ getArticle( word ) }</Text>
                     <Text style={ styles.singleSearchResultMainWord }>{ word.de }</Text>

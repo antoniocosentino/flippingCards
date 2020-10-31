@@ -249,6 +249,9 @@ export const styles = StyleSheet.create( {
     searchResultWordBlock: {
         flex: 8.5
     },
+    'searchResultWordBlock--Disabled': {
+        opacity: 0.2
+    },
     searchResultTypeOfWordBlock: {
         flex: 1.5,
         flexDirection: 'column',
