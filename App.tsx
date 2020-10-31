@@ -394,7 +394,7 @@ export default () => {
                                 <Layout style={ styles.addBar }>
                                     <Layout style={ styles.addBarLeft }>
                                         <Icon
-                                            onPress={ () => setView( 'LIST' )  }
+                                            onPress={ () => onMenuClick( 0 )  }
                                             width={ 30 }
                                             height={ 30 }
                                             fill='#fff'
