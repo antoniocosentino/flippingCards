@@ -331,6 +331,7 @@ export const styles = StyleSheet.create( {
     },
     cardsTopIcon: {
         top: isAndroid ? 5 : 2,
+        left: isAndroid ? 1 : 0,
         marginRight: 6
     },
     firstSlideText: {
