@@ -15,7 +15,14 @@ export const List = () => {
 
     const appData = useContext( AppContext );
 
-    const { wordsWallet, filteredWordsWallet, storeData, wipeWalletSearch } = appData;
+    const {
+        wordsWallet,
+        filteredWordsWallet,
+        hasShownAnimation,
+        setHasShownAnimation,
+        storeData,
+        wipeWalletSearch
+    } = appData;
 
     const wordsWalletToShow = filteredWordsWallet.length > 0 ? filteredWordsWallet : wordsWallet;
 
@@ -42,15 +49,19 @@ export const List = () => {
         };
     } );
 
+    if ( !hasShownAnimation ) {
+        setTimeout( ()=> { setHasShownAnimation( true ); }, 3000 );
+    }
+
     return (
         <SwipeListView
             keyboardDismissMode={ 'on-drag' }
+            previewRowKey={ hasShownAnimation ? '' : '0' }
+            previewOpenValue={ -50 }
             showsVerticalScrollIndicator={ false }
             data={ wordsWalletWithKeys }
             style={ styles.cardsScrollView }
             renderItem={ ( data ) => {
-
-                // const typeOfWord = getTypeOfWord( data.item );
 
                 return (
                     <Card

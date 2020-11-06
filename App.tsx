@@ -66,6 +66,8 @@ type TAppData = {
     wordsWallet: TWordsWallet,
     filteredWordsWallet: TWordsWallet,
     selectedIndex: number,
+    hasShownAnimation: boolean,
+    setHasShownAnimation: ( value: boolean ) => void,
     onMenuClick: ( index: number ) => void,
     storeData: ( value: TWordsWallet ) => void,
     addSingleWord: ( word: TSingleWord ) => void,
@@ -77,6 +79,13 @@ type TAppData = {
 export type TSearchWords = TWords;
 
 export const AppContext = React.createContext( {} as TAppData );
+
+
+let hasShownAnimation = false;
+
+const setHasShownAnimation = ( value: boolean ) => {
+    hasShownAnimation = value;
+};
 
 export default () => {
     const [ selectedIndex, setSelectedIndex ] = React.useState( 0 );
@@ -156,6 +165,8 @@ export default () => {
         };
 
         walletCopy.unshift( wordWithCurrentTimestamp );
+
+        setHasShownAnimation( false );
 
         storeData( walletCopy );
         onMenuClick( 0 );
@@ -245,6 +256,8 @@ export default () => {
         wordsWallet,
         filteredWordsWallet,
         selectedIndex,
+        hasShownAnimation,
+        setHasShownAnimation,
         onMenuClick,
         storeData,
         addSingleWord,
