@@ -167,6 +167,7 @@ export default () => {
         walletCopy.unshift( wordWithCurrentTimestamp );
 
         setHasShownAnimation( false );
+        setHasFetchedWallet( false ); // this is to avoid flickering on the welcome screen
 
         storeData( walletCopy );
         onMenuClick( 0 );
