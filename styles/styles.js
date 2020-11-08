@@ -113,11 +113,19 @@ export const styles = StyleSheet.create( {
         overflow: 'scroll'
     },
     walletInstructionsWrapper: {
-        backgroundColor: 'blue'
+        backgroundColor: 'transparent'
     },
     walletInstructions: {
         paddingLeft: 30,
         paddingRight: 30
+    },
+    tapInstructions: {
+        position: 'absolute',
+        width: '100%',
+        bottom: 0,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center'
     },
     bottomZone: {
         flex: 1.6,
