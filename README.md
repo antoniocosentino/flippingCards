@@ -20,10 +20,10 @@ Flipping Cards is currently only available with German words. Additional languag
 ---
 
 ## Main Features:
-- All the functionality is available even offline, thanks to the locally stored dictionary.
+- All the functionality is available even offline, thanks to the locally stored dictionary
 - Super simple UI: add a word in less than 5 seconds!
-- Create a deck with a configurable size and with selected "freshness" of the words (e.g. only words added in the last week).
-- Test your knowledge of the words by swiping and flipping your cards.
+- Create a deck with a configurable size and with selected "freshness" of the words (e.g. only words added in the last week)
+- Test your knowledge of the words by swiping and flipping your cards
 
 ---
 
@@ -43,12 +43,12 @@ Illustrations are from [manypixels.co](https://manypixels.co).
 ---
 
 ## Coming soon:
-- Challenge mode: test your words knowledge.
-- Reminders.
-- Word stats.
-- Add your words: if a word is not available in the dictionary you will be able to enter it manually.
+- Challenge mode: test your words knowledge
+- Reminders
+- Word stats
+- Add your words: if a word is not available in the dictionary you will be able to enter it manually
 
 ## Coming later :)
-- Additional languages.
-- Pre-made word bundles.
-- Backup your data in iCloud / Google Drive.
+- Additional languages
+- Pre-made word bundles
+- Backup your data in iCloud / Google Drive
