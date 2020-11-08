@@ -16,7 +16,8 @@ import { TouchableWithoutFeedback, View } from 'react-native';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import AsyncStorage from '@react-native-community/async-storage';
-import { DEMO_WORDS } from './utils/demoData';
+import { DEMO_WORDS_DEBUG } from './utils/demoData.debug.js';
+import { DEMO_WORDS } from './utils/demoData.js';
 import { styles } from './styles/styles';
 import { List } from './views/List';
 import { BottomMenu } from './views/BottomMenu';
@@ -486,7 +487,7 @@ export default () => {
                                     </Layout>
 
                                     <Layout style={ styles.walletInstructions }>
-                                        <Button onPress={ () => console.log( 'YOLO' ) } style={ styles.ctaButton } accessoryLeft={ AddWordIcon }>
+                                        <Button onPress={ () => storeData( DEMO_WORDS ) } style={ styles.ctaButton } accessoryLeft={ AddWordIcon }>
                                             START WITH DEMO WORDS
                                         </Button>
                                     </Layout>
@@ -518,9 +519,9 @@ export default () => {
                         { view === 'DEBUG' &&
                             <>
                                 <Button
-                                    onPress={ () => storeData( DEMO_WORDS ) }
+                                    onPress={ () => storeData( DEMO_WORDS_DEBUG ) }
                                 >
-                                    Fill Wallet with Demo Words
+                                    Fill Wallet with Debug Demo Words
                                 </Button>
                                 <Divider />
                                 <Button
