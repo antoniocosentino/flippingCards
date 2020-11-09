@@ -46,7 +46,7 @@ const errorCallback = ( error: any ) => {
 };
 
 export const AddWordIcon = ( props: IconProps ) => (
-    <Icon { ...props } name='file-add-outline' />
+    <Icon { ...props } name='plus-outline' />
 );
 
 const db = SQLite.openDatabase( { name: 'dictionary.db', createFromLocation: 1 }, okCallback, errorCallback );
@@ -487,7 +487,7 @@ export default () => {
                                     </Layout>
 
                                     <Layout style={ styles.walletInstructions }>
-                                        <Button onPress={ () => storeData( DEMO_WORDS ) } style={ styles.ctaButton } accessoryLeft={ AddWordIcon }>
+                                        <Button onPress={ () => storeData( DEMO_WORDS ) } style={ styles.ctaButton }>
                                             START WITH DEMO WORDS
                                         </Button>
                                     </Layout>
