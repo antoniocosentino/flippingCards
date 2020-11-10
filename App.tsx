@@ -38,18 +38,35 @@ import { Image } from 'react-native';
 const SQLite = require( 'react-native-sqlite-storage' );
 
 const okCallback = () => {
-    console.log( 'connected to DB' );
+    console.log( 'connected to DB A' );
 };
 
 const errorCallback = ( error: any ) => {
     console.log( 'DB connection error', error );
 };
 
+let db = SQLite.openDatabase( { name: 'dictionary.db', createFromLocation: 1 }, okCallback, errorCallback );
+
+const okCallbackB = () => {
+    console.log( 'connected to DB B' );
+};
+
+const okDeletionCallback = () => {
+    console.log( 'I deleted the database' );
+    db = SQLite.openDatabase( { name: 'dictionary.db', createFromLocation: 1 }, okCallbackB, errorCallback );
+};
+
+const errorDeletionCallback = ( error: any ) => {
+    console.log( 'Error while deleting DB', error );
+};
+
 export const AddWordIcon = ( props: IconProps ) => (
     <Icon { ...props } name='plus-outline' />
 );
 
-const db = SQLite.openDatabase( { name: 'dictionary.db', createFromLocation: 1 }, okCallback, errorCallback );
+const dbRefresh = () => {
+    SQLite.deleteDatabase( { name: 'dictionary.db', createFromLocation: 1 }, okDeletionCallback, errorDeletionCallback );
+};
 
 export type TSingleWord = {
     de: string,
@@ -534,6 +551,12 @@ export default () => {
                                     onPress={ () => storeDeckData( [], 0, 'All Words' ) }
                                 >
                                     Wipe Deck
+                                </Button>
+
+                                <Button
+                                    onPress={ dbRefresh }
+                                >
+                                    Force DB refresh
                                 </Button>
                             </>
                         }
