@@ -35,6 +35,9 @@ import SafeArea, { SafeAreaInsets } from 'react-native-safe-area';
 import Fuse from 'fuse.js';
 import { Image } from 'react-native';
 
+// this needs to be updated everytime a change in the words database is released
+const DB_VERSION = '2';
+
 const SQLite = require( 'react-native-sqlite-storage' );
 
 const okCallback = () => {
@@ -156,6 +159,14 @@ export default () => {
         }
     };
 
+    const storeDBversion = async ( version: string ) => {
+        try {
+            await AsyncStorage.setItem( '@dbVersion', version );
+        } catch ( e ) {
+            console.error( 'Error:', e );
+        }
+    };
+
     const storeDeckData = async ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ): Promise<number> => {
         const shuffledCards = getShuffledCards( value, nOfCards, wordsFreshness );
         setDeckDataUpdated( false );
@@ -203,6 +214,24 @@ export default () => {
             // error reading value
         }
     };
+
+    const getDBversion = async () => {
+        try {
+            const version = await AsyncStorage.getItem( '@dbVersion' );
+
+            if ( version !== DB_VERSION ) {
+                dbRefresh();
+                storeDBversion( DB_VERSION );
+            }
+
+        } catch ( e ) {
+            // error reading value
+        }
+    };
+
+    useEffect( () => {
+        getDBversion();
+    } );
 
     const getDeckData = async () => {
         try {
@@ -553,6 +582,12 @@ export default () => {
                                     onPress={ dbRefresh }
                                 >
                                     Force DB refresh
+                                </Button>
+
+                                <Button
+                                    onPress={ () => storeDBversion( '' ) }
+                                >
+                                    Clear stored DB version
                                 </Button>
                             </>
                         }
