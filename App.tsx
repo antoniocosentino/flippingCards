@@ -38,22 +38,18 @@ import { Image } from 'react-native';
 const SQLite = require( 'react-native-sqlite-storage' );
 
 const okCallback = () => {
-    console.log( 'connected to DB A' );
+    console.log( 'connected to DB' );
 };
 
 const errorCallback = ( error: any ) => {
     console.log( 'DB connection error', error );
 };
 
-let db = SQLite.openDatabase( { name: 'dictionary.db', createFromLocation: 1 }, okCallback, errorCallback );
-
-const okCallbackB = () => {
-    console.log( 'connected to DB B' );
-};
+const db = SQLite.openDatabase( { name: 'dictionary.db', createFromLocation: 1 }, okCallback, errorCallback );
 
 const okDeletionCallback = () => {
     console.log( 'I deleted the database' );
-    db = SQLite.openDatabase( { name: 'dictionary.db', createFromLocation: 1 }, okCallbackB, errorCallback );
+    SQLite.openDatabase( { name: 'dictionary.db', createFromLocation: 1 }, okCallback, errorCallback );
 };
 
 const errorDeletionCallback = ( error: any ) => {

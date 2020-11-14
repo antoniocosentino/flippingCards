@@ -20,7 +20,7 @@
 		2FC1DA5F5570E2F16054450A /* libPods-flipCards-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8ABA7D4A1C8684D4EF6339 /* libPods-flipCards-tvOSTests.a */; };
 		6A6C6C8EDB5ED898AC785DBB /* libPods-flipCards.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 413B43FA0F4256D650576307 /* libPods-flipCards.a */; };
 		835DB597A0DE471C9B5D7870 /* Nunito-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 10B1A8ACDD9144A18E6FB701 /* Nunito-Light.ttf */; };
-		A9C45E0924CCA96F007D8816 /* www in Resources */ = {isa = PBXBuildFile; fileRef = A9C45E0824CCA96F007D8816 /* www */; };
+		A981DDA1255DE91000FA003C /* www in Resources */ = {isa = PBXBuildFile; fileRef = A981DDA0255DE91000FA003C /* www */; };
 		B9BE236EAF284355AC96D340 /* Nunito-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92FBA1AC315E4B8D9C3BECA9 /* Nunito-SemiBold.ttf */; };
 		C3A27D9717C9B0A721A6923E /* libPods-flipCards-flipCardsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EFFE770027852AD4EC6C4163 /* libPods-flipCards-flipCardsTests.a */; };
 		E8D61BA1D8B04D12855FC31F /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7ADDC3EFB5443FE8D7CB7E6 /* Nunito-Regular.ttf */; };
@@ -69,7 +69,7 @@
 		92FBA1AC315E4B8D9C3BECA9 /* Nunito-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-SemiBold.ttf"; path = "../assets/Nunito-SemiBold.ttf"; sourceTree = "<group>"; };
 		9398FF4257A5451E05B56E71 /* Pods-flipCards-flipCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-flipCards-flipCardsTests.release.xcconfig"; path = "Target Support Files/Pods-flipCards-flipCardsTests/Pods-flipCards-flipCardsTests.release.xcconfig"; sourceTree = "<group>"; };
 		A7ADDC3EFB5443FE8D7CB7E6 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-Regular.ttf"; path = "../assets/Nunito-Regular.ttf"; sourceTree = "<group>"; };
-		A9C45E0824CCA96F007D8816 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../www; sourceTree = "<group>"; };
+		A981DDA0255DE91000FA003C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../www; sourceTree = "<group>"; };
 		DA42544F6B9C2AC56C5A3F97 /* libPods-flipCards-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-flipCards-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -133,7 +133,7 @@
 		13B07FAE1A68108700A75B9A /* flipCards */ = {
 			isa = PBXGroup;
 			children = (
-				A9C45E0824CCA96F007D8816 /* www */,
+				A981DDA0255DE91000FA003C /* www */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -361,7 +361,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9C45E0924CCA96F007D8816 /* www in Resources */,
+				A981DDA1255DE91000FA003C /* www in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				835DB597A0DE471C9B5D7870 /* Nunito-Light.ttf in Resources */,
