@@ -36,8 +36,6 @@ The app is currently in beta testing on both platforms (iOS & Android) with a se
 ## Credits
 Flipping cards is built with [React Native](https://reactnative.dev/) and [UI Kitten](https://akveo.github.io/react-native-ui-kitten/).
 
-German dictionary is from [http://dict.tu-chemnitz.de](http://dict.tu-chemnitz.de) (Frank Richter © 1995 - 2016).
-
 Illustrations are from [manypixels.co](https://manypixels.co).
 
 ---

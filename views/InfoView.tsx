@@ -81,17 +81,6 @@ const InfoSecondView = () => {
                         manypixels.co
                     </Text>
                     { '\n\n' }
-                    <Text style={ [ styles.boldText ] }>German Dictionary Database:</Text>
-                    { '\n' }
-                    Frank Richter © 1995 - 2016
-                    { '\n' }
-                    <Text
-                        style={ [ styles.text, styles.leftAlignedText, styles.smallerText, styles.linkText ] }
-                        onPress={ () => Linking.openURL( 'http://dict.tu-chemnitz.de' ) }
-                    >
-                        dict.tu-chemnitz.de
-                    </Text>
-                    { '\n\n' }
                     <Text style={ [ styles.boldText ] }>Mobile Application Framework:</Text>
                     { '\n' }
                     React Native
