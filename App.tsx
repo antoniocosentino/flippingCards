@@ -22,7 +22,7 @@ import { styles } from './styles/styles';
 import { List } from './views/List';
 import { BottomMenu } from './views/BottomMenu';
 import { SearchResults } from './components/SearchResults';
-import { removeArticle, getShuffledCards, TWordsFreshnessValues } from './utils/utils';
+import { removeArticle, getShuffledCards, TWordsFreshnessValues, uncapitalizeWord } from './utils/utils';
 import { Cards } from './views/Cards';
 import { customTheme } from './utils/customTheme';
 import { ChallengeMode } from './views/ChallengeMode';
@@ -346,7 +346,7 @@ export default () => {
 
     const [ addSearchWords, setAddSearchWords ] = React.useState( [] as TSearchWords );
 
-    const query = `select * from words where words MATCH '${ removeArticle( addSearch ) }*' AND rank MATCH 'bm25(10.0, 1.0)' GROUP BY de, en ORDER BY ( de = '${ addSearch }' ), rank LIMIT 20`;
+    const query = `select * from words where words MATCH '${ removeArticle( addSearch ) }*' AND rank MATCH 'bm25(10.0, 1.0)' GROUP BY de, en ORDER BY ( de = '${ removeArticle( uncapitalizeWord( addSearch ) ) }' ) desc, rank LIMIT 20`;
 
     if ( shouldQuery && addSearch !== '' ) {
         setShouldQuery( false );
