@@ -229,7 +229,7 @@ const InfoMainView = ( props: any ) => { // TODO: types
             />
 
             <Layout style={ styles.versionBox } >
-                <Text style={ [ styles.text, styles.boldText, styles.leftAlignedText, styles.biggerText ] }>1.0 Beta</Text>
+                <Text style={ [ styles.text, styles.boldText, styles.leftAlignedText, styles.biggerText ] }>1.0</Text>
                 <Text
                     style={ [ styles.text, styles.leftAlignedText, styles.smallerText ] }>
                         App version

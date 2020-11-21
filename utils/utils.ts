@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 
 type TTypeOfWord = {
     name: string,
-    class: 'typeOfWord--Noun' | 'typeOfWord--Verb' | 'typeOfWord--Adj'
+    class: 'typeOfWord--Noun' | 'typeOfWord--Verb' | 'typeOfWord--Adj' | 'typeOfWord--Adv'
 }
 
 export const DECK_SIZE_DATA = [
@@ -65,8 +65,7 @@ export const getTypeOfWord = ( word: TSingleWord ): TTypeOfWord => {
                 name: 'NOUN'
             };
 
-        case 'vi':
-        case 'vt':
+        case 'verb':
             return {
                 class: 'typeOfWord--Verb',
                 name: 'VERB'
@@ -76,6 +75,12 @@ export const getTypeOfWord = ( word: TSingleWord ): TTypeOfWord => {
             return {
                 class: 'typeOfWord--Adj',
                 name: 'ADJ'
+            };
+
+        case 'adv':
+            return {
+                class: 'typeOfWord--Adv',
+                name: 'ADV'
             };
     }
 };

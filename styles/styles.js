@@ -13,6 +13,7 @@ export const mainColor = '#B83B5E';
 export const secondColor = '#F08A5D';
 export const thirdColor = '#6A2C70';
 export const fourthColor = '#EEECDA';
+export const fifthColor = '#F01641';
 
 
 const customFontRegular = 'Nunito-Regular';
@@ -281,6 +282,9 @@ export const styles = StyleSheet.create( {
     },
     'typeOfWord--Adj': {
         backgroundColor: thirdColor
+    },
+    'typeOfWord--Adv': {
+        backgroundColor: fifthColor
     },
     sliderWrapper: {
         flex: 2

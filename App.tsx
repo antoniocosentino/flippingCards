@@ -36,7 +36,7 @@ import Fuse from 'fuse.js';
 import { Image } from 'react-native';
 
 // this needs to be updated everytime a change in the words database is released
-const DB_VERSION = '2';
+const DB_VERSION = '4';
 
 const SQLite = require( 'react-native-sqlite-storage' );
 
@@ -346,7 +346,7 @@ export default () => {
 
     const [ addSearchWords, setAddSearchWords ] = React.useState( [] as TSearchWords );
 
-    const query = `select * from words where words MATCH '${ removeArticle( addSearch ) }*' AND rank MATCH 'bm25(10.0, 1.0)' GROUP BY de, en ORDER BY ( de = '${ addSearch }' ) desc, rank LIMIT 10`;
+    const query = `select * from words where words MATCH '${ removeArticle( addSearch ) }*' AND rank MATCH 'bm25(10.0, 1.0)' GROUP BY de, en ORDER BY ( de = '${ addSearch }' ), rank LIMIT 20`;
 
     if ( shouldQuery && addSearch !== '' ) {
         setShouldQuery( false );
