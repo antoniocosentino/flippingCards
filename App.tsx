@@ -36,7 +36,7 @@ import Fuse from 'fuse.js';
 import { Image } from 'react-native';
 
 // this needs to be updated everytime a change in the words database is released
-const DB_VERSION = '4';
+const DB_VERSION = '5';
 
 const SQLite = require( 'react-native-sqlite-storage' );
 
