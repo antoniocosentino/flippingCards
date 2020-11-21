@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Text } from '@ui-kitten/components';
 import { TSingleWord, AppContext } from '../App';
 import { styles } from './../styles/styles';
-import { getArticle, getTypeOfWord } from '../utils/utils';
+import { getArticle, getCapitalizedIfNeeded, getTypeOfWord } from '../utils/utils';
 import { TouchableOpacity, View } from 'react-native';
 
 type TSingleSearchResultProps = {
@@ -37,7 +37,7 @@ export const SingleSearchResult = ( props: TSingleSearchResultProps ) => {
             ] }>
                 <Text>
                     <Text style={ styles.singleSearchResultArticle }>{ getArticle( word ) }</Text>
-                    <Text style={ styles.singleSearchResultMainWord }>{ word.de }</Text>
+                    <Text style={ styles.singleSearchResultMainWord }>{ getCapitalizedIfNeeded( word ) }</Text>
                 </Text>
                 <Text style={ styles.enWord } >{ word.en }</Text>
             </View>

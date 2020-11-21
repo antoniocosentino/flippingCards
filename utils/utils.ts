@@ -23,7 +23,27 @@ export const WORDS_FRESHNESS_DATA = [
     'Last Month'
 ];
 
+const capitalizeWord = ( word: string ) => {
+    return word.charAt( 0 ).toUpperCase() + word.slice( 1 );
+};
+
 export const isAndroid = Platform.OS === 'android';
+
+
+export const getCapitalizedIfNeeded = ( word: TSingleWord ): string => {
+
+    const { wordType } = word;
+
+    switch ( wordType ) {
+        case 'm':
+        case 'n':
+        case 'f':
+            return capitalizeWord( word.de );
+
+        default:
+            return word.de;
+    }
+};
 
 export const getArticle = ( word: TSingleWord ): string => {
 
