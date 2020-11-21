@@ -61,3 +61,5 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+android/app/src/main/assets/www/dictionary.db
+www/dictionary.db
