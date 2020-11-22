@@ -7,7 +7,7 @@ import { AppContext, TSingleWalletWord } from '../App';
 import { styles } from '../styles/styles';
 
 import { SwipeListView } from 'react-native-swipe-list-view';
-import { getArticle } from '../utils/utils';
+import { getArticle, getCapitalizedIfNeeded } from '../utils/utils';
 
 export const DeleteIcon = ( props: IconProps ) => <Icon { ...props } fill='#333'  width={ 32 } height={ 32 } name='trash-2-outline' />;
 
@@ -76,7 +76,7 @@ export const List = () => {
                             <Text
                                 style={ styles.mainWord }
                             >
-                                { data.item.de }
+                                { getCapitalizedIfNeeded( data.item ) }
                             </Text>
                         </Text>
                         <Text
