@@ -28,7 +28,7 @@ Flipping Cards is currently only available with German words. Additional languag
 ---
 
 ## Current State:
-The app is currently in beta testing on both platforms (iOS & Android) with a selected group of testers. If you want to join the testing phase, just fill [this form](https://antoniocosentino1.typeform.com/to/fRXYTkS9).
+The app is officially released on [Google Play](https://play.google.com/store/apps/details?id=com.flipcards&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1) while the iOS version is currently being reviewed by Apple.
 
 
 ---
