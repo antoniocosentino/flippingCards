@@ -27,9 +27,9 @@ Flipping Cards is currently only available with German words. Additional languag
 
 ---
 
-## Current State:
-The app is officially released on [Google Play](https://play.google.com/store/apps/details?id=com.flipcards&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1) while the iOS version is currently being reviewed by Apple.
-
+## Download:
+- iOS ([download](https://apps.apple.com/us/app/flipping-cards/id1536330032?ign-itsct=apps_box&ign-itscg=30200))
+- Android ([download](https://play.google.com/store/apps/details?id=com.flipcards&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1))
 
 ---
 
