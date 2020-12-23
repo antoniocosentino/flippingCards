@@ -448,6 +448,7 @@ export default () => {
                                 name='cards'
                                 options={ {
                                     title: '',
+                                    animationEnabled: false,
                                     headerLeft: () => null,
                                     headerStyle: {
                                         shadowColor: 'transparent',
@@ -474,6 +475,8 @@ export default () => {
                                 name='add'
                                 options={ {
                                     title: '',
+                                    animationEnabled: false,
+                                    headerLeft: () => null,
                                     headerStyle: {
                                         shadowColor: 'transparent',
                                         elevation: 0
@@ -494,6 +497,8 @@ export default () => {
                                 component={ ChallengeMode }
                                 options={ {
                                     title: '',
+                                    animationEnabled: false,
+                                    headerLeft: () => null,
                                     headerStyle: {
                                         shadowColor: 'transparent',
                                         elevation: 0
@@ -503,9 +508,11 @@ export default () => {
 
                             <Stack.Screen
                                 name='info'
-                                component={ DebugMode }
+                                component={ InfoView }
                                 options={ {
                                     title: '',
+                                    animationEnabled: false,
+                                    headerLeft: () => null,
                                     headerStyle: {
                                         shadowColor: 'transparent',
                                         elevation: 0
@@ -518,6 +525,8 @@ export default () => {
                                 component={ DebugMode }
                                 options={ {
                                     title: '',
+                                    animationEnabled: false,
+                                    headerLeft: () => null,
                                     headerStyle: {
                                         shadowColor: 'transparent',
                                         elevation: 0
