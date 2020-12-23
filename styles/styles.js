@@ -117,6 +117,7 @@ export const styles = StyleSheet.create( {
         backgroundColor: 'transparent'
     },
     walletInstructions: {
+        marginTop: 40,
         paddingLeft: 30,
         paddingRight: 30
     },
