@@ -1,14 +1,94 @@
-import React, { useContext } from 'react';
-import { Layout, Text, Button } from '@ui-kitten/components';
+import React, { useRef, useState } from 'react';
+import { Text, Icon } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
-import { Image, View } from 'react-native';
-import { AppContext } from '../App';
-import { DEMO_WORDS } from '../utils/demoData';
+import Carousel from 'react-native-snap-carousel';
+import { View } from 'react-native';
+import { TWords } from '../App';
+import FlipCard from 'react-native-flip-card';
+import { getArticle } from '../utils/utils';
 
+type TCards = {
+    deck: TWords;
+}
 
-export const Cards = () => {
+type TRenderCardProps = {
+    item: any;
+    index: number;
+};
+
+export const Cards = ( props: TCards ) => {
+    const [ cardWrapperDimensions, setCardWrapperDimensions ] = useState( { width: 0, height: 0 } );
+    const carouselRef = useRef( null );
+    const { deck } = props;
 
     return (
-        <Text>ciao</Text>
+        <>
+            <View
+                style={ styles.sliderWrapper }
+                onLayout={ ( event ) => {
+                    const { height, width } = event.nativeEvent.layout;
+                    setCardWrapperDimensions( { width, height } );
+                } }
+            >
+                { cardWrapperDimensions.height > 0 &&
+                    <Carousel
+                        ref={ carouselRef }
+                        data={ deck }
+                        sliderHeight={ cardWrapperDimensions.height }
+                        itemHeight={ cardWrapperDimensions.height * ( 1 - 0.35 ) }
+                        vertical={ true }
+                        layout={ 'default' }
+                        loop={ false }
+                        renderItem={ renderCard }
+                        firstItem={ 0 }
+                    />
+                }
+            </View>
+        </>
+    );
+};
+
+
+const renderCard = ( props: TRenderCardProps ) => {
+    const { item } = props;
+
+    // const typeOfWord = getTypeOfWord( item );
+
+    if ( item.de  === '___firstItem___' ) {
+        return (
+            <View style={ styles.cardFrontAndBack }>
+                <Text style={ styles.whiteText } category='s1'>START</Text>
+                <Text style={ [ styles.slideText, styles.firstSlideText ] }>This is the beginning of your deck.</Text>
+                <Text style={ [ styles.slideText, styles.firstSlideText ] }>Scroll through the cards and tap to flip them.</Text>
+                <View style={ styles.centeredView }>
+                    <Icon
+                        fill='#fff'
+                        name='arrow-downward-outline'
+                        style={ styles.icon }
+                    />
+                </View>
+            </View>
+        );
+    }
+
+
+    return (
+        <View style={ styles.singleSlide }>
+            <View style={ styles.singleCardWrapper }>
+                <FlipCard
+                    style={ styles.singleCard }
+                    flipHorizontal={ true }
+                    flipVertical={ false }
+                >
+                    <View style={ styles.cardFrontAndBack }>
+                        <Text style={ styles.slideText }>{ item.en }</Text>
+                    </View>
+
+                    <View style={ [ styles.cardFrontAndBack, styles.cardBack ] }>
+                        <Text style={ styles.slideText }>{ getArticle( item ) } { item.de }</Text>
+                    </View>
+                </FlipCard>
+            </View>
+        </View>
     );
 };
