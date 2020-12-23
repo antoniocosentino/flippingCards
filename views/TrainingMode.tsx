@@ -1,71 +1,21 @@
-import React, { useRef, Dispatch, SetStateAction, useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Text, Icon, Button, IndexPath, Layout, IconProps, Divider, Select, SelectItem, Modal, Card } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
-import Carousel from 'react-native-snap-carousel';
 import { AppContext, TWords, TWordsWallet } from '../App';
 import AsyncStorage from '@react-native-community/async-storage';
-import { View } from 'react-native';
-import FlipCard from 'react-native-flip-card';
-import { DECK_SIZE_DATA, getArticle, getShuffledCards, TWordsFreshnessValues, WORDS_FRESHNESS_DATA } from '../utils/utils';
+import { DECK_SIZE_DATA, getShuffledCards, TWordsFreshnessValues, WORDS_FRESHNESS_DATA } from '../utils/utils';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { AddWordIcon } from '../App';
-
-type TRenderCardProps = {
-    item: any;
-    index: number;
-};
+import { Cards } from './Cards';
 
 type TTrainingModeInstructionsProps = {
     wordsWallet: TWordsWallet;
     deck: TWords;
     storeDeckData: ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ) => Promise<number>;
+    navigation: any; // TODO: I don't know the type of this
 }
-
-const renderCard = ( props: TRenderCardProps ) => {
-    const { item } = props;
-
-    // const typeOfWord = getTypeOfWord( item );
-
-    if ( item.de  === '___firstItem___' ) {
-        return (
-            <View style={ styles.cardFrontAndBack }>
-                <Text style={ styles.whiteText } category='s1'>START</Text>
-                <Text style={ [ styles.slideText, styles.firstSlideText ] }>This is the beginning of your deck.</Text>
-                <Text style={ [ styles.slideText, styles.firstSlideText ] }>Scroll through the cards and tap to flip them.</Text>
-                <View style={ styles.centeredView }>
-                    <Icon
-                        fill='#fff'
-                        name='arrow-downward-outline'
-                        style={ styles.icon }
-                    />
-                </View>
-            </View>
-        );
-    }
-
-
-    return (
-        <View style={ styles.singleSlide }>
-            <View style={ styles.singleCardWrapper }>
-                <FlipCard
-                    style={ styles.singleCard }
-                    flipHorizontal={ true }
-                    flipVertical={ false }
-                >
-                    <View style={ styles.cardFrontAndBack }>
-                        <Text style={ styles.slideText }>{ item.en }</Text>
-                    </View>
-
-                    <View style={ [ styles.cardFrontAndBack, styles.cardBack ] }>
-                        <Text style={ styles.slideText }>{ getArticle( item ) } { item.de }</Text>
-                    </View>
-                </FlipCard>
-            </View>
-        </View>
-    );
-};
 
 const CardsIcon = ( props: IconProps ) => (
     <Icon { ...props } name='grid-outline' />
@@ -77,8 +27,7 @@ const ShuffleIcon = ( props: IconProps ) => (
 
 const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
-    const { wordsWallet, deck, storeDeckData } = props;
-
+    const { wordsWallet, deck, storeDeckData, navigation } = props;
     const [modalVisible, setModalVisible] = React.useState( false );
 
     const [selectedDeckSizeIndex, setSelectedDeckSizeIndex] = React.useState( new IndexPath( 1 ) );
@@ -130,7 +79,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
             { deck.length > 1 &&
                 <>
                     { /* TODO: implement navigation here */ }
-                    <Button onPress={ undefined } style={ styles.ctaButton } accessoryLeft={ CardsIcon }>
+                    <Button onPress={ () => navigation.navigate( 'training-mode_cards' ) } style={ styles.ctaButton } accessoryLeft={ CardsIcon }>
                         GO TO EXISTING DECK
                     </Button>
 
@@ -204,15 +153,11 @@ const Stack = createStackNavigator();
 
 export const TrainingMode = () => {
 
-    const carouselRef = useRef( null );
-
     const [ deck, setDeck ] = React.useState( [] as TWords );
     const [ isDeckDataUpdated, setDeckDataUpdated ] = React.useState( false );
 
     const appData = useContext( AppContext );
     const { wordsWallet } = appData;
-
-    const [ cardWrapperDimensions, setCardWrapperDimensions ] = useState( { width: 0, height: 0 } );
 
     const getDeckData = async () => {
         try {
@@ -264,9 +209,10 @@ export const TrainingMode = () => {
                     } }
                 >
                     {
-                        () => {
+                        ( props ) => {
                             return (
-                                <TrainingModeInstructions 
+                                <TrainingModeInstructions
+                                    { ...props }
                                     wordsWallet={ wordsWallet }
                                     deck={ deck }
                                     storeDeckData={ storeDeckData }
@@ -276,34 +222,31 @@ export const TrainingMode = () => {
                     }
                 </Stack.Screen>
 
+                <Stack.Screen
+                    name='training-mode_cards'
+                    options={ {
+                        headerShown: true,
+                        title: '',
+                        animationEnabled: true,
+                        headerStyle: {
+                            shadowColor: 'transparent',
+                            elevation: 0
+                        }
+                    } }
+                >
+                    {
+                        ( props ) => {
+                            return (
+                                <Cards
+                                    { ...props }
+                                    deck={ deck }
+                                />
+                            );
+                        }
+                    }
+                </Stack.Screen>
+
             </Stack.Navigator>
         </Layout>
-    );
-    
-
-    return (
-        <>
-            <View
-                style={ styles.sliderWrapper }
-                onLayout={ ( event ) => {
-                    const { height, width } = event.nativeEvent.layout;
-                    setCardWrapperDimensions( { width, height } );
-                } }
-            >
-                { cardWrapperDimensions.height > 0 &&
-                    <Carousel
-                        ref={ carouselRef }
-                        data={ deck }
-                        sliderHeight={ cardWrapperDimensions.height }
-                        itemHeight={ cardWrapperDimensions.height * ( 1 - 0.35 ) }
-                        vertical={ true }
-                        layout={ 'default' }
-                        loop={ false }
-                        renderItem={ renderCard }
-                        firstItem={ 0 }
-                    />
-                }
-            </View>
-        </>
     );
 };

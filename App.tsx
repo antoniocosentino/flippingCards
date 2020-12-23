@@ -3,9 +3,7 @@ import {
     ApplicationProvider,
     IconRegistry,
     Layout,
-    Input,
     Icon,
-    Text,
     IconProps
 } from '@ui-kitten/components';
 
@@ -18,15 +16,13 @@ import { styles } from './styles/styles';
 import { List } from './views/List';
 import { BottomMenu } from './views/BottomMenu';
 import { SearchResults } from './components/SearchResults';
-import { removeArticle, getShuffledCards, TWordsFreshnessValues, uncapitalizeWord } from './utils/utils';
+import { removeArticle, uncapitalizeWord } from './utils/utils';
 import { TrainingMode } from './views/TrainingMode';
 import { customTheme } from './utils/customTheme';
 import { ChallengeMode } from './views/ChallengeMode';
 import { InfoView } from './views/InfoView';
 
 import { NavigationContainer } from '@react-navigation/native';
-
-import SafeArea, { SafeAreaInsets } from 'react-native-safe-area';
 
 import Fuse from 'fuse.js';
 import { DebugMode } from './views/DebugMode';
@@ -147,21 +143,13 @@ export default () => {
 
     const [ hasFetchedWallet, setHasFetchedWallet ] = React.useState( false );
 
-    const [ deviceNotchSize, setDeviceNotchSize ] = React.useState( 0 );
-
+    // TODO: check what to do here
     // useEffect( () => {
     //     setAddSearchWords( [] );
     //     setAddSearch( '' );
     // }, [ view ] );
 
-    SafeArea.getSafeAreaInsetsForRootView()
-        .then( ( result: any ) => {
-            const safeAreaInsets: SafeAreaInsets = result.safeAreaInsets;
-            setDeviceNotchSize( safeAreaInsets.bottom );
-        } );
-
     const [ isDataUpdated, setDataUpdated ] = React.useState( false );
-    
 
     const storeData = async ( value: TWordsWallet ) => {
 
@@ -226,10 +214,6 @@ export default () => {
     useEffect( () => {
         getDBversion();
     } );
-
-    
-
-    
 
     if ( !isDataUpdated ){
         getData();
@@ -384,11 +368,8 @@ export default () => {
             <IconRegistry icons={ EvaIconsPack } />
             <ApplicationProvider { ...eva } theme={ customTheme }>
                 <AppContext.Provider value={ appData }>
-
-                    
                     <Layout style={ styles.stackNavigatorWrapper } >
-
-                       <Stack.Navigator
+                        <Stack.Navigator
                             screenOptions={ {
                                 cardStyle: { backgroundColor: '#fff' }
                             } }
@@ -412,7 +393,7 @@ export default () => {
                                 options={ {
                                     title: '',
                                     animationEnabled: false,
-                                    headerLeft: () => null,
+                                    headerShown: false,
                                     headerStyle: {
                                         shadowColor: 'transparent',
                                         elevation: 0
