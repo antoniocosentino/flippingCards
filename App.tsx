@@ -19,7 +19,7 @@ import { List } from './views/List';
 import { BottomMenu } from './views/BottomMenu';
 import { SearchResults } from './components/SearchResults';
 import { removeArticle, getShuffledCards, TWordsFreshnessValues, uncapitalizeWord } from './utils/utils';
-import { Cards } from './views/Cards';
+import { TrainingMode } from './views/TrainingMode';
 import { customTheme } from './utils/customTheme';
 import { ChallengeMode } from './views/ChallengeMode';
 import { InfoView } from './views/InfoView';
@@ -276,7 +276,7 @@ export default () => {
                 break;
 
             case 1:
-                customNavigate( 'cards' );
+                customNavigate( 'training-mode' );
                 break;
 
             case 2:
@@ -445,7 +445,7 @@ export default () => {
                             />
 
                             <Stack.Screen
-                                name='cards'
+                                name='training-mode'
                                 options={ {
                                     title: '',
                                     animationEnabled: false,
@@ -459,7 +459,7 @@ export default () => {
                                 {
                                     () => {
                                         return (
-                                            <Cards
+                                            <TrainingMode
                                                 deck={ deck }
                                                 cardsView={ cardsView }
                                                 setCardsView={ setCardsView }
@@ -512,7 +512,7 @@ export default () => {
                                 options={ {
                                     title: '',
                                     animationEnabled: false,
-                                    headerLeft: () => null,
+                                    headerShown: false,
                                     headerStyle: {
                                         shadowColor: 'transparent',
                                         elevation: 0

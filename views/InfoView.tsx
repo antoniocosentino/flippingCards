@@ -7,6 +7,7 @@ import { AppContext } from '../App';
 import 'react-native-gesture-handler';
 
 import { createStackNavigator } from '@react-navigation/stack';
+
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 export const FlexiIcon = ( settingsIconProps: IconProps ) => (
@@ -28,6 +29,7 @@ export const InfoView = () => {
                     component={ InfoMainView }
                     options={ {
                         title: '',
+                        headerLeft: () => null,
                         headerStyle: {
                             shadowColor: 'transparent',
                             elevation: 0
@@ -38,6 +40,7 @@ export const InfoView = () => {
                     name='infoSecondView'
                     component={ InfoSecondView }
                     options={ {
+                        headerShown: true,
                         title: 'App Info',
                         headerStyle: {
                             shadowColor: 'transparent'
