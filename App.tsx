@@ -12,12 +12,11 @@ import {
 } from '@ui-kitten/components';
 
 import { debounce } from 'lodash';
-import { TouchableWithoutFeedback, View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import AsyncStorage from '@react-native-community/async-storage';
 import { DEMO_WORDS_DEBUG } from './utils/demoData.debug.js';
-import { DEMO_WORDS } from './utils/demoData.js';
 import { styles } from './styles/styles';
 import { List } from './views/List';
 import { BottomMenu } from './views/BottomMenu';
@@ -33,7 +32,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import SafeArea, { SafeAreaInsets } from 'react-native-safe-area';
 
 import Fuse from 'fuse.js';
-import { Image } from 'react-native';
+import { EmptyList } from './views/EmptyList';
 
 // this needs to be updated everytime a change in the words database is released
 const DB_VERSION = '5';
@@ -504,49 +503,7 @@ export default () => {
                         }
 
                         { view === 'LIST' && hasFetchedWallet && wordsWallet.length === 0 &&
-                            <>
-                                <Layout style={ styles.walletInstructionsWrapper }>
-                                    <Layout style={ styles.walletInstructions }>
-                                        <Text style={ [ styles.text, styles.titleText ] } category='h4'>Hello there! 👋</Text>
-
-                                        <Text style={ [ styles.text, styles.instructionsText ] }>
-                                            This is your wallet view. All the words that you add in your wallet will show up here.
-                                        </Text>
-
-                                        <View
-                                            style={ styles.centeredSimpleView }
-                                        >
-                                            <Image
-                                                source={ require( './img/start-page.jpg' ) }
-                                                resizeMode={ 'contain' }
-                                                // eslint-disable-next-line react-native/no-inline-styles
-                                                style={ {
-                                                    width: 250,
-                                                    height: 249 // this small hack fixes an issue with an unwanted border on Android
-                                                } }
-                                            />
-                                        </View>
-                                    </Layout>
-
-                                    <Layout style={ styles.walletInstructions }>
-                                        <Button onPress={ () => storeData( DEMO_WORDS ) } style={ styles.ctaButton }>
-                                            START WITH DEMO WORDS
-                                        </Button>
-                                    </Layout>
-                                </Layout>
-
-                                <Layout style={ styles.tapInstructions }>
-                                    <Image
-                                        source={ require( './img/tap-hint.png' ) }
-                                        resizeMode={ 'cover' }
-                                        // eslint-disable-next-line react-native/no-inline-styles
-                                        style={ {
-                                            width: 350,
-                                            height: 100 // this small hack fixes an issue with an unwanted border on Android
-                                        } }
-                                    />
-                                </Layout>
-                            </>
+                            <EmptyList />
                         }
 
                         {
