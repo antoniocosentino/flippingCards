@@ -32,6 +32,8 @@ import Fuse from 'fuse.js';
 import { EmptyList } from './views/EmptyList';
 import { DebugMode } from './views/DebugMode';
 
+import { createStackNavigator } from '@react-navigation/stack';
+
 // this needs to be updated everytime a change in the words database is released
 const DB_VERSION = '5';
 
@@ -78,6 +80,8 @@ export type TWordsWallet = ReadonlyArray<TSingleWalletWord>
 
 type TAppData = {
     wordsWallet: TWordsWallet,
+    hasFetchedWallet: boolean,
+    searchValue: string,
     filteredWordsWallet: TWordsWallet,
     selectedIndex: number,
     hasShownAnimation: boolean,
@@ -88,7 +92,8 @@ type TAppData = {
     addSingleWord: ( word: TSingleWord ) => void,
     setView: ( view: string ) => void,
     wipeWalletSearch: () => void,
-    increaseTapsCount: () => void
+    increaseTapsCount: () => void,
+    setSearchValue: ( param: string ) => void
 };
 
 export type TSearchWords = TWords;
@@ -109,8 +114,16 @@ export const storeDBversion = async ( version: string ) => {
     }
 };
 
+export const navigationRef = React.createRef() as any; // TODO: type
+
+const customNavigate = ( route: string ) => {
+    navigationRef.current?.navigate( route );
+};
+
 export default () => {
     const [ selectedIndex, setSelectedIndex ] = React.useState( 0 );
+
+
 
     // DEFAULT VIEW IS DEFINED HERE
     const [ view, setView ] = React.useState( 'LIST' );
@@ -155,6 +168,7 @@ export default () => {
     const [ isDeckDataUpdated, setDeckDataUpdated ] = React.useState( false );
 
     const storeData = async ( value: TWordsWallet ) => {
+
         setDataUpdated( false );
         try {
             const jsonValue = JSON.stringify( value );
@@ -258,23 +272,23 @@ export default () => {
         switch ( index ) {
             case 0:
             default:
-                setView( 'LIST' );
+                customNavigate( 'list' );
                 break;
 
             case 1:
-                setView( 'CARDS' );
+                customNavigate( 'cards' );
                 break;
 
             case 2:
-                setView( 'ADD' );
+                customNavigate( 'add' );
                 break;
 
             case 3:
-                setView( 'PLAY' );
+                customNavigate( 'challenge-mode' );
                 break;
 
             case 4:
-                setView( 'INFO' );
+                customNavigate( 'info' );
                 break;
         }
 
@@ -295,12 +309,15 @@ export default () => {
 
     const appData: TAppData = {
         wordsWallet,
+        hasFetchedWallet,
+        searchValue,
         filteredWordsWallet,
         selectedIndex,
         hasShownAnimation,
         setHasShownAnimation,
         onMenuClick,
         storeData,
+        setSearchValue,
         storeDeckData,
         addSingleWord,
         setView,
@@ -390,24 +407,6 @@ export default () => {
         );
     };
 
-    const renderCloseIconForWalletSearch = ( props: IconProps ) => {
-        if ( searchValue.length < 1 ) {
-            return <></>;
-        }
-
-        return (
-            <TouchableWithoutFeedback onPress={ wipeWalletSearch }>
-                <Icon { ...props } width={ 22 } height={ 22 } fill='#ccc' name={ 'close-circle' } />
-            </TouchableWithoutFeedback>
-        );
-    };
-
-    const renderFilterIcon = ( props: IconProps ) => {
-        return (
-            <Icon { ...props } width={ 22 } height={ 22 } fill='#ccc' name={ 'search-outline' } />
-        );
-    };
-
     const goToMainPage = () => {
         setCardsView( 'instructions' );
     };
@@ -416,117 +415,124 @@ export default () => {
         <Icon { ...settingsIconProps } width={ 22 } height={ 22 } fill='#333' name='settings-2-outline'/>
     );
 
+    const Stack = createStackNavigator();
+
     return (
-        <NavigationContainer>
+        <NavigationContainer ref={ navigationRef }>
             <IconRegistry icons={ EvaIconsPack } />
             <ApplicationProvider { ...eva } theme={ customTheme }>
                 <AppContext.Provider value={ appData }>
 
-                    { view !== 'INFO' &&
-                        // since INFO is a special page, which uses react navigation,
-                        // we can't render the top container here
-                        <Layout style={ [
-                            styles.topContainer,
-                            deviceNotchSize > 0 ? styles['topContainer--withNotch'] : null,
-                            view === 'ADD' && styles.coloredTopContainer
-                        ] }>
+                    
+                    <Layout style={ styles.stackNavigatorWrapper } >
 
-                            { view === 'LIST' && hasFetchedWallet && wordsWallet.length > 0 &&
-                                <Layout style={ styles.transparentLayout } >
-                                    <Input
-                                        style={ styles.topSearchInput }
-                                        placeholder='Search your wallet'
-                                        value={ searchValue }
-                                        onChangeText={ nextValue => setSearchValue( nextValue ) }
-                                        size={ 'small' }
-                                        accessoryRight={ renderCloseIconForWalletSearch }
-                                        accessoryLeft={ renderFilterIcon }
-                                    />
-                                </Layout>
-                            }
-
-                            { view === 'ADD' &&
-                                <Layout style={ styles.addBar }>
-                                    <Layout style={ styles.addBarLeft }>
-                                        <Icon
-                                            onPress={ () => onMenuClick( 0 )  }
-                                            width={ 30 }
-                                            height={ 30 }
-                                            fill='#fff'
-                                            name={ 'close' }
-                                        />
-                                    </Layout>
-                                    <Layout style={ styles.addBarRight }>
-                                        <Input
-                                            autoFocus={ true }
-                                            autoCorrect={ false }
-                                            style={ styles.addWordInput }
-                                            placeholder='Type the word you want to add'
-                                            value={ addSearch }
-                                            onChangeText={ nextValue => setAddSearchWrapper( nextValue ) }
-                                            size={ 'medium' }
-                                            accessoryRight={ renderCloseIcon }
-                                        />
-                                    </Layout>
-                                </Layout>
-                            }
-
-                            { view === 'CARDS' && cardsView === 'cards' &&
-                                <Layout
-                                    style={ styles.cardsTopNav }>
-                                    <Text onPress={ goToMainPage } style={ styles.text } >
-                                        <SettingsIcon style={ styles.cardsTopIcon } />
-                                        Configure Deck
-                                    </Text>
-                                </Layout>
-                            }
-                        </Layout>
-                    }
-
-                    <Layout style={ styles.mainBlock }>
-                        { view === 'CARDS' &&
-                            <Cards
-                                deck={ deck }
-                                cardsView={ cardsView }
-                                setCardsView={ setCardsView }
-                                setView={ setView }
-                                storeDeckData={ storeDeckData }
+                       <Stack.Navigator
+                            screenOptions={ {
+                                cardStyle: { backgroundColor: '#fff' }
+                            } }
+                        >
+                            <Stack.Screen
+                                name='list'
+                                component={ List }
+                                options={ {
+                                    title: '',
+                                    headerStyle: {
+                                        height: 50,
+                                        shadowColor: 'transparent',
+                                        elevation: 0
+                                    }
+                                } }
                             />
-                        }
-                        { view === 'LIST' && wordsWallet.length > 0 &&
-                            <List />
-                        }
 
-                        { view === 'PLAY' &&
-                            <ChallengeMode />
-                        }
+                            <Stack.Screen
+                                name='cards'
+                                options={ {
+                                    title: '',
+                                    headerLeft: () => null,
+                                    headerStyle: {
+                                        shadowColor: 'transparent',
+                                        elevation: 0
+                                    }
+                                } }
+                            >
+                                {
+                                    () => {
+                                        return (
+                                            <Cards
+                                                deck={ deck }
+                                                cardsView={ cardsView }
+                                                setCardsView={ setCardsView }
+                                                setView={ setView }
+                                                storeDeckData={ storeDeckData }
+                                            />
+                                        );
+                                    }
+                                }
+                            </Stack.Screen>
 
-                        { view === 'LIST' && hasFetchedWallet && wordsWallet.length === 0 &&
-                            <EmptyList />
-                        }
+                            <Stack.Screen
+                                name='add'
+                                options={ {
+                                    title: '',
+                                    headerStyle: {
+                                        shadowColor: 'transparent',
+                                        elevation: 0
+                                    }
+                                } }
+                            >
+                                {
+                                    () => {
+                                        return (
+                                            <SearchResults results={ addSearchWords } />
+                                        );
+                                    }
+                                }
+                            </Stack.Screen>
 
-                        {
-                            view === 'ADD' &&
-                            <SearchResults results={ addSearchWords } />
-                        }
+                            <Stack.Screen
+                                name='challenge-mode'
+                                component={ ChallengeMode }
+                                options={ {
+                                    title: '',
+                                    headerStyle: {
+                                        shadowColor: 'transparent',
+                                        elevation: 0
+                                    }
+                                } }
+                            />
 
-                        { view === 'INFO' &&
-                            <InfoView />
-                        }
+                            <Stack.Screen
+                                name='info'
+                                component={ DebugMode }
+                                options={ {
+                                    title: '',
+                                    headerStyle: {
+                                        shadowColor: 'transparent',
+                                        elevation: 0
+                                    }
+                                } }
+                            />
 
-                        { view === 'DEBUG' &&
-                            <DebugMode />
-                        }
+                            <Stack.Screen
+                                name='debug'
+                                component={ DebugMode }
+                                options={ {
+                                    title: '',
+                                    headerStyle: {
+                                        shadowColor: 'transparent',
+                                        elevation: 0
+                                    }
+                                } }
+                            />
+
+                        </Stack.Navigator>
+
                     </Layout>
 
-                    <Layout
-                        style={ [
-                            styles.bottomZone,
-                            view === 'INFO' && styles['bottomZone--specialCase']
-                        ] }
-                    >
+                    <Layout style={ styles.bottomZone }>
                         <BottomMenu />
                     </Layout>
+
                 </AppContext.Provider>
             </ApplicationProvider>
         </NavigationContainer>

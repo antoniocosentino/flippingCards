@@ -41,8 +41,8 @@ export const styles = StyleSheet.create( {
     coloredTopContainer: {
         backgroundColor: mainColor
     },
-    transparentLayout: {
-        backgroundColor: 'transparent'
+    listSearchWrapper: {
+        marginBottom: 6
     },
     select: {
         flex: 1,
@@ -389,7 +389,7 @@ export const styles = StyleSheet.create( {
     },
     stackNavigatorWrapper: {
         width: '100%',
-        flex: 1
+        flex: 13
     },
     standardModal: {
         width: '90%'
