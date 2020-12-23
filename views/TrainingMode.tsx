@@ -3,10 +3,10 @@ import { Text, Icon, Button, IndexPath, Layout, IconProps, Divider, Select, Sele
 import { styles } from './../styles/styles';
 import Carousel from 'react-native-snap-carousel';
 import { AppContext, TWords, TWordsWallet } from '../App';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import { View } from 'react-native';
 import FlipCard from 'react-native-flip-card';
-import { DECK_SIZE_DATA, getArticle, TWordsFreshnessValues, WORDS_FRESHNESS_DATA } from '../utils/utils';
+import { DECK_SIZE_DATA, getArticle, getShuffledCards, TWordsFreshnessValues, WORDS_FRESHNESS_DATA } from '../utils/utils';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -16,14 +16,6 @@ type TRenderCardProps = {
     item: any;
     index: number;
 };
-
-type TTrainingModeProps = {
-    deck: TWords;
-    cardsView: string;
-    setView: Dispatch<SetStateAction<string>>;
-    setCardsView: Dispatch<SetStateAction<string>>;
-    storeDeckData: ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ) => Promise<number>;
-}
 
 type TTrainingModeInstructionsProps = {
     wordsWallet: TWordsWallet;
@@ -112,7 +104,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
     };
 
     return (
-        <Layout level='1' style={ styles.instructions }>
+        <Layout style={ styles.instructions }>
 
             <Text style={ [ styles.text, styles.titleText ] } category='h4'>Training mode</Text>
 
@@ -210,16 +202,47 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
 const Stack = createStackNavigator();
 
-export const TrainingMode = ( props: TTrainingModeProps ) => {
+export const TrainingMode = () => {
 
     const carouselRef = useRef( null );
 
-    const { deck, cardsView, setView, setCardsView, storeDeckData } = props;
+    const [ deck, setDeck ] = React.useState( [] as TWords );
+    const [ isDeckDataUpdated, setDeckDataUpdated ] = React.useState( false );
 
     const appData = useContext( AppContext );
     const { wordsWallet } = appData;
 
     const [ cardWrapperDimensions, setCardWrapperDimensions ] = useState( { width: 0, height: 0 } );
+
+    const getDeckData = async () => {
+        try {
+            const value = await AsyncStorage.getItem( '@deck' );
+
+            if ( value !== null ) {
+                setDeck( JSON.parse( value ) );
+            }
+        } catch ( e ) {
+            // error reading value
+        }
+    };
+
+    const storeDeckData = async ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ): Promise<number> => {
+        const shuffledCards = getShuffledCards( value, nOfCards, wordsFreshness );
+        setDeckDataUpdated( false );
+        try {
+            const jsonValue = JSON.stringify( shuffledCards );
+            await AsyncStorage.setItem( '@deck', jsonValue );
+        } catch ( e ) {
+            console.error( 'Error:', e );
+        }
+
+        return shuffledCards.length;
+    };
+
+    if ( !isDeckDataUpdated ){
+        getDeckData();
+        setDeckDataUpdated( true );
+    }
 
     return (
         <Layout style={ styles.stackNavigatorWrapper } >

@@ -29,7 +29,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import SafeArea, { SafeAreaInsets } from 'react-native-safe-area';
 
 import Fuse from 'fuse.js';
-import { EmptyList } from './views/EmptyList';
 import { DebugMode } from './views/DebugMode';
 
 import { createStackNavigator } from '@react-navigation/stack';
@@ -88,9 +87,7 @@ type TAppData = {
     setHasShownAnimation: ( value: boolean ) => void,
     onMenuClick: ( index: number ) => void,
     storeData: ( value: TWordsWallet ) => void,
-    storeDeckData: ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues  ) => Promise<number>,
     addSingleWord: ( word: TSingleWord ) => void,
-    setView: ( view: string ) => void,
     wipeWalletSearch: () => void,
     increaseTapsCount: () => void,
     setSearchValue: ( param: string ) => void
@@ -123,11 +120,8 @@ const customNavigate = ( route: string ) => {
 export default () => {
     const [ selectedIndex, setSelectedIndex ] = React.useState( 0 );
 
-
-
-    // DEFAULT VIEW IS DEFINED HERE
-    const [ view, setView ] = React.useState( 'LIST' );
-    const [ cardsView, setCardsView ] = React.useState( 'instructions' );
+    const currentRouteObj = navigationRef.current?.getCurrentRoute();
+    const currentRoute = currentRouteObj?.name;
 
     // dev feature to enable debug mode
     const [ tapsCount, setTapsCount ] = React.useState( 0 );
@@ -136,9 +130,11 @@ export default () => {
         setTapsCount( tapsCount + 1 );
     };
 
-    if ( tapsCount >= 10 && view !== 'DEBUG' ){
-        setView( 'DEBUG' );
-    }
+    useEffect( () => {
+        if ( tapsCount >= 10 && currentRoute !== 'debug' ){
+            customNavigate( 'debug' );
+        }
+    }, [ tapsCount, currentRoute ] );
 
     const [ wordsWallet, setWordsWallet ] = React.useState( [] as TWordsWallet );
 
@@ -153,10 +149,10 @@ export default () => {
 
     const [ deviceNotchSize, setDeviceNotchSize ] = React.useState( 0 );
 
-    useEffect( () => {
-        setAddSearchWords( [] );
-        setAddSearch( '' );
-    }, [ view ] );
+    // useEffect( () => {
+    //     setAddSearchWords( [] );
+    //     setAddSearch( '' );
+    // }, [ view ] );
 
     SafeArea.getSafeAreaInsetsForRootView()
         .then( ( result: any ) => {
@@ -165,7 +161,7 @@ export default () => {
         } );
 
     const [ isDataUpdated, setDataUpdated ] = React.useState( false );
-    const [ isDeckDataUpdated, setDeckDataUpdated ] = React.useState( false );
+    
 
     const storeData = async ( value: TWordsWallet ) => {
 
@@ -176,19 +172,6 @@ export default () => {
         } catch ( e ) {
             console.error( 'Error:', e );
         }
-    };
-
-    const storeDeckData = async ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ): Promise<number> => {
-        const shuffledCards = getShuffledCards( value, nOfCards, wordsFreshness );
-        setDeckDataUpdated( false );
-        try {
-            const jsonValue = JSON.stringify( shuffledCards );
-            await AsyncStorage.setItem( '@deck', jsonValue );
-        } catch ( e ) {
-            console.error( 'Error:', e );
-        }
-
-        return shuffledCards.length;
     };
 
     const addSingleWord = ( word: TSingleWord ) => {
@@ -244,28 +227,13 @@ export default () => {
         getDBversion();
     } );
 
-    const getDeckData = async () => {
-        try {
-            const value = await AsyncStorage.getItem( '@deck' );
+    
 
-            if ( value !== null ) {
-                setDeck( JSON.parse( value ) );
-            }
-        } catch ( e ) {
-            // error reading value
-        }
-    };
-
-    const [ deck, setDeck ] = React.useState( [] as TWords );
+    
 
     if ( !isDataUpdated ){
         getData();
         setDataUpdated( true );
-    }
-
-    if ( !isDeckDataUpdated ){
-        getDeckData();
-        setDeckDataUpdated( true );
     }
 
     const onMenuClick = ( index: number ) => {
@@ -318,9 +286,7 @@ export default () => {
         onMenuClick,
         storeData,
         setSearchValue,
-        storeDeckData,
         addSingleWord,
-        setView,
         wipeWalletSearch,
         increaseTapsCount
     };
@@ -407,10 +373,6 @@ export default () => {
         );
     };
 
-    const goToMainPage = () => {
-        setCardsView( 'instructions' );
-    };
-
     const SettingsIcon = ( settingsIconProps: IconProps ) => (
         <Icon { ...settingsIconProps } width={ 22 } height={ 22 } fill='#333' name='settings-2-outline'/>
     );
@@ -446,6 +408,7 @@ export default () => {
 
                             <Stack.Screen
                                 name='training-mode'
+                                component={ TrainingMode }
                                 options={ {
                                     title: '',
                                     animationEnabled: false,
@@ -455,21 +418,7 @@ export default () => {
                                         elevation: 0
                                     }
                                 } }
-                            >
-                                {
-                                    () => {
-                                        return (
-                                            <TrainingMode
-                                                deck={ deck }
-                                                cardsView={ cardsView }
-                                                setCardsView={ setCardsView }
-                                                setView={ setView }
-                                                storeDeckData={ storeDeckData }
-                                            />
-                                        );
-                                    }
-                                }
-                            </Stack.Screen>
+                            />
 
                             <Stack.Screen
                                 name='add'
