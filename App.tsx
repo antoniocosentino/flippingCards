@@ -6,9 +6,7 @@ import {
     Input,
     Icon,
     Text,
-    Button,
-    IconProps,
-    Divider
+    IconProps
 } from '@ui-kitten/components';
 
 import { debounce } from 'lodash';
@@ -16,7 +14,6 @@ import { TouchableWithoutFeedback } from 'react-native';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import AsyncStorage from '@react-native-community/async-storage';
-import { DEMO_WORDS_DEBUG } from './utils/demoData.debug.js';
 import { styles } from './styles/styles';
 import { List } from './views/List';
 import { BottomMenu } from './views/BottomMenu';
@@ -33,6 +30,7 @@ import SafeArea, { SafeAreaInsets } from 'react-native-safe-area';
 
 import Fuse from 'fuse.js';
 import { EmptyList } from './views/EmptyList';
+import { DebugMode } from './views/DebugMode';
 
 // this needs to be updated everytime a change in the words database is released
 const DB_VERSION = '5';
@@ -62,7 +60,7 @@ export const AddWordIcon = ( props: IconProps ) => (
     <Icon { ...props } name='plus-outline' />
 );
 
-const dbRefresh = () => {
+export const dbRefresh = () => {
     SQLite.deleteDatabase( { name: 'dictionary.db', createFromLocation: 1 }, okDeletionCallback, errorDeletionCallback );
 };
 
@@ -86,6 +84,7 @@ type TAppData = {
     setHasShownAnimation: ( value: boolean ) => void,
     onMenuClick: ( index: number ) => void,
     storeData: ( value: TWordsWallet ) => void,
+    storeDeckData: ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues  ) => Promise<number>,
     addSingleWord: ( word: TSingleWord ) => void,
     setView: ( view: string ) => void,
     wipeWalletSearch: () => void,
@@ -96,11 +95,18 @@ export type TSearchWords = TWords;
 
 export const AppContext = React.createContext( {} as TAppData );
 
-
 let hasShownAnimation = false;
 
 const setHasShownAnimation = ( value: boolean ) => {
     hasShownAnimation = value;
+};
+
+export const storeDBversion = async ( version: string ) => {
+    try {
+        await AsyncStorage.setItem( '@dbVersion', version );
+    } catch ( e ) {
+        console.error( 'Error:', e );
+    }
 };
 
 export default () => {
@@ -153,14 +159,6 @@ export default () => {
         try {
             const jsonValue = JSON.stringify( value );
             await AsyncStorage.setItem( '@wordsWallet', jsonValue );
-        } catch ( e ) {
-            console.error( 'Error:', e );
-        }
-    };
-
-    const storeDBversion = async ( version: string ) => {
-        try {
-            await AsyncStorage.setItem( '@dbVersion', version );
         } catch ( e ) {
             console.error( 'Error:', e );
         }
@@ -303,6 +301,7 @@ export default () => {
         setHasShownAnimation,
         onMenuClick,
         storeData,
+        storeDeckData,
         addSingleWord,
         setView,
         wipeWalletSearch,
@@ -516,37 +515,7 @@ export default () => {
                         }
 
                         { view === 'DEBUG' &&
-                            <>
-                                <Button
-                                    onPress={ () => storeData( DEMO_WORDS_DEBUG ) }
-                                >
-                                    Fill Wallet with Debug Demo Words
-                                </Button>
-                                <Divider />
-                                <Button
-                                    onPress={ () => storeData( [] ) }
-                                >
-                                    Wipe Wallet
-                                </Button>
-                                <Divider />
-                                <Button
-                                    onPress={ () => storeDeckData( [], 0, 'All Words' ) }
-                                >
-                                    Wipe Deck
-                                </Button>
-
-                                <Button
-                                    onPress={ dbRefresh }
-                                >
-                                    Force DB refresh
-                                </Button>
-
-                                <Button
-                                    onPress={ () => storeDBversion( '' ) }
-                                >
-                                    Clear stored DB version
-                                </Button>
-                            </>
+                            <DebugMode />
                         }
                     </Layout>
 
