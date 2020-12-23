@@ -7,7 +7,7 @@ import { storeDBversion } from '../App';
 export const DebugMode = () => {
 
     const appData = useContext( AppContext );
-    const { storeData, storeDeckData } = appData;
+    const { storeData } = appData;
 
     return (
         <>
@@ -28,7 +28,8 @@ export const DebugMode = () => {
             <Text />
 
             <Button
-                onPress={ () => storeDeckData( [], 0, 'All Words' ) }
+                // TODO: this cannot work anymore with the current structure
+                onPress={ undefined }
             >
                 Wipe Deck
             </Button>
