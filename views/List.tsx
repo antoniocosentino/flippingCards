@@ -11,6 +11,7 @@ import { styles } from '../styles/styles';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { getArticle, getCapitalizedIfNeeded } from '../utils/utils';
 import { EmptyList } from './EmptyList';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const DeleteIcon = ( props: IconProps ) => <Icon { ...props } fill='#333'  width={ 32 } height={ 32 } name='trash-2-outline' />;
 
@@ -82,7 +83,7 @@ export const List = () => {
     }
 
     return (
-        <>
+        <SafeAreaView style={ styles.searchResults }>
             <Layout style={ styles.listSearchWrapper } >
                 <Input
                     style={ styles.topSearchInput }
@@ -136,6 +137,6 @@ export const List = () => {
                 rightOpenValue={ -75 }
                 disableRightSwipe={ true }
             />
-        </>
+        </SafeAreaView>
     );
 };

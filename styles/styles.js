@@ -32,7 +32,8 @@ export const styles = StyleSheet.create( {
         width: '80%',
         marginLeft: '10%',
         marginRight: '10%',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingTop: '10%'
     },
     centeredSimpleView: {
         justifyContent: 'center',
@@ -229,9 +230,11 @@ export const styles = StyleSheet.create( {
         justifyContent: 'center',
         paddingRight: 10
     },
+    // TODO: more generic class here? using this in multiple places
     searchResults: {
         width: '100%',
-        flex: 1
+        flex: 1,
+        backgroundColor: '#fff'
     },
     singleSearchResult: {
         width: '91%',

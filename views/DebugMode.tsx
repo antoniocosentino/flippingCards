@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
-import { Text, Button } from '@ui-kitten/components';
+import { Text, Button, Layout } from '@ui-kitten/components';
 import { AppContext, dbRefresh } from '../App';
 import { DEMO_WORDS_DEBUG } from '../utils/demoData.debug';
 import { storeDBversion } from '../App';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { styles } from '../styles/styles';
 
 export const DebugMode = () => {
 
@@ -10,45 +12,47 @@ export const DebugMode = () => {
     const { storeData } = appData;
 
     return (
-        <>
-            <Button
-                onPress={ () => storeData( DEMO_WORDS_DEBUG ) }
-            >
-                Fill Wallet with Debug Demo Words
-            </Button>
+        <SafeAreaView style={ styles.searchResults }>
+            <Layout style={ styles.centeredElement }>
+                <Button
+                    onPress={ () => storeData( DEMO_WORDS_DEBUG ) }
+                >
+                    Fill Wallet with Debug Demo Words
+                </Button>
 
-            <Text />
+                <Text />
 
-            <Button
-                onPress={ () => storeData( [] ) }
-            >
-                Wipe Wallet
-            </Button>
+                <Button
+                    onPress={ () => storeData( [] ) }
+                >
+                    Wipe Wallet
+                </Button>
 
-            <Text />
+                <Text />
 
-            <Button
-                // TODO: this cannot work anymore with the current structure
-                onPress={ undefined }
-            >
-                Wipe Deck
-            </Button>
+                <Button
+                    // TODO: this cannot work anymore with the current structure
+                    onPress={ undefined }
+                >
+                    Wipe Deck
+                </Button>
 
-            <Text />
+                <Text />
 
-            <Button
-                onPress={ dbRefresh }
-            >
-                Force DB refresh
-            </Button>
+                <Button
+                    onPress={ dbRefresh }
+                >
+                    Force DB refresh
+                </Button>
 
-            <Text />
+                <Text />
 
-            <Button
-                onPress={ () => storeDBversion( '' ) }
-            >
-                Clear stored DB version
-            </Button>
-        </>
+                <Button
+                    onPress={ () => storeDBversion( '' ) }
+                >
+                    Clear stored DB version
+                </Button>
+            </Layout>
+        </SafeAreaView>
     );
 };
