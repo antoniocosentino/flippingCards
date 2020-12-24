@@ -22,12 +22,12 @@ import { customTheme } from './utils/customTheme';
 import { ChallengeMode } from './views/ChallengeMode';
 import { InfoView } from './views/InfoView';
 
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import { NavigationContainer } from '@react-navigation/native';
 
 import Fuse from 'fuse.js';
 import { DebugMode } from './views/DebugMode';
-
-import { createStackNavigator } from '@react-navigation/stack';
 
 // this needs to be updated everytime a change in the words database is released
 const DB_VERSION = '5';
@@ -361,7 +361,7 @@ export default () => {
         <Icon { ...settingsIconProps } width={ 22 } height={ 22 } fill='#333' name='settings-2-outline'/>
     );
 
-    const Stack = createStackNavigator();
+    const Tab = createBottomTabNavigator();
 
     return (
         <NavigationContainer ref={ navigationRef }>
@@ -369,48 +369,27 @@ export default () => {
             <ApplicationProvider { ...eva } theme={ customTheme }>
                 <AppContext.Provider value={ appData }>
                     <Layout style={ styles.stackNavigatorWrapper } >
-                        <Stack.Navigator
-                            screenOptions={ {
-                                cardStyle: { backgroundColor: '#fff' }
-                            } }
-                        >
-                            <Stack.Screen
+                        <Tab.Navigator>
+                            <Tab.Screen
                                 name='list'
                                 component={ List }
                                 options={ {
-                                    title: '',
-                                    headerStyle: {
-                                        height: 50,
-                                        shadowColor: 'transparent',
-                                        elevation: 0
-                                    }
+                                    tabBarVisible: false
                                 } }
                             />
 
-                            <Stack.Screen
+                            <Tab.Screen
                                 name='training-mode'
                                 component={ TrainingMode }
                                 options={ {
-                                    title: '',
-                                    animationEnabled: false,
-                                    headerShown: false,
-                                    headerStyle: {
-                                        shadowColor: 'transparent',
-                                        elevation: 0
-                                    }
+                                    tabBarVisible: false
                                 } }
                             />
 
-                            <Stack.Screen
+                            <Tab.Screen
                                 name='add'
                                 options={ {
-                                    title: '',
-                                    animationEnabled: false,
-                                    headerLeft: () => null,
-                                    headerStyle: {
-                                        shadowColor: 'transparent',
-                                        elevation: 0
-                                    }
+                                    tabBarVisible: false
                                 } }
                             >
                                 {
@@ -420,51 +399,33 @@ export default () => {
                                         );
                                     }
                                 }
-                            </Stack.Screen>
+                            </Tab.Screen>
 
-                            <Stack.Screen
+                            <Tab.Screen
                                 name='challenge-mode'
                                 component={ ChallengeMode }
                                 options={ {
-                                    title: '',
-                                    animationEnabled: false,
-                                    headerLeft: () => null,
-                                    headerStyle: {
-                                        shadowColor: 'transparent',
-                                        elevation: 0
-                                    }
+                                    tabBarVisible: false
                                 } }
                             />
 
-                            <Stack.Screen
+                            <Tab.Screen
                                 name='info'
                                 component={ InfoView }
                                 options={ {
-                                    title: '',
-                                    animationEnabled: false,
-                                    headerShown: false,
-                                    headerStyle: {
-                                        shadowColor: 'transparent',
-                                        elevation: 0
-                                    }
+                                    tabBarVisible: false
                                 } }
                             />
 
-                            <Stack.Screen
+                            <Tab.Screen
                                 name='debug'
                                 component={ DebugMode }
                                 options={ {
-                                    title: '',
-                                    animationEnabled: false,
-                                    headerLeft: () => null,
-                                    headerStyle: {
-                                        shadowColor: 'transparent',
-                                        elevation: 0
-                                    }
+                                    tabBarVisible: false
                                 } }
                             />
 
-                        </Stack.Navigator>
+                        </Tab.Navigator>
 
                     </Layout>
 
