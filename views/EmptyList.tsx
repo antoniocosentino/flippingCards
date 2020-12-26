@@ -4,6 +4,7 @@ import { styles } from '../styles/styles';
 import { Image, View } from 'react-native';
 import { AppContext } from '../App';
 import { DEMO_WORDS } from '../utils/demoData';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 export const EmptyList = () => {
@@ -12,8 +13,9 @@ export const EmptyList = () => {
     const { storeData } = appData;
 
     return (
-        <>
-            <Layout style={ styles.walletInstructionsWrapper }>
+        <SafeAreaView style={ styles.mainViewWrapper }>
+            <Layout style={ styles.listSearchWrapper } >
+
                 <Layout style={ styles.walletInstructions }>
                     <Text style={ [ styles.text, styles.titleText ] } category='h4'>Hello there! 👋</Text>
 
@@ -54,6 +56,6 @@ export const EmptyList = () => {
                     } }
                 />
             </Layout>
-        </>
+        </SafeAreaView>
     );
 };
