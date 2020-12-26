@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
     ApplicationProvider,
     IconRegistry,
@@ -7,16 +7,13 @@ import {
     IconProps
 } from '@ui-kitten/components';
 
-import { debounce } from 'lodash';
-import { TouchableWithoutFeedback } from 'react-native';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import AsyncStorage from '@react-native-community/async-storage';
 import { styles } from './styles/styles';
 import { List } from './views/List';
 import { BottomMenu } from './views/BottomMenu';
-import { SearchResults } from './components/SearchResults';
-import { removeArticle, uncapitalizeWord } from './utils/utils';
+import { AddToWallet } from './components/AddToWallet';
 import { TrainingMode } from './views/TrainingMode';
 import { customTheme } from './utils/customTheme';
 import { ChallengeMode } from './views/ChallengeMode';
@@ -80,6 +77,7 @@ type TAppData = {
     filteredWordsWallet: TWordsWallet,
     selectedIndex: number,
     hasShownAnimation: boolean,
+    db: any, // TODO: not sure if we can type here
     setHasShownAnimation: ( value: boolean ) => void,
     onMenuClick: ( index: number ) => void,
     storeData: ( value: TWordsWallet ) => void,
@@ -89,14 +87,13 @@ type TAppData = {
     setSearchValue: ( param: string ) => void
 };
 
-export type TSearchWords = TWords;
 
 export const AppContext = React.createContext( {} as TAppData );
 
-let hasShownAnimation = false;
+let hasShownAnimation = false; // TODO: this goes to list!!!
 
 const setHasShownAnimation = ( value: boolean ) => {
-    hasShownAnimation = value;
+    hasShownAnimation = value; // TODO: move to list
 };
 
 export const storeDBversion = async ( version: string ) => {
@@ -145,7 +142,7 @@ export default () => {
 
     // TODO: check what to do here
     // useEffect( () => {
-    //     setAddSearchWords( [] );
+    //     setAddSearchResults( [] );
     //     setAddSearch( '' );
     // }, [ view ] );
 
@@ -248,11 +245,7 @@ export default () => {
         setTapsCount( 0 );
     };
 
-    const [ searchValue, setSearchValue ] = React.useState( '' );
-
-    const wipeSearch = () => {
-        setAddSearch( '' );
-    };
+    const [ searchValue, setSearchValue ] = React.useState( '' ); // TODO: rename and move to list
 
     const wipeWalletSearch = () => {
         setSearchValue( '' );
@@ -265,24 +258,15 @@ export default () => {
         filteredWordsWallet,
         selectedIndex,
         hasShownAnimation,
+        db,
         setHasShownAnimation,
         onMenuClick,
         storeData,
-        setSearchValue,
+        setSearchValue, // TODO: this is very confusing. It's only for wallet. Use better names!
         addSingleWord,
         wipeWalletSearch,
         increaseTapsCount
     };
-
-    // database stuff
-
-    const [ addSearch, setAddSearch ] = React.useState( '' );
-
-    useEffect( () => {
-        if ( addSearch === '' ) {
-            setAddSearchWords( [] );
-        }
-    }, [ addSearch ] );
 
     useEffect( () => {
         updateWalletFilter();
@@ -298,67 +282,6 @@ export default () => {
         const fuseResult = walletFuseInstance.search( searchValue );
         setFilteredWordsWallet( fuseResult.map( ( result ) => result.item ) );
     };
-
-    const [ shouldQuery, setShouldQuery ] = React.useState( false );
-
-    const setAddSearchWrapper = ( word: string ) => {
-        setShouldQueryDebounced( true );
-        setAddSearch( word );
-    };
-
-    const setShouldQueryDebounced = useCallback( debounce( setShouldQuery, 300 ), [] );
-
-    const [ addSearchWords, setAddSearchWords ] = React.useState( [] as TSearchWords );
-
-    const query = `select * from words where words MATCH '${ removeArticle( addSearch ) }*' AND rank MATCH 'bm25(10.0, 1.0)' GROUP BY de, en ORDER BY ( de = '${ removeArticle( uncapitalizeWord( addSearch ) ) }' ) desc, rank LIMIT 20`;
-
-    if ( shouldQuery && addSearch !== '' ) {
-        setShouldQuery( false );
-        db.transaction( ( tx: any ) => {
-
-            tx.executeSql( query, [], ( trans: any, results:any ) => {
-                console.log( 'Query executed' );
-
-                const len = results.rows.length;
-
-                const tempAddSearchWords = [];
-
-                for ( let i = 0; i < len; i++ ) {
-                    let row = results.rows.item( i );
-
-                    const tempObj = {
-                        de: row.de,
-                        en: row.en,
-                        wordType: row.wordType
-                    };
-
-                    tempAddSearchWords.push( tempObj );
-                }
-
-                setAddSearchWords( tempAddSearchWords );
-            },
-            ( error: any ) => {
-                console.log( 'Errors with the query', error );
-            }
-            );
-        } );
-    }
-
-    const renderCloseIcon = ( props: IconProps ) => {
-        if ( addSearch.length < 1 ) {
-            return <></>;
-        }
-
-        return (
-            <TouchableWithoutFeedback onPress={ wipeSearch }>
-                <Icon { ...props } width={ 22 } height={ 22 } fill='#ccc' name={ 'close-circle' } />
-            </TouchableWithoutFeedback>
-        );
-    };
-
-    const SettingsIcon = ( settingsIconProps: IconProps ) => (
-        <Icon { ...settingsIconProps } width={ 22 } height={ 22 } fill='#333' name='settings-2-outline'/>
-    );
 
     const Tab = createBottomTabNavigator();
 
@@ -387,18 +310,11 @@ export default () => {
 
                             <Tab.Screen
                                 name='add'
+                                component={ AddToWallet }
                                 options={ {
                                     tabBarVisible: false
                                 } }
-                            >
-                                {
-                                    () => {
-                                        return (
-                                            <SearchResults results={ addSearchWords } />
-                                        );
-                                    }
-                                }
-                            </Tab.Screen>
+                            />
 
                             <Tab.Screen
                                 name='challenge-mode'
