@@ -163,7 +163,6 @@ export default () => {
     };
 
     const addSingleWord = ( word: TSingleWord ) => {
-        // TODO: tackle duplicates
         const walletCopy = [...wordsWallet ];
 
         const wordWithCurrentTimestamp = {
