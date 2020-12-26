@@ -17,7 +17,7 @@ export const SearchResults = ( props: TSearchResultsProps ) => {
 
 
     return (
-        <SafeAreaView style={ styles.searchResults }>
+        <SafeAreaView style={ styles.mainViewWrapper }>
             <ScrollView
                 keyboardDismissMode={ 'on-drag' }
                 keyboardShouldPersistTaps={ 'always' }

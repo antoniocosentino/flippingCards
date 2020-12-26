@@ -12,7 +12,7 @@ export const DebugMode = () => {
     const { storeData } = appData;
 
     return (
-        <SafeAreaView style={ styles.searchResults }>
+        <SafeAreaView style={ styles.mainViewWrapper }>
             <Layout style={ styles.centeredElement }>
                 <Button
                     onPress={ () => storeData( DEMO_WORDS_DEBUG ) }

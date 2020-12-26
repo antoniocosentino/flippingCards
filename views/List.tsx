@@ -83,7 +83,7 @@ export const List = () => {
     }
 
     return (
-        <SafeAreaView style={ styles.searchResults }>
+        <SafeAreaView style={ styles.mainViewWrapper }>
             <Layout style={ styles.listSearchWrapper } >
                 <Input
                     style={ styles.topSearchInput }

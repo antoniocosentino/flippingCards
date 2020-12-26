@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export const ChallengeMode = () => {
 
     return (
-        <SafeAreaView style={ styles.searchResults }>
+        <SafeAreaView style={ styles.mainViewWrapper }>
             <Layout style={ styles.centeredElement }>
                 <Text style={ [ styles.text, styles.titleText ] } category='h4'>Challenge mode</Text>
                 <Image

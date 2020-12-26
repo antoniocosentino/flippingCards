@@ -135,9 +135,6 @@ export const styles = StyleSheet.create( {
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    'bottomZone--specialCase': {
-        flex: 1.39 // TODO: this doesn't look super reliable
-    },
     bottomWrapper: {
         paddingTop: 16
     },
@@ -230,8 +227,7 @@ export const styles = StyleSheet.create( {
         justifyContent: 'center',
         paddingRight: 10
     },
-    // TODO: more generic class here? using this in multiple places
-    searchResults: {
+    mainViewWrapper: {
         width: '100%',
         flex: 1,
         backgroundColor: '#fff'
@@ -291,7 +287,9 @@ export const styles = StyleSheet.create( {
         backgroundColor: fifthColor
     },
     sliderWrapper: {
-        flex: 2
+        flex: 2,
+        maxWidth: '90%',
+        marginLeft: '5%'
     },
     singleSlide: {
         flex: 1,
