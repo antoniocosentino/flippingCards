@@ -122,7 +122,7 @@ const InfoMainView = ( props: any ) => { // TODO: types
     return (
         <>
             <Layout
-                style={ styles.centeredElement }
+                style={ [ styles.centeredElement, styles['centeredElement--noTopSpace'] ] }
             >
                 <TouchableWithoutFeedback onPress={ increaseTapsCount }>
                     <Image
