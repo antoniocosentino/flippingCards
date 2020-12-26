@@ -21,12 +21,14 @@ const customFontBold = 'Nunito-SemiBold';
 
 export const styles = StyleSheet.create( {
     topContainer: {
-        flex: 1.2,
         paddingBottom: 10,
         justifyContent: 'flex-end'
     },
     'topContainer--withNotch': {
-        paddingTop: 10
+        paddingTop: 40
+    },
+    'topContainer--withoutNotch': {
+        paddingTop: 20
     },
     centeredElement: {
         width: '80%',
@@ -34,6 +36,9 @@ export const styles = StyleSheet.create( {
         marginRight: '10%',
         alignItems: 'center',
         paddingTop: '10%'
+    },
+    'centeredElement--noTopSpace': {
+        paddingTop: 0
     },
     centeredSimpleView: {
         justifyContent: 'center',
@@ -231,6 +236,9 @@ export const styles = StyleSheet.create( {
         width: '100%',
         flex: 1,
         backgroundColor: '#fff'
+    },
+    'mainViewWrapper--extraTopSpacing': {
+        paddingTop: 10
     },
     singleSearchResult: {
         width: '91%',

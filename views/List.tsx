@@ -25,6 +25,7 @@ export const List = () => {
         searchValue,
         filteredWordsWallet,
         hasShownAnimation,
+        deviceNotchSize,
         setHasShownAnimation,
         storeData,
         wipeWalletSearch,
@@ -83,7 +84,7 @@ export const List = () => {
     }
 
     return (
-        <SafeAreaView style={ styles.mainViewWrapper }>
+        <SafeAreaView style={ [ styles.mainViewWrapper, deviceNotchSize === 0 ? styles['mainViewWrapper--extraTopSpacing'] : null ] }>
             <Layout style={ styles.listSearchWrapper } >
                 <Input
                     style={ styles.topSearchInput }

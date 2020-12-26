@@ -18,6 +18,7 @@ import { TrainingMode } from './views/TrainingMode';
 import { customTheme } from './utils/customTheme';
 import { ChallengeMode } from './views/ChallengeMode';
 import { InfoView } from './views/InfoView';
+import SafeArea, { SafeAreaInsets } from 'react-native-safe-area';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -71,22 +72,22 @@ export type TWords = ReadonlyArray<TSingleWord>
 export type TWordsWallet = ReadonlyArray<TSingleWalletWord>
 
 type TAppData = {
-    wordsWallet: TWordsWallet,
-    hasFetchedWallet: boolean,
-    searchValue: string,
-    filteredWordsWallet: TWordsWallet,
-    selectedIndex: number,
-    hasShownAnimation: boolean,
-    db: any, // TODO: not sure if we can type here
-    setHasShownAnimation: ( value: boolean ) => void,
-    onMenuClick: ( index: number ) => void,
-    storeData: ( value: TWordsWallet ) => void,
-    addSingleWord: ( word: TSingleWord ) => void,
-    wipeWalletSearch: () => void,
-    increaseTapsCount: () => void,
-    setSearchValue: ( param: string ) => void
+    wordsWallet: TWordsWallet;
+    hasFetchedWallet: boolean;
+    searchValue: string;
+    filteredWordsWallet: TWordsWallet;
+    selectedIndex: number;
+    hasShownAnimation: boolean;
+    deviceNotchSize: number;
+    db: any; // TODO: not sure if we can type here
+    setHasShownAnimation: ( value: boolean ) => void;
+    onMenuClick: ( index: number ) => void;
+    storeData: ( value: TWordsWallet ) => void;
+    addSingleWord: ( word: TSingleWord ) => void;
+    wipeWalletSearch: () => void;
+    increaseTapsCount: () => void;
+    setSearchValue: ( param: string ) => void;
 };
-
 
 export const AppContext = React.createContext( {} as TAppData );
 
@@ -145,6 +146,15 @@ export default () => {
     //     setAddSearchResults( [] );
     //     setAddSearch( '' );
     // }, [ view ] );
+
+    const [ deviceNotchSize, setDeviceNotchSize ] = React.useState( 0 );
+
+    SafeArea.getSafeAreaInsetsForRootView()
+        .then( ( result: any ) => {
+            const safeAreaInsets: SafeAreaInsets = result.safeAreaInsets;
+            setDeviceNotchSize( safeAreaInsets.bottom );
+        } );
+
 
     const [ isDataUpdated, setDataUpdated ] = React.useState( false );
 
@@ -259,6 +269,7 @@ export default () => {
         selectedIndex,
         hasShownAnimation,
         db,
+        deviceNotchSize,
         setHasShownAnimation,
         onMenuClick,
         storeData,

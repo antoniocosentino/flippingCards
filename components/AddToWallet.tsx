@@ -13,7 +13,7 @@ export type TSearchResults = TWords;
 
 export const AddToWallet = () => {
     const appData = useContext( AppContext );
-    const { wordsWallet, db } = appData;
+    const { wordsWallet, db, deviceNotchSize } = appData;
 
     const [ addSearchKeyword, setAddSearchKeyword ] = React.useState( '' );
     const [ addSearchResults, setAddSearchResults ] = React.useState( [] as TSearchResults );
@@ -85,27 +85,33 @@ export const AddToWallet = () => {
 
     return (
         <>
-            <Layout style={ styles.addBar }>
-                <Layout style={ styles.addBarLeft }>
-                    <Icon
-                        onPress={ null } // TODO: navigation
-                        width={ 30 }
-                        height={ 30 }
-                        fill='#fff'
-                        name={ 'close' }
-                    />
-                </Layout>
-                <Layout style={ styles.addBarRight }>
-                    <Input
-                        autoFocus={ true }
-                        autoCorrect={ false }
-                        style={ styles.addWordInput }
-                        placeholder='Type the word you want to add'
-                        value={ addSearchKeyword }
-                        onChangeText={ nextValue => setAddSearchKeywordWrapper( nextValue ) }
-                        size={ 'medium' }
-                        accessoryRight={ renderCloseIcon }
-                    />
+            <Layout style={ [
+                styles.topContainer,
+                deviceNotchSize > 0 ? styles['topContainer--withNotch'] : styles['topContainer--withoutNotch'],
+                styles.coloredTopContainer
+            ] }>
+                <Layout style={ styles.addBar }>
+                    <Layout style={ styles.addBarLeft }>
+                        <Icon
+                            onPress={ null } // TODO: navigation
+                            width={ 30 }
+                            height={ 30 }
+                            fill='#fff'
+                            name={ 'close' }
+                        />
+                    </Layout>
+                    <Layout style={ styles.addBarRight }>
+                        <Input
+                            autoFocus={ true }
+                            autoCorrect={ false }
+                            style={ styles.addWordInput }
+                            placeholder='Type the word you want to add'
+                            value={ addSearchKeyword }
+                            onChangeText={ nextValue => setAddSearchKeywordWrapper( nextValue ) }
+                            size={ 'medium' }
+                            accessoryRight={ renderCloseIcon }
+                        />
+                    </Layout>
                 </Layout>
             </Layout>
 
