@@ -31,15 +31,6 @@ export const DebugMode = () => {
                 <Text />
 
                 <Button
-                    // TODO: this cannot work anymore with the current structure
-                    onPress={ undefined }
-                >
-                    Wipe Deck
-                </Button>
-
-                <Text />
-
-                <Button
                     onPress={ dbRefresh }
                 >
                     Force DB refresh

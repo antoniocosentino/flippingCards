@@ -80,6 +80,7 @@ type TAppData = {
     hasShownAnimation: boolean;
     deviceNotchSize: number;
     db: any; // TODO: not sure if we can type here
+    customNavigate: ( route: string ) => void;
     setHasShownAnimation: ( value: boolean ) => void;
     onMenuClick: ( index: number ) => void;
     storeData: ( value: TWordsWallet ) => void;
@@ -140,12 +141,6 @@ export default () => {
     } );
 
     const [ hasFetchedWallet, setHasFetchedWallet ] = React.useState( false );
-
-    // TODO: check what to do here
-    // useEffect( () => {
-    //     setAddSearchResults( [] );
-    //     setAddSearch( '' );
-    // }, [ view ] );
 
     const [ deviceNotchSize, setDeviceNotchSize ] = React.useState( 0 );
 
@@ -270,6 +265,7 @@ export default () => {
         hasShownAnimation,
         db,
         deviceNotchSize,
+        customNavigate,
         setHasShownAnimation,
         onMenuClick,
         storeData,
