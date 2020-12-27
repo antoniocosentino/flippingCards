@@ -36,6 +36,10 @@ export const List = () => {
         return <EmptyList />;
     }
 
+    if ( !hasFetchedWallet ) {
+        return null;
+    }
+
     const renderCloseIconForWalletSearch = ( props: IconProps ) => {
         if ( searchValue.length < 1 ) {
             return <></>;
