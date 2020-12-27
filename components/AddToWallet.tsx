@@ -13,7 +13,7 @@ export type TSearchResults = TWords;
 
 export const AddToWallet = () => {
     const appData = useContext( AppContext );
-    const { wordsWallet, db, deviceNotchSize } = appData;
+    const { wordsWallet, db, deviceNotchSize, customNavigate } = appData;
 
     const [ addSearchKeyword, setAddSearchKeyword ] = React.useState( '' );
     const [ addSearchResults, setAddSearchResults ] = React.useState( [] as TSearchResults );
@@ -82,7 +82,6 @@ export const AddToWallet = () => {
         } );
     }
 
-
     return (
         <>
             <Layout style={ [
@@ -93,7 +92,7 @@ export const AddToWallet = () => {
                 <Layout style={ styles.addBar }>
                     <Layout style={ styles.addBarLeft }>
                         <Icon
-                            onPress={ null } // TODO: navigation
+                            onPress={ () => customNavigate( 'list' )  }
                             width={ 30 }
                             height={ 30 }
                             fill='#fff'
@@ -126,7 +125,13 @@ export const AddToWallet = () => {
 
                             const isAlreadyThere = wordsWallet.find( ( walletWord ) => walletWord.de === word.de && walletWord.en === word.en );
 
-                            return <SingleSearchResult isAlreadyThere={ Boolean( isAlreadyThere ) } word={ word } key={ index } />;
+                            return <SingleSearchResult
+                                isAlreadyThere={ Boolean( isAlreadyThere ) }
+                                word={ word }
+                                key={ index }
+                                setAddSearchResults={ setAddSearchResults }
+                                setAddSearchKeyword={ setAddSearchKeyword }
+                            />;
                         } )
                     }
                 </ScrollView>

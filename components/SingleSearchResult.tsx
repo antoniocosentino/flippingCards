@@ -1,17 +1,19 @@
 import React, { useContext } from 'react';
 import { Text } from '@ui-kitten/components';
-import { TSingleWord, AppContext } from '../App';
+import { TSingleWord, AppContext, TWords } from '../App';
 import { styles } from './../styles/styles';
 import { getArticle, getCapitalizedIfNeeded, getTypeOfWord } from '../utils/utils';
 import { TouchableOpacity, View } from 'react-native';
 
 type TSingleSearchResultProps = {
-    word: TSingleWord,
-    isAlreadyThere: boolean
+    word: TSingleWord;
+    isAlreadyThere: boolean;
+    setAddSearchResults: ( words: TWords  ) => void;
+    setAddSearchKeyword: ( word: string ) => void;
 };
 
 export const SingleSearchResult = ( props: TSingleSearchResultProps ) => {
-    const { word, isAlreadyThere } = props;
+    const { word, isAlreadyThere, setAddSearchResults, setAddSearchKeyword } = props;
 
     const appData = useContext( AppContext );
 
@@ -23,6 +25,9 @@ export const SingleSearchResult = ( props: TSingleSearchResultProps ) => {
         if ( !isAlreadyThere ) {
             addSingleWord( passedWord );
         }
+
+        setAddSearchResults( [] );
+        setAddSearchKeyword( '' );
     };
 
     return (

@@ -11,7 +11,6 @@ import { AddWordIcon } from '../App';
 import { Cards } from './Cards';
 
 type TTrainingModeInstructionsProps = {
-    wordsWallet: TWordsWallet;
     deck: TWords;
     storeDeckData: ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ) => Promise<number>;
     navigation: any; // TODO: I don't know the type of this
@@ -27,7 +26,11 @@ const ShuffleIcon = ( props: IconProps ) => (
 
 const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
-    const { wordsWallet, deck, storeDeckData, navigation } = props;
+    const { deck, storeDeckData, navigation } = props;
+
+    const appData = useContext( AppContext );
+    const { wordsWallet, customNavigate } = appData;
+
     const [modalVisible, setModalVisible] = React.useState( false );
 
     const [selectedDeckSizeIndex, setSelectedDeckSizeIndex] = React.useState( new IndexPath( 1 ) );
@@ -45,7 +48,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
         Promise.resolve( deckSizePromise ).then( ( result: number ) => {
             if ( result > 1 ){
-                // TODO: navigation
+                navigation.navigate( 'training-mode_cards' );
             } else {
                 setModalVisible( true );
             }
@@ -69,8 +72,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
                         To start, you first need to add some words into your wallet.
                     </Text>
 
-                    { /* TODO: implement navigation here */ }
-                    <Button onPress={ undefined } style={ styles.ctaButton } accessoryLeft={ AddWordIcon }>
+                    <Button onPress={ () => customNavigate( 'add' ) } style={ styles.ctaButton } accessoryLeft={ AddWordIcon }>
                         ADD YOUR FIRST WORD
                     </Button>
                 </>
@@ -78,7 +80,6 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
             { deck.length > 1 &&
                 <>
-                    { /* TODO: implement navigation here */ }
                     <Button onPress={ () => navigation.navigate( 'training-mode_cards' ) } style={ styles.ctaButton } accessoryLeft={ CardsIcon }>
                         GO TO EXISTING DECK
                     </Button>
@@ -156,9 +157,6 @@ export const TrainingMode = () => {
     const [ deck, setDeck ] = React.useState( [] as TWords );
     const [ isDeckDataUpdated, setDeckDataUpdated ] = React.useState( false );
 
-    const appData = useContext( AppContext );
-    const { wordsWallet } = appData;
-
     const getDeckData = async () => {
         try {
             const value = await AsyncStorage.getItem( '@deck' );
@@ -213,7 +211,6 @@ export const TrainingMode = () => {
                             return (
                                 <TrainingModeInstructions
                                     { ...props }
-                                    wordsWallet={ wordsWallet }
                                     deck={ deck }
                                     storeDeckData={ storeDeckData }
                                 />
