@@ -302,7 +302,14 @@ export default () => {
             <ApplicationProvider { ...eva } theme={ customTheme }>
                 <AppContext.Provider value={ appData }>
                     <Layout style={ styles.stackNavigatorWrapper } >
-                        <Tab.Navigator>
+                        <Tab.Navigator
+                            tabBarOptions={ {
+                                showLabel: false,
+                                style: {
+                                    height: 0
+                                }
+                            } }
+                        >
                             <Tab.Screen
                                 name='list'
                                 component={ List }
