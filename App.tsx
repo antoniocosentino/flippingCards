@@ -24,7 +24,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { NavigationContainer } from '@react-navigation/native';
 
-import Fuse from 'fuse.js';
 import { DebugMode } from './views/DebugMode';
 
 // this needs to be updated everytime a change in the words database is released
@@ -74,8 +73,6 @@ export type TWordsWallet = ReadonlyArray<TSingleWalletWord>
 type TAppData = {
     wordsWallet: TWordsWallet;
     hasFetchedWallet: boolean;
-    searchValue: string;
-    filteredWordsWallet: TWordsWallet;
     selectedIndex: number;
     hasShownAnimation: boolean;
     deviceNotchSize: number;
@@ -85,9 +82,7 @@ type TAppData = {
     onMenuClick: ( index: number ) => void;
     storeData: ( value: TWordsWallet ) => void;
     addSingleWord: ( word: TSingleWord ) => void;
-    wipeWalletSearch: () => void;
     increaseTapsCount: () => void;
-    setSearchValue: ( param: string ) => void;
 };
 
 export const AppContext = React.createContext( {} as TAppData );
@@ -132,14 +127,6 @@ export default () => {
     }, [ tapsCount, currentRoute ] );
 
     const [ wordsWallet, setWordsWallet ] = React.useState( [] as TWordsWallet );
-
-    const [ filteredWordsWallet, setFilteredWordsWallet ] = React.useState( [] as TWordsWallet );
-
-    const walletFuseInstance = new Fuse( wordsWallet, {
-        keys: ['de', 'en'],
-        threshold: 0.2
-    } );
-
     const [ hasFetchedWallet, setHasFetchedWallet ] = React.useState( false );
 
     const [ deviceNotchSize, setDeviceNotchSize ] = React.useState( 0 );
@@ -250,17 +237,9 @@ export default () => {
         setTapsCount( 0 );
     };
 
-    const [ searchValue, setSearchValue ] = React.useState( '' ); // TODO: rename and move to list
-
-    const wipeWalletSearch = () => {
-        setSearchValue( '' );
-    };
-
     const appData: TAppData = {
         wordsWallet,
         hasFetchedWallet,
-        searchValue,
-        filteredWordsWallet,
         selectedIndex,
         hasShownAnimation,
         db,
@@ -269,25 +248,8 @@ export default () => {
         setHasShownAnimation,
         onMenuClick,
         storeData,
-        setSearchValue, // TODO: this is very confusing. It's only for wallet. Use better names!
         addSingleWord,
-        wipeWalletSearch,
         increaseTapsCount
-    };
-
-    useEffect( () => {
-        updateWalletFilter();
-
-        if ( searchValue === '' ) {
-            setFilteredWordsWallet( [] );
-        }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ searchValue ] );
-
-    const updateWalletFilter = () => {
-        const fuseResult = walletFuseInstance.search( searchValue );
-        setFilteredWordsWallet( fuseResult.map( ( result ) => result.item ) );
     };
 
     const Tab = createBottomTabNavigator();

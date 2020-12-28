@@ -1,17 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View } from 'react-native';
 
 import { Text, Card, IconProps, Icon, Layout, Input } from '@ui-kitten/components';
 
 import { TouchableWithoutFeedback } from 'react-native';
 
-import { AppContext, TSingleWalletWord } from '../App';
+import { AppContext, TSingleWalletWord, TWordsWallet } from '../App';
 import { styles } from '../styles/styles';
 
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { getArticle, getCapitalizedIfNeeded } from '../utils/utils';
 import { EmptyList } from './EmptyList';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Fuse from 'fuse.js';
 
 export const DeleteIcon = ( props: IconProps ) => <Icon { ...props } fill='#333'  width={ 32 } height={ 32 } name='trash-2-outline' />;
 
@@ -22,15 +23,34 @@ export const List = () => {
     const {
         wordsWallet,
         hasFetchedWallet,
-        searchValue,
-        filteredWordsWallet,
         hasShownAnimation,
         deviceNotchSize,
         setHasShownAnimation,
-        storeData,
-        wipeWalletSearch,
-        setSearchValue
+        storeData
     } = appData;
+
+    const [ walletSearchKeyword, setWalletSearchKeyword ] = React.useState( '' );
+    const [ filteredWordsWallet, setFilteredWordsWallet ] = React.useState( [] as TWordsWallet );
+
+    const walletFuseInstance = new Fuse( wordsWallet, {
+        keys: ['de', 'en'],
+        threshold: 0.2
+    } );
+
+    const updateWalletFilter = () => {
+        const fuseResult = walletFuseInstance.search( walletSearchKeyword );
+        setFilteredWordsWallet( fuseResult.map( ( result ) => result.item ) );
+    };
+
+    useEffect( () => {
+        updateWalletFilter();
+
+        if ( walletSearchKeyword === '' ) {
+            setFilteredWordsWallet( [] );
+        }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ walletSearchKeyword ] );
 
     if ( hasFetchedWallet && wordsWallet.length === 0 ) {
         return <EmptyList />;
@@ -40,8 +60,12 @@ export const List = () => {
         return null;
     }
 
+    const wipeWalletSearch = () => {
+        setWalletSearchKeyword( '' );
+    };
+
     const renderCloseIconForWalletSearch = ( props: IconProps ) => {
-        if ( searchValue.length < 1 ) {
+        if ( walletSearchKeyword.length < 1 ) {
             return <></>;
         }
 
@@ -93,8 +117,8 @@ export const List = () => {
                 <Input
                     style={ styles.topSearchInput }
                     placeholder='Search your wallet'
-                    value={ searchValue }
-                    onChangeText={ nextValue => setSearchValue( nextValue ) }
+                    value={ walletSearchKeyword }
+                    onChangeText={ nextValue => setWalletSearchKeyword( nextValue ) }
                     size={ 'small' }
                     accessoryRight={ renderCloseIconForWalletSearch }
                     accessoryLeft={ renderFilterIcon }
