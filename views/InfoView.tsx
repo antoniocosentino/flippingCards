@@ -211,14 +211,14 @@ const InfoMainView = ( props: any ) => { // TODO: types
                 <Layout style={ styles.infoColOne }>
                     <FlexiIcon
                         name='external-link-outline'
-                        onPress={ () => Linking.openURL( 'https://github.com/antoniocosentino/flipCards' ) }
+                        onPress={ () => Linking.openURL( 'https://antoniocosentino.github.io/flippingCards/' ) }
                     />
                 </Layout>
 
                 <Layout style={ styles.infoColTwo }>
                     <Text
                         style={ [ styles.text, styles.boldText, styles.biggerText ] }
-                        onPress={ () => Linking.openURL( 'https://github.com/antoniocosentino/flipCards' ) }
+                        onPress={ () => Linking.openURL( 'https://antoniocosentino.github.io/flippingCards' ) }
                     >
                         App Homepage
                     </Text>
@@ -232,7 +232,7 @@ const InfoMainView = ( props: any ) => { // TODO: types
             />
 
             <Layout style={ styles.versionBox } >
-                <Text style={ [ styles.text, styles.boldText, styles.leftAlignedText, styles.biggerText ] }>1.0</Text>
+                <Text style={ [ styles.text, styles.boldText, styles.leftAlignedText, styles.biggerText ] }>1.0.2</Text>
                 <Text
                     style={ [ styles.text, styles.leftAlignedText, styles.smallerText ] }>
                         App version

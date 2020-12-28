@@ -35,7 +35,7 @@ export const Cards = ( props: TCards ) => {
                         ref={ carouselRef }
                         data={ deck }
                         sliderHeight={ cardWrapperDimensions.height }
-                        itemHeight={ cardWrapperDimensions.height * ( 1 - 0.35 ) }
+                        itemHeight={ 400 }
                         vertical={ true }
                         layout={ 'default' }
                         loop={ false }
