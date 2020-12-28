@@ -92,10 +92,10 @@ type TAppData = {
 
 export const AppContext = React.createContext( {} as TAppData );
 
-let hasShownAnimation = false; // TODO: this goes to list!!!
+let hasShownAnimation = true;
 
 const setHasShownAnimation = ( value: boolean ) => {
-    hasShownAnimation = value; // TODO: move to list
+    hasShownAnimation = value;
 };
 
 export const storeDBversion = async ( version: string ) => {
