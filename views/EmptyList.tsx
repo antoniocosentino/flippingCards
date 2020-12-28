@@ -31,8 +31,8 @@ export const EmptyList = () => {
                             resizeMode={ 'contain' }
                             // eslint-disable-next-line react-native/no-inline-styles
                             style={ {
-                                width: 250,
-                                height: 249 // this small hack fixes an issue with an unwanted border on Android
+                                width: 210,
+                                height: 210 // this small hack fixes an issue with an unwanted border on Android
                             } }
                         />
                     </View>
