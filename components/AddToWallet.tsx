@@ -4,7 +4,7 @@ import { SingleSearchResult } from './SingleSearchResult';
 import { SafeAreaView, ScrollView } from 'react-native';
 import { AppContext, TWords } from '../App';
 import { Icon, IconProps, Input, Layout } from '@ui-kitten/components';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableWithoutFeedback } from 'react-native';
 import { debounce } from 'lodash';
 import { removeArticle, uncapitalizeWord } from '../utils/utils';
 
