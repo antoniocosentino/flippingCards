@@ -13,7 +13,7 @@ export type TSearchResults = TWords;
 
 export const AddToWallet = () => {
     const appData = useContext( AppContext );
-    const { wordsWallet, db, deviceNotchSize, customNavigate } = appData;
+    const { wordsWallet, db, deviceNotchSize, onMenuClick } = appData;
 
     const [ addSearchKeyword, setAddSearchKeyword ] = React.useState( '' );
     const [ addSearchResults, setAddSearchResults ] = React.useState( [] as TSearchResults );
@@ -92,7 +92,7 @@ export const AddToWallet = () => {
                 <Layout style={ styles.addBar }>
                     <Layout style={ styles.addBarLeft }>
                         <Icon
-                            onPress={ () => customNavigate( 'list' )  }
+                            onPress={ () => onMenuClick( 0 )  }
                             width={ 30 }
                             height={ 30 }
                             fill='#fff'
