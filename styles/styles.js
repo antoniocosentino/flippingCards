@@ -28,7 +28,7 @@ export const styles = StyleSheet.create( {
         paddingTop: 40
     },
     'topContainer--withoutNotch': {
-        paddingTop: 20
+        paddingTop: isAndroid ? 10 : 20
     },
     centeredElement: {
         width: '80%',
@@ -111,16 +111,6 @@ export const styles = StyleSheet.create( {
     },
     topSearchInput: {
         ...inputGlobalStyles
-    },
-    mainBlock: {
-        flex: isAndroid ? 13 : 10,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        marginTop: 0,
-        overflow: 'scroll'
-    },
-    walletInstructionsWrapper: {
-        backgroundColor: 'transparent'
     },
     walletInstructions: {
         marginTop: 40,
@@ -353,11 +343,6 @@ export const styles = StyleSheet.create( {
         flexDirection: 'row',
         justifyContent: 'space-between',
         top: -10
-    },
-    cardsTopIcon: {
-        top: isAndroid ? 5 : 2,
-        left: isAndroid ? 1 : 0,
-        marginRight: 6
     },
     firstSlideText: {
         fontSize: 16,
