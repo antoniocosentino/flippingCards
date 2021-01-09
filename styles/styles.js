@@ -149,6 +149,9 @@ export const styles = StyleSheet.create( {
     smallerText: {
         fontSize: 13
     },
+    verySmallText: {
+        fontSize: 10
+    },
     leftAlignedText: {
         textAlign: 'left'
     },
@@ -392,5 +395,37 @@ export const styles = StyleSheet.create( {
     standardModalBackdrop: {
         backgroundColor: 'black',
         opacity: 0.8
+    },
+    decksWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        marginTop: '2%',
+        marginBottom: '2%'
+    },
+    singleDeck: {
+        backgroundColor: mainColor,
+        height: 140,
+        flexBasis: '31%',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        borderColor: 'transparent',
+        borderRadius: 8,
+        marginLeft: '3.5%',
+        marginRight: '3.5%'
+    },
+    'singleDeck--noMargin': {
+        marginLeft: 0,
+        marginRight: 0
+    },
+    addDeck: {
+        backgroundColor: '#EAC3CF',
+        borderStyle: 'dashed',
+        borderColor: mainColor,
+        borderWidth: 2
+    },
+    addDeckPlus: {
+        color: mainColor,
+        textAlign: 'center',
+        fontSize: 20
     }
 } );
