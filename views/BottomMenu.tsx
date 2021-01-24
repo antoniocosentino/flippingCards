@@ -5,10 +5,21 @@ import { BottomNavigation, BottomNavigationTab, IconProps, Icon } from '@ui-kitt
 import { AppContext } from '../App';
 import { styles } from '../styles/styles';
 import { SvgXml } from 'react-native-svg';
-import { plusSvg } from '../utils/customIcons';
+import { plusSvg, challengeSvgBase, walletSvgBase, getCustomSvg } from '../utils/customIcons';
 
-const ListIcon = ( props: IconProps ) => <Icon { ...props } name='list-outline' />;
-const CardsIcon = ( props: IconProps ) => <Icon { ...props } name='grid-outline' />;
+const ListIcon = ( props: IconProps ) => {
+
+    return (
+        <SvgXml
+            width='32'
+            height='32'
+            xml={ getCustomSvg( walletSvgBase, props.style?.tintColor ) }
+        />
+    );
+};
+
+const CardsIcon = ( props: IconProps ) =>  <Icon { ...props } name='grid-outline' />;
+
 const PlusIcon = () => {
     return (
         <SvgXml
@@ -19,7 +30,17 @@ const PlusIcon = () => {
         />
     );
 };
-const PlayIcon = ( props: IconProps ) => <Icon { ...props } name='award-outline' />;
+
+const PlayIcon = ( props: IconProps ) => {
+    return (
+        <SvgXml
+            width='32'
+            height='32'
+            xml={ getCustomSvg( challengeSvgBase, props.style?.tintColor ) }
+        />
+    );
+};
+
 const InfoIcon = ( props: IconProps ) => <Icon { ...props } name='info-outline' />;
 
 export const BottomMenu = () => {
