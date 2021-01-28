@@ -4,6 +4,7 @@ import { styles } from './../styles/styles';
 import { AppContext, TWords, TWordsWallet } from '../App';
 import AsyncStorage from '@react-native-community/async-storage';
 import { DECK_SIZE_DATA, getShuffledCards, TWordsFreshnessValues, WORDS_FRESHNESS_DATA } from '../utils/utils';
+import { TransitionPresets } from '@react-navigation/stack';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -11,6 +12,8 @@ import { AddWordIcon } from '../App';
 import { Cards } from './Cards';
 import { demoDeck } from '../utils/demoDeck';
 import { chunk } from 'lodash';
+import { View } from 'react-native';
+import { DeckAddEdit } from './DeckAddEdit';
 
 type TTrainingModeInstructionsProps = {
     deck: TWords;
@@ -25,14 +28,6 @@ const CardsIcon = ( props: IconProps ) => (
 const ShuffleIcon = ( props: IconProps ) => (
     <Icon { ...props } name='shuffle-2-outline' />
 );
-
-demoDeck.decks.push( {
-    id: -1,
-    name: '__ADD_PLACEHOLDER__',
-    createdTimestamp: 1609757292,
-    updatedTimestamp: 1609757492,
-    cards: []
-} );
 
 const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
@@ -84,7 +79,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
                             if ( singleDeck.name === '__ADD_PLACEHOLDER__' ) {
                                 return (
                                     <Card
-                                        onPress={ () => navigation.navigate( 'training-mode_cards' ) } 
+                                        onPress={ () => navigation.navigate( 'training-mode_new-deck' ) }
                                         style={ [
                                             styles.singleDeck,
                                             styles.addDeck,
@@ -206,6 +201,28 @@ export const TrainingMode = () => {
                                     { ...props }
                                     deck={ deck }
                                 />
+                            );
+                        }
+                    }
+                </Stack.Screen>
+
+                <Stack.Screen
+                    name='training-mode_new-deck'
+                    options={ {
+                        headerShown: true,
+                        title: '',
+                        animationEnabled: true,
+                        headerStyle: {
+                            shadowColor: 'transparent',
+                            elevation: 0
+                        },
+                        ...TransitionPresets.ModalTransition
+                    } }
+                >
+                    {
+                        () => {
+                            return (
+                                <DeckAddEdit />
                             );
                         }
                     }

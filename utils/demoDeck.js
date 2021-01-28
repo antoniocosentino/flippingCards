@@ -103,6 +103,13 @@ export const demoDeck = {
                     mastered: false
                 }
             ]
+        },
+        {
+            id: -1,
+            name: '__ADD_PLACEHOLDER__',
+            createdTimestamp: 1609757292,
+            updatedTimestamp: 1609757492,
+            cards: []
         }
     ]
 };
