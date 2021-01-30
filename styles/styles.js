@@ -14,7 +14,7 @@ export const secondColor = '#F08A5D';
 export const thirdColor = '#6A2C70';
 export const fourthColor = '#EEECDA';
 export const fifthColor = '#F01641';
-
+export const sixthColor = '#3251B8';
 
 const customFontRegular = 'Nunito-Regular';
 const customFontBold = 'Nunito-SemiBold';
@@ -39,6 +39,11 @@ export const styles = StyleSheet.create( {
     },
     'centeredElement--noTopSpace': {
         paddingTop: 0
+    },
+    'centeredElement--lessHorizontalPadding': {
+        width: '90%',
+        marginLeft: '5%',
+        marginRight: '5%'
     },
     centeredSimpleView: {
         justifyContent: 'center',

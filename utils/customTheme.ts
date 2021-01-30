@@ -1,5 +1,5 @@
 import * as eva from '@eva-design/eva';
-import { mainColor } from '../styles/styles';
+import { fourthColor, mainColor, secondColor, sixthColor, thirdColor } from '../styles/styles';
 
 const colorOverrides = {
     'color-basic-100': '#FFFFFF',
@@ -35,7 +35,7 @@ const colorOverrides = {
     'color-primary-200': '#D9E4FF',
     'color-primary-300': '#A6C1FF',
     'color-primary-400': '#598BFF',
-    'color-primary-500': mainColor,
+    'color-primary-500': sixthColor,
     'color-primary-600': mainColor, // this is the onPress color. Can be customized
     'color-primary-700': '#1A34B8',
     'color-primary-800': '#102694',
