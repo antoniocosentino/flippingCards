@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 
-import { BottomNavigation, BottomNavigationTab, IconProps, Icon } from '@ui-kitten/components';
+import { BottomNavigation, BottomNavigationTab, IconProps } from '@ui-kitten/components';
 
 import { AppContext } from '../App';
 import { styles } from '../styles/styles';
 import { SvgXml } from 'react-native-svg';
-import { plusSvg, challengeSvgBase, walletSvgBase, getCustomSvg } from '../utils/customIcons';
+import { plusSvg, challengeSvgBase, walletSvgBase, infoSvgBase, getCustomSvg, cardsSvgBase } from '../utils/customIcons';
 
 const ListIcon = ( props: IconProps ) => {
 
@@ -18,7 +18,16 @@ const ListIcon = ( props: IconProps ) => {
     );
 };
 
-const CardsIcon = ( props: IconProps ) =>  <Icon { ...props } name='grid-outline' />;
+const CardsIcon = ( props: IconProps ) => {
+
+    return (
+        <SvgXml
+            width='32'
+            height='32'
+            xml={ getCustomSvg( cardsSvgBase, props.style?.tintColor ) }
+        />
+    );
+};
 
 const PlusIcon = () => {
     return (
@@ -41,7 +50,15 @@ const PlayIcon = ( props: IconProps ) => {
     );
 };
 
-const InfoIcon = ( props: IconProps ) => <Icon { ...props } name='info-outline' />;
+const InfoIcon = ( props: IconProps ) => {
+    return (
+        <SvgXml
+            width='32'
+            height='32'
+            xml={ getCustomSvg( infoSvgBase, props.style?.tintColor ) }
+        />
+    );
+};
 
 export const BottomMenu = () => {
 
