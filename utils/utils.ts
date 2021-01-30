@@ -1,4 +1,4 @@
-import { TSingleWord, TSearchWords, TWordsWallet } from '../App';
+import { TSingleWord, TWords, TWordsWallet } from '../App';
 import { Platform } from 'react-native';
 
 type TTypeOfWord = {
@@ -109,7 +109,7 @@ export const getTypeOfWord = ( word: TSingleWord ): TTypeOfWord => {
     }
 };
 
-export const getShuffledCards = ( words: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ): TSearchWords => {
+export const getShuffledCards = ( words: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ): TWords => {
 
     const allShuffled = getWalletWordsInGivenPeriod( words, wordsFreshness )
         .map( ( a ) => ( { sort: Math.random(), value: a } ) )
@@ -128,7 +128,7 @@ export const getShuffledCards = ( words: TWordsWallet, nOfCards: number, wordsFr
     return tenShuffled;
 };
 
-const getWalletWordsInGivenPeriod = ( words: TWordsWallet, wordsFreshness: TWordsFreshnessValues ): TSearchWords => {
+const getWalletWordsInGivenPeriod = ( words: TWordsWallet, wordsFreshness: TWordsFreshnessValues ): TWords => {
     if ( wordsFreshness === WORDS_FRESHNESS_DATA[ 0 ] ) {
         return words;
     }
