@@ -1,31 +1,48 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { CheckBox, Layout, Text } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
 import { FlatList } from 'react-native-gesture-handler';
 import { AppContext } from '../App';
 
-export const DeckAddEdit = () => {
+const SingleRow = ( props: any ) => {
 
-    const SingleRow = ( props: any ) => {
+    const { data, rowSelector } = props;
+    const { item } = data;
+    const [ checked, setChecked ] = useState( false );
 
-        const { item } = props;
-
-        return (
-            <Layout key={ `${item.de}_${item.en}` }>
-                <CheckBox
-                    checked={ false }
-                    onChange={ undefined }
-                >
-                    { item.de }
-                </CheckBox>
-            </Layout>
-        );
+    const onCheckboxChange = () => {
+        setChecked( !checked );
+        rowSelector( item.id, !checked );
     };
+
+    return (
+        <Layout key={ item.id }>
+            <CheckBox
+                checked={ checked }
+                onChange={ onCheckboxChange }
+            >
+                { item.de }
+            </CheckBox>
+        </Layout>
+    );
+};
+
+export const DeckAddEdit = () => {
 
     const appData = useContext( AppContext );
 
     const { wordsWallet } = appData;
+
+    const initialSelectionState = wordsWallet.map( ( word, index ) => {
+        return { ...word, checked: false, id: index.toString() };
+    } );
+
+
+    const rowSelector = ( rowId: string, isSelected: boolean ) => {
+        console.log( 'selecting', rowId, 'value:', isSelected );
+    };
+
 
     return (
         <Layout style={ [ styles.centeredElement, styles['centeredElement--noTopSpace' ], styles['centeredElement--lessHorizontalPadding' ] ] }>
@@ -36,9 +53,16 @@ export const DeckAddEdit = () => {
             </Text>
 
             <FlatList
-                data={ wordsWallet }
-                renderItem={ SingleRow }
-                keyExtractor={ item => `${item.de}_${item.en}` }
+                data={ initialSelectionState }
+                renderItem={ ( data ) => {
+                    return (
+                        <SingleRow
+                            data={ data }
+                            rowSelector={ rowSelector }
+                        />
+                    );
+                } }
+                keyExtractor={ item => item.id }
             />
         </Layout>
     );
