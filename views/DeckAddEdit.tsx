@@ -4,6 +4,7 @@ import { CheckBox, Layout, Text } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
 import { FlatList } from 'react-native-gesture-handler';
 import { AppContext } from '../App';
+import { timeAgo } from './../utils/utils';
 
 const SingleRow = ( props: any ) => {
 
@@ -17,13 +18,18 @@ const SingleRow = ( props: any ) => {
     };
 
     return (
-        <Layout key={ item.id }>
-            <CheckBox
-                checked={ checked }
-                onChange={ onCheckboxChange }
-            >
-                { item.de }
-            </CheckBox>
+        <Layout style={ styles.deckAddRow } key={ item.id }>
+            <Layout style={ styles.deckAddRowLeft }>
+                <CheckBox
+                    checked={ checked }
+                    onChange={ onCheckboxChange }
+                >
+                    { item.de }
+                </CheckBox>
+            </Layout>
+            <Layout style={ styles.deckAddRowRight }>
+                <Text style={ [ styles.verySmallText, styles.rightAlignedText ] } >{ timeAgo( item.dateAdded ) }</Text>
+            </Layout>
         </Layout>
     );
 };
@@ -53,6 +59,7 @@ export const DeckAddEdit = () => {
             </Text>
 
             <FlatList
+                style={ styles.createDeckList }
                 data={ initialSelectionState }
                 renderItem={ ( data ) => {
                     return (

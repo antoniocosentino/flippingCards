@@ -160,6 +160,9 @@ export const styles = StyleSheet.create( {
     leftAlignedText: {
         textAlign: 'left'
     },
+    rightAlignedText: {
+        textAlign: 'right'
+    },
     centeredText: {
         textAlign: 'center'
     },
@@ -432,5 +435,19 @@ export const styles = StyleSheet.create( {
         color: mainColor,
         textAlign: 'center',
         fontSize: 20
+    },
+    createDeckList: {
+        width: '100%'
+    },
+    deckAddRow: {
+        marginTop: 10,
+        marginBottom: 10,
+        flexDirection: 'row'
+    },
+    deckAddRowLeft: {
+        flexBasis: '60%'
+    },
+    deckAddRowRight: {
+        flexBasis: '40%'
     }
 } );
