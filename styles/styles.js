@@ -135,6 +135,9 @@ export const styles = StyleSheet.create( {
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
+    'bottomZone--Hidden': {
+        display: 'none'
+    },
     bottomWrapper: {
         paddingTop: 16
     },
