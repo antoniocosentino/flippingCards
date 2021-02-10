@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { CheckBox, Layout, Text } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
@@ -34,21 +34,27 @@ const SingleRow = ( props: any ) => {
     );
 };
 
-export const DeckAddEdit = () => {
+export const DeckAddEdit = ( props: any ) => { // TODO: types
 
+    const routeName = props.route?.name;
     const appData = useContext( AppContext );
+    const { wordsWallet, setBottomBarVisibility } = appData;
 
-    const { wordsWallet } = appData;
+    useEffect( () => {
+        setBottomBarVisibility( false );
+
+        return () => {
+            setBottomBarVisibility( true );
+        };
+    }, [ routeName, setBottomBarVisibility ] );
 
     const initialSelectionState = wordsWallet.map( ( word, index ) => {
         return { ...word, checked: false, id: index.toString() };
     } );
 
-
     const rowSelector = ( rowId: string, isSelected: boolean ) => {
         console.log( 'selecting', rowId, 'value:', isSelected );
     };
-
 
     return (
         <Layout style={ [ styles.centeredElement, styles['centeredElement--noTopSpace' ], styles['centeredElement--lessHorizontalPadding' ] ] }>
@@ -56,6 +62,7 @@ export const DeckAddEdit = () => {
 
             <Text style={ styles.text }>
                 Select words that will be added to this deck.
+                { '\n' }
             </Text>
 
             <FlatList
