@@ -41,9 +41,9 @@ export const styles = StyleSheet.create( {
         paddingTop: 0
     },
     'centeredElement--lessHorizontalPadding': {
-        width: '90%',
-        marginLeft: '5%',
-        marginRight: '5%'
+        width: '98%',
+        marginLeft: '1%',
+        marginRight: '1%'
     },
     centeredSimpleView: {
         justifyContent: 'center',
@@ -442,7 +442,9 @@ export const styles = StyleSheet.create( {
     deckAddRow: {
         marginTop: 10,
         marginBottom: 10,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginLeft: '5%',
+        marginRight: '5%'
     },
     deckAddRowLeft: {
         flexBasis: '60%'

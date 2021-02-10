@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     ApplicationProvider,
     IconRegistry,
@@ -76,6 +76,7 @@ type TAppData = {
     selectedIndex: number;
     hasShownAnimation: boolean;
     deviceNotchSize: number;
+    isBottomBarShown: boolean;
     db: any; // TODO: not sure if we can type here
     customNavigate: ( route: string ) => void;
     setHasShownAnimation: ( value: boolean ) => void;
@@ -83,6 +84,7 @@ type TAppData = {
     storeData: ( value: TWordsWallet ) => void;
     addSingleWord: ( word: TSingleWord ) => void;
     increaseTapsCount: () => void;
+    setBottomBarVisibility: ( value: boolean ) => void;
 };
 
 export const AppContext = React.createContext( {} as TAppData );
@@ -108,7 +110,9 @@ const customNavigate = ( route: string ) => {
 };
 
 export default () => {
-    const [ selectedIndex, setSelectedIndex ] = React.useState( 0 );
+    const [ selectedIndex, setSelectedIndex ] = useState( 0 );
+
+    const [ isBottomBarShown, setBottomBarVisibility ] = useState( true );
 
     const currentRouteObj = navigationRef.current?.getCurrentRoute();
     const currentRoute = currentRouteObj?.name;
@@ -244,12 +248,14 @@ export default () => {
         hasShownAnimation,
         db,
         deviceNotchSize,
+        isBottomBarShown,
         customNavigate,
         setHasShownAnimation,
         onMenuClick,
         storeData,
         addSingleWord,
-        increaseTapsCount
+        increaseTapsCount,
+        setBottomBarVisibility
     };
 
     const Tab = createBottomTabNavigator();
@@ -320,9 +326,11 @@ export default () => {
 
                     </Layout>
 
-                    <Layout style={ styles.bottomZone }>
-                        <BottomMenu />
-                    </Layout>
+                    { isBottomBarShown &&
+                        <Layout style={ styles.bottomZone }>
+                            <BottomMenu />
+                        </Layout>
+                    }
 
                 </AppContext.Provider>
             </ApplicationProvider>

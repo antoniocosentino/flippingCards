@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Text, Icon, Button, IndexPath, Layout, IconProps, Divider, Select, SelectItem, Modal, Card } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
-import { AppContext, TWords, TWordsWallet } from '../App';
+import { AppContext, navigationRef, TWords, TWordsWallet } from '../App';
 import AsyncStorage from '@react-native-community/async-storage';
 import { DECK_SIZE_DATA, getShuffledCards, TWordsFreshnessValues, WORDS_FRESHNESS_DATA } from '../utils/utils';
 import { TransitionPresets } from '@react-navigation/stack';
@@ -19,6 +19,7 @@ type TTrainingModeInstructionsProps = {
     deck: TWords;
     storeDeckData: ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ) => Promise<number>;
     navigation: any; // TODO: I don't know the type of this
+    route: any; // TODO: same.
 }
 
 const CardsIcon = ( props: IconProps ) => (
@@ -31,10 +32,11 @@ const ShuffleIcon = ( props: IconProps ) => (
 
 const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
-    const { deck, storeDeckData, navigation } = props;
+    const { deck, storeDeckData, navigation, route } = props;
 
     const appData = useContext( AppContext );
     const { wordsWallet, customNavigate } = appData;
+    
 
     const [modalVisible, setModalVisible] = React.useState( false );
 
@@ -220,9 +222,11 @@ export const TrainingMode = () => {
                     } }
                 >
                     {
-                        () => {
+                        ( props ) => {
                             return (
-                                <DeckAddEdit />
+                                <DeckAddEdit
+                                    { ...props }
+                                />
                             );
                         }
                     }
