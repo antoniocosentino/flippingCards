@@ -326,11 +326,9 @@ export default () => {
 
                     </Layout>
 
-                    { isBottomBarShown &&
-                        <Layout style={ styles.bottomZone }>
-                            <BottomMenu />
-                        </Layout>
-                    }
+                    <Layout style={ [ styles.bottomZone, !isBottomBarShown && styles['bottomZone--Hidden'] ] }>
+                        <BottomMenu />
+                    </Layout>
 
                 </AppContext.Provider>
             </ApplicationProvider>
