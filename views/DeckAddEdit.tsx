@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { CheckBox, Layout, Text } from '@ui-kitten/components';
+import { Button, CheckBox, Layout, Text } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
 import { FlatList } from 'react-native-gesture-handler';
 import { AppContext } from '../App';
@@ -40,6 +40,8 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
     const appData = useContext( AppContext );
     const { wordsWallet, setBottomBarVisibility } = appData;
 
+    // TODO: this is slightly buggy (there's a flickering on the list)
+    // check if we can make this smoother
     useEffect( () => {
         setBottomBarVisibility( false );
 
@@ -78,6 +80,12 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
                 } }
                 keyExtractor={ item => item.id }
             />
+
+            <Layout style={ styles.createDeckCta }>
+                <Button onPress={ () => console.log('click click') } style={ styles.ctaButton }>
+                    Create Deck
+                </Button>
+            </Layout>
         </Layout>
     );
 };
