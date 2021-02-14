@@ -440,7 +440,12 @@ export const styles = StyleSheet.create( {
         fontSize: 20
     },
     createDeckList: {
-        width: '100%'
+        width: '100%',
+        height: '75%'
+    },
+    createDeckCta: {
+        height: '25%',
+        paddingTop: '6%'
     },
     deckAddRow: {
         marginTop: 10,

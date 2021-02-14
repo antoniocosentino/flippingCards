@@ -218,7 +218,7 @@ export const TrainingMode = () => {
                             shadowColor: 'transparent',
                             elevation: 0
                         },
-                        ...TransitionPresets.ModalTransition
+                        ...TransitionPresets.ModalSlideFromBottomIOS
                     } }
                 >
                     {
