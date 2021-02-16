@@ -5,11 +5,12 @@ import { DEMO_WORDS_DEBUG } from '../utils/demoData.debug';
 import { storeDBversion } from '../App';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from '../styles/styles';
+import { DEMO_DECKS } from '../utils/demoDecks';
 
 export const DebugMode = () => {
 
     const appData = useContext( AppContext );
-    const { storeData } = appData;
+    const { storeData, storeDecksData } = appData;
 
     return (
         <SafeAreaView style={ styles.mainViewWrapper }>
@@ -23,9 +24,25 @@ export const DebugMode = () => {
                 <Text />
 
                 <Button
+                    onPress={ () => storeDecksData( DEMO_DECKS ) }
+                >
+                    Fill with demo decks
+                </Button>
+
+                <Text />
+
+                <Button
                     onPress={ () => storeData( [] ) }
                 >
                     Wipe Wallet
+                </Button>
+
+                <Text />
+
+                <Button
+                    onPress={ () => storeDecksData( [] ) }
+                >
+                    Wipe Decks
                 </Button>
 
                 <Text />

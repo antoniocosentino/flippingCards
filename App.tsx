@@ -72,6 +72,7 @@ export type TWordsWallet = ReadonlyArray<TSingleWalletWord>
 
 type TAppData = {
     wordsWallet: TWordsWallet;
+    decksData: any; // TODO: type
     hasFetchedWallet: boolean;
     selectedIndex: number;
     hasShownAnimation: boolean;
@@ -82,6 +83,7 @@ type TAppData = {
     setHasShownAnimation: ( value: boolean ) => void;
     onMenuClick: ( index: number ) => void;
     storeData: ( value: TWordsWallet ) => void;
+    storeDecksData: ( value: any ) => void; // TODO: types
     addSingleWord: ( word: TSingleWord ) => void;
     increaseTapsCount: () => void;
     setBottomBarVisibility: ( value: boolean ) => void;
@@ -131,6 +133,9 @@ export default () => {
     }, [ tapsCount, currentRoute ] );
 
     const [ wordsWallet, setWordsWallet ] = React.useState( [] as TWordsWallet );
+
+    const [ decksData, setDecksData ] = React.useState( [] as any );
+
     const [ hasFetchedWallet, setHasFetchedWallet ] = React.useState( false );
 
     const [ deviceNotchSize, setDeviceNotchSize ] = React.useState( 0 );
@@ -142,6 +147,8 @@ export default () => {
         } );
 
 
+
+    // WALLET specific
     const [ isDataUpdated, setDataUpdated ] = React.useState( false );
 
     const storeData = async ( value: TWordsWallet ) => {
@@ -189,6 +196,49 @@ export default () => {
         }
     };
 
+    /* end of WALLET specific */
+
+    // DECKS specific
+    const [ isDecksDataUpdated, setDecksDataUpdated ] = React.useState( false );
+
+    const storeDecksData = async ( value: TWordsWallet ) => {
+        setDecksDataUpdated( false );
+        try {
+            const jsonValue = JSON.stringify( value );
+            await AsyncStorage.setItem( '@decks', jsonValue );
+        } catch ( e ) {
+            console.error( 'Error:', e );
+        }
+    };
+
+    const getDecksData = async () => {
+        try {
+            const value = await AsyncStorage.getItem( '@decks' );
+
+            if ( value !== null ) {
+
+                const DECKS_EXTRA = {
+                    id: -1,
+                    name: '__ADD_PLACEHOLDER__',
+                    createdTimestamp: 1609757292,
+                    updatedTimestamp: 1609757492,
+                    cards: []
+                };
+
+                const dataAsArr = JSON.parse( value );
+                dataAsArr.push( DECKS_EXTRA );
+
+                setDecksData( dataAsArr );
+            }
+
+        } catch ( e ) {
+            // error reading value
+        }
+    };
+
+    /* end of DECKS specific */
+
+
     const getDBversion = async () => {
         try {
             const version = await AsyncStorage.getItem( '@dbVersion' );
@@ -210,6 +260,11 @@ export default () => {
     if ( !isDataUpdated ){
         getData();
         setDataUpdated( true );
+    }
+
+    if ( !isDecksDataUpdated ){
+        getDecksData();
+        setDecksDataUpdated( true );
     }
 
     const onMenuClick = ( index: number ) => {
@@ -243,6 +298,7 @@ export default () => {
 
     const appData: TAppData = {
         wordsWallet,
+        decksData,
         hasFetchedWallet,
         selectedIndex,
         hasShownAnimation,
@@ -253,6 +309,7 @@ export default () => {
         setHasShownAnimation,
         onMenuClick,
         storeData,
+        storeDecksData,
         addSingleWord,
         increaseTapsCount,
         setBottomBarVisibility
