@@ -10,7 +10,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { AddWordIcon } from '../App';
 import { Cards } from './Cards';
-import { demoDeck } from '../utils/demoDeck';
 import { chunk } from 'lodash';
 import { View } from 'react-native';
 import { DeckAddEdit } from './DeckAddEdit';
@@ -35,7 +34,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
     const { deck, storeDeckData, navigation, route } = props;
 
     const appData = useContext( AppContext );
-    const { wordsWallet, customNavigate } = appData;
+    const { wordsWallet, customNavigate, decksData } = appData;
     
 
     const [modalVisible, setModalVisible] = React.useState( false );
@@ -62,7 +61,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
         } );
     };
 
-    const chunkedDecks = chunk( demoDeck.decks, 3 );
+    const chunkedDecks = chunk( decksData, 3 );
 
     return (
         <Layout style={ styles.instructions }>
