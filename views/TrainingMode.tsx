@@ -1,65 +1,28 @@
-import React, { useContext, useEffect } from 'react';
-import { Text, Icon, Button, IndexPath, Layout, IconProps, Divider, Select, SelectItem, Modal, Card } from '@ui-kitten/components';
+import React, { useContext } from 'react';
+import { Text, Layout, Card } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
-import { AppContext, navigationRef, TWords, TWordsWallet } from '../App';
+import { AppContext, TWords, TWordsWallet } from '../App';
 import AsyncStorage from '@react-native-community/async-storage';
-import { DECK_SIZE_DATA, getShuffledCards, TWordsFreshnessValues, WORDS_FRESHNESS_DATA } from '../utils/utils';
+import { getShuffledCards, TWordsFreshnessValues } from '../utils/utils';
 import { TransitionPresets } from '@react-navigation/stack';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { AddWordIcon } from '../App';
 import { Cards } from './Cards';
 import { chunk } from 'lodash';
-import { View } from 'react-native';
 import { DeckAddEdit } from './DeckAddEdit';
 
 type TTrainingModeInstructionsProps = {
-    deck: TWords;
-    storeDeckData: ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ) => Promise<number>;
     navigation: any; // TODO: I don't know the type of this
     route: any; // TODO: same.
 }
 
-const CardsIcon = ( props: IconProps ) => (
-    <Icon { ...props } name='grid-outline' />
-);
-
-const ShuffleIcon = ( props: IconProps ) => (
-    <Icon { ...props } name='shuffle-2-outline' />
-);
-
 const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
-    const { deck, storeDeckData, navigation, route } = props;
+    const { navigation } = props;
 
     const appData = useContext( AppContext );
-    const { wordsWallet, customNavigate, decksData } = appData;
-    
-
-    const [modalVisible, setModalVisible] = React.useState( false );
-
-    const [selectedDeckSizeIndex, setSelectedDeckSizeIndex] = React.useState( new IndexPath( 1 ) );
-    const displayDeckSizeValue = DECK_SIZE_DATA[selectedDeckSizeIndex.row];
-
-    const [selectedWordsFreshnessIndex, setSelectedWordsFreshnessIndex] = React.useState( new IndexPath( 0 ) );
-    const displayWordsFreshnessValue = WORDS_FRESHNESS_DATA[selectedWordsFreshnessIndex.row];
-
-    const renderSizeOption = ( title: string, index: number ) => (
-        <SelectItem key={ index } title={ title }/>
-    );
-
-    const generateNewDeck = ( nOfCards: number, wordsFreshness: TWordsFreshnessValues ) => {
-        const deckSizePromise = storeDeckData( wordsWallet, nOfCards, wordsFreshness );
-
-        Promise.resolve( deckSizePromise ).then( ( result: number ) => {
-            if ( result > 1 ){
-                navigation.navigate( 'training-mode_cards' );
-            } else {
-                setModalVisible( true );
-            }
-        } );
-    };
+    const { decksData } = appData;
 
     const chunkedDecks = chunk( decksData, 3 );
 
@@ -118,39 +81,6 @@ const Stack = createStackNavigator();
 
 export const TrainingMode = () => {
 
-    const [ deck, setDeck ] = React.useState( [] as TWords );
-    const [ isDeckDataUpdated, setDeckDataUpdated ] = React.useState( false );
-
-    const getDeckData = async () => {
-        try {
-            const value = await AsyncStorage.getItem( '@deck' );
-
-            if ( value !== null ) {
-                setDeck( JSON.parse( value ) );
-            }
-        } catch ( e ) {
-            // error reading value
-        }
-    };
-
-    const storeDeckData = async ( value: TWordsWallet, nOfCards: number, wordsFreshness: TWordsFreshnessValues ): Promise<number> => {
-        const shuffledCards = getShuffledCards( value, nOfCards, wordsFreshness );
-        setDeckDataUpdated( false );
-        try {
-            const jsonValue = JSON.stringify( shuffledCards );
-            await AsyncStorage.setItem( '@deck', jsonValue );
-        } catch ( e ) {
-            console.error( 'Error:', e );
-        }
-
-        return shuffledCards.length;
-    };
-
-    if ( !isDeckDataUpdated ){
-        getDeckData();
-        setDeckDataUpdated( true );
-    }
-
     return (
         <Layout style={ styles.stackNavigatorWrapper } >
             <Stack.Navigator
@@ -175,8 +105,6 @@ export const TrainingMode = () => {
                             return (
                                 <TrainingModeInstructions
                                     { ...props }
-                                    deck={ deck }
-                                    storeDeckData={ storeDeckData }
                                 />
                             );
                         }
@@ -200,7 +128,6 @@ export const TrainingMode = () => {
                             return (
                                 <Cards
                                     { ...props }
-                                    deck={ deck }
                                 />
                             );
                         }
