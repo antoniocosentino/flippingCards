@@ -1,15 +1,14 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Text, Icon } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
 import Carousel from 'react-native-snap-carousel';
 import { View } from 'react-native';
-import { TWords } from '../App';
+
 import FlipCard from 'react-native-flip-card';
 import { getArticle } from '../utils/utils';
+import { AppContext } from '../App';
 
-type TCards = {
-    deck: TWords;
-}
+type TCards = any; //TODO: types!
 
 type TRenderCardProps = {
     item: any;
@@ -19,7 +18,18 @@ type TRenderCardProps = {
 export const Cards = ( props: TCards ) => {
     const [ cardWrapperDimensions, setCardWrapperDimensions ] = useState( { width: 0, height: 0 } );
     const carouselRef = useRef( null );
-    const { deck } = props;
+    const appData = useContext( AppContext );
+    const { decksData } = appData;
+
+    // TODO: the index should be dynamic
+    const deck = decksData[0].cards.slice();
+
+    deck.unshift( {
+        de: '___firstItem___',
+        en: '___firstItem___',
+        wordType: '___firstItem___',
+        mastered: false
+    } );
 
     return (
         <>
