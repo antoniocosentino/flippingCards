@@ -70,9 +70,23 @@ export type TWords = ReadonlyArray<TSingleWord>
 
 export type TWordsWallet = ReadonlyArray<TSingleWalletWord>
 
+export type TSingleCard = TSingleWord & { mastered: boolean };
+
+export type TCards = TSingleCard[]
+
+export type TDeck = {
+    id: number,
+    name: string,
+    createdTimestamp: number,
+    updatedTimestamp: number,
+    cards: TCards
+};
+
+export type TDecks = ReadonlyArray<TDeck>;
+
 type TAppData = {
     wordsWallet: TWordsWallet;
-    decksData: any; // TODO: type
+    decksData: TDecks;
     hasFetchedWallet: boolean;
     selectedIndex: number;
     hasShownAnimation: boolean;
@@ -83,8 +97,9 @@ type TAppData = {
     setHasShownAnimation: ( value: boolean ) => void;
     onMenuClick: ( index: number ) => void;
     storeData: ( value: TWordsWallet ) => void;
-    storeDecksData: ( value: any ) => void; // TODO: types
+    storeDecksData: ( value: TDecks ) => void;
     addSingleWord: ( word: TSingleWord ) => void;
+    addSingleDeck: ( deck: TDeck ) => void;
     increaseTapsCount: () => void;
     setBottomBarVisibility: ( value: boolean ) => void;
 };
@@ -201,7 +216,7 @@ export default () => {
     // DECKS specific
     const [ isDecksDataUpdated, setDecksDataUpdated ] = React.useState( false );
 
-    const storeDecksData = async ( value: TWordsWallet ) => {
+    const storeDecksData = async ( value: TDecks ) => {
         setDecksDataUpdated( false );
         try {
             const jsonValue = JSON.stringify( value );
@@ -209,6 +224,18 @@ export default () => {
         } catch ( e ) {
             console.error( 'Error:', e );
         }
+    };
+
+    const addSingleDeck = ( deckData: TDeck ) => {
+        const decksClone = decksData.slice();
+
+        // removing the add placeholder row
+        decksClone.splice( -1, 1 );
+
+        decksClone.push( deckData );
+
+        storeDecksData( decksClone );
+
     };
 
     const getDecksData = async () => {
@@ -310,6 +337,7 @@ export default () => {
         onMenuClick,
         storeData,
         storeDecksData,
+        addSingleDeck,
         addSingleWord,
         increaseTapsCount,
         setBottomBarVisibility

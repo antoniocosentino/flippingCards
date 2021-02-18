@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Button, CheckBox, Layout, Text } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
 import { FlatList } from 'react-native-gesture-handler';
-import { AppContext } from '../App';
+import { AppContext, TCards, TDeck, TSingleCard } from '../App';
 import { timeAgo } from './../utils/utils';
 
 const SingleRow = ( props: any ) => {
@@ -37,11 +37,14 @@ const SingleRow = ( props: any ) => {
 export const DeckAddEdit = ( props: any ) => { // TODO: types
 
     const routeName = props.route?.name;
+    const { navigation } = props;
     const appData = useContext( AppContext );
-    const { wordsWallet, setBottomBarVisibility } = appData;
+    const { wordsWallet, setBottomBarVisibility, addSingleDeck } = appData;
+
+    const newDeckCards: TCards = [];
 
     // TODO: this is slightly buggy (there's a flickering on the list)
-    // check if we can make this smoother
+    // check if I can make this smoother
     useEffect( () => {
         setBottomBarVisibility( false );
 
@@ -55,7 +58,32 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
     } );
 
     const rowSelector = ( rowId: string, isSelected: boolean ) => {
-        console.log( 'selecting', rowId, 'value:', isSelected );
+        if ( isSelected ) {
+            const cardToAdd: TSingleCard = {
+                en: wordsWallet[ parseInt( rowId, 10 ) ].en,
+                de: wordsWallet[ parseInt( rowId, 10 ) ].de,
+                wordType: wordsWallet[ parseInt( rowId, 10 ) ].wordType,
+                mastered: false
+            };
+            newDeckCards.push( cardToAdd );
+        }
+
+        // TODO: add removing logic
+    };
+
+    const constructNewDeckData = (): TDeck => {
+        return {
+            id: ( new Date() ).getTime(),
+            name: ( new Date() ).getTime().toString(),
+            createdTimestamp: ( new Date() ).getTime(),
+            updatedTimestamp: ( new Date() ).getTime(),
+            cards: newDeckCards
+        };
+    };
+
+    const onCreateDeck = () => {
+        addSingleDeck( constructNewDeckData() );
+        navigation.goBack();
     };
 
     return (
@@ -82,7 +110,7 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
             />
 
             <Layout style={ styles.createDeckCta }>
-                <Button onPress={ () => console.log('click click') } style={ styles.ctaButton }>
+                <Button onPress={ onCreateDeck } style={ styles.ctaButton }>
                     Create Deck
                 </Button>
             </Layout>
