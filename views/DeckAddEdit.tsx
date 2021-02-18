@@ -74,7 +74,7 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
     const constructNewDeckData = (): TDeck => {
         return {
             id: ( new Date() ).getTime(),
-            name: ( new Date() ).getTime().toString(),
+            name: ( new Date() ).toLocaleString( 'de-DE' ),
             createdTimestamp: ( new Date() ).getTime(),
             updatedTimestamp: ( new Date() ).getTime(),
             cards: newDeckCards
