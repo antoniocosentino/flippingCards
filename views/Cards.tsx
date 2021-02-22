@@ -16,13 +16,15 @@ type TRenderCardProps = {
 };
 
 export const Cards = ( props: TCards ) => {
+
     const [ cardWrapperDimensions, setCardWrapperDimensions ] = useState( { width: 0, height: 0 } );
     const carouselRef = useRef( null );
     const appData = useContext( AppContext );
     const { decksData } = appData;
 
-    // TODO: the index should be dynamic
-    const deck = decksData[0].cards.slice();
+    const deckKey = props.route?.params?.deckKey ?? 0;
+
+    const deck = decksData[deckKey].cards.slice();
 
     deck.unshift( {
         de: '___firstItem___',
