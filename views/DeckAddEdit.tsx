@@ -17,6 +17,9 @@ const SingleRow = ( props: any ) => {
         rowSelector( item.id, !checked );
     };
 
+    // TODO: i'm using ts-ignore because according to the type definition I can't pass
+    // a layout as a children of checkbox. However this works perfectly fine.
+
     return (
         <Layout style={ styles.deckAddRow } key={ item.id }>
             <Layout style={ styles.deckAddRowLeft }>
@@ -24,7 +27,12 @@ const SingleRow = ( props: any ) => {
                     checked={ checked }
                     onChange={ onCheckboxChange }
                 >
-                    { item.de }
+                    { /* @ts-ignore */ }
+                    <Layout>
+                        <Text style={ styles.boldText } >{ item.de }</Text>
+                        <Text style={ [styles.text, styles.smallerText, styles.leftAlignedText ] }>{ item.en }</Text>
+                    </Layout>
+
                 </CheckBox>
             </Layout>
             <Layout style={ styles.deckAddRowRight }>
