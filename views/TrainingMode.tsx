@@ -1,9 +1,7 @@
 import React, { useContext } from 'react';
 import { Text, Layout, Card } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
-import { AppContext, TWords, TWordsWallet } from '../App';
-import AsyncStorage from '@react-native-community/async-storage';
-import { getShuffledCards, TWordsFreshnessValues } from '../utils/utils';
+import { AppContext } from '../App';
 import { TransitionPresets } from '@react-navigation/stack';
 
 import { createStackNavigator } from '@react-navigation/stack';
@@ -58,7 +56,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
                             return (
                                 <Card
-                                    onPress={ () => navigation.navigate( 'training-mode_cards' ) }
+                                    onPress={ () => navigation.navigate( 'training-mode_cards', { deckKey } ) }
                                     style={ [
                                         styles.singleDeck,
                                         ( deckKey === 0 || deckKey === 2 ) && styles['singleDeck--noMargin']
