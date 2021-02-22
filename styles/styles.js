@@ -459,5 +459,10 @@ export const styles = StyleSheet.create( {
     },
     deckAddRowRight: {
         flexBasis: '40%'
+    },
+    editButtonSvg: {
+        position: 'absolute',
+        top: -50,
+        right: -20
     }
 } );
