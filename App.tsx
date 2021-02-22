@@ -232,7 +232,7 @@ export default () => {
         // removing the add placeholder row
         decksClone.splice( -1, 1 );
 
-        decksClone.push( deckData );
+        decksClone.unshift( deckData );
 
         storeDecksData( decksClone );
 
