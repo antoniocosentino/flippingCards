@@ -9,11 +9,29 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Cards } from './Cards';
 import { chunk } from 'lodash';
 import { DeckAddEdit } from './DeckAddEdit';
+import { SvgXml } from 'react-native-svg';
+import { editSvgBase, getCustomSvg } from '../utils/customIcons';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 type TTrainingModeInstructionsProps = {
     navigation: any; // TODO: I don't know the type of this
     route: any; // TODO: same.
 }
+
+const EditButton = () => {
+    return (
+        <SvgXml
+            style={ styles.editButtonSvg }
+            width='18'
+            height='18'
+            xml={ getCustomSvg( editSvgBase, '#FFFFFF' ) }
+        />
+    );
+};
+
+const editClick = () => {
+    console.log( 'click edit button' );
+};
 
 const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
@@ -63,6 +81,11 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
                                     ] }
                                     key={ deckKey }
                                 >
+                                    <TouchableWithoutFeedback
+                                        onPress={ editClick }
+                                    >
+                                        <EditButton />
+                                    </TouchableWithoutFeedback>
                                     <Text style={ [ styles.whiteText, styles.verySmallText ] }>{ singleDeck.name }</Text>
                                 </Card>
                             );
