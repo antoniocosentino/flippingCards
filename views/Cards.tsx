@@ -8,7 +8,9 @@ import FlipCard from 'react-native-flip-card';
 import { getArticle } from '../utils/utils';
 import { AppContext } from '../App';
 
-type TCards = any; //TODO: types!
+type TCards = {
+    route: any; // TODO: not sure about type here
+}
 
 type TRenderCardProps = {
     item: any;
@@ -63,8 +65,6 @@ export const Cards = ( props: TCards ) => {
 
 const renderCard = ( props: TRenderCardProps ) => {
     const { item } = props;
-
-    // const typeOfWord = getTypeOfWord( item );
 
     if ( item.de  === '___firstItem___' ) {
         return (
