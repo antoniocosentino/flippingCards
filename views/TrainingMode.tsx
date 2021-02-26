@@ -11,7 +11,7 @@ import { chunk } from 'lodash';
 import { DeckAddEdit } from './DeckAddEdit';
 import { SvgXml } from 'react-native-svg';
 import { editSvgBase, getCustomSvg } from '../utils/customIcons';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 
 type TTrainingModeInstructionsProps = {
     navigation: any; // TODO: I don't know the type of this
@@ -29,10 +29,6 @@ const EditButton = () => {
     );
 };
 
-const editClick = () => {
-    console.log( 'click edit button' );
-};
-
 const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
     const { navigation } = props;
@@ -41,6 +37,14 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
     const { decksData } = appData;
 
     const chunkedDecks = chunk( decksData, 3 );
+
+    const editClick = () => {
+        console.log( 'click edit button' );
+    };
+
+    const cardClick = ( deckKey: number ) => {
+        navigation.navigate( 'training-mode_cards', { deckKey } );
+    };
 
     return (
         <Layout style={ styles.instructions }>
@@ -74,18 +78,18 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
                             return (
                                 <Card
-                                    onPress={ () => navigation.navigate( 'training-mode_cards', { deckKey } ) }
+                                    onPress={ () => cardClick( deckKey ) }
                                     style={ [
                                         styles.singleDeck,
                                         ( deckKey === 0 || deckKey === 2 ) && styles['singleDeck--noMargin']
                                     ] }
                                     key={ deckKey }
                                 >
-                                    <TouchableWithoutFeedback
+                                    <TouchableOpacity
                                         onPress={ editClick }
                                     >
                                         <EditButton />
-                                    </TouchableWithoutFeedback>
+                                    </TouchableOpacity>
                                     <Text style={ [ styles.whiteText, styles.verySmallText ] }>{ singleDeck.name }</Text>
                                 </Card>
                             );

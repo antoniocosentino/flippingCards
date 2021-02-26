@@ -422,7 +422,8 @@ export const styles = StyleSheet.create( {
         borderColor: 'transparent',
         borderRadius: 8,
         marginLeft: '3.5%',
-        marginRight: '3.5%'
+        marginRight: '3.5%',
+        zIndex: 1
     },
     'singleDeck--noMargin': {
         marginLeft: 0,
@@ -463,6 +464,7 @@ export const styles = StyleSheet.create( {
     editButtonSvg: {
         position: 'absolute',
         top: -50,
-        right: -20
+        right: -20,
+        zIndex: 2
     }
 } );
