@@ -11,7 +11,7 @@ import { chunk } from 'lodash';
 import { DeckAddEdit } from './DeckAddEdit';
 import { SvgXml } from 'react-native-svg';
 import { editSvgBase, getCustomSvg } from '../utils/customIcons';
-import { TouchableOpacity, ActionSheetIOS } from 'react-native';
+import { TouchableOpacity, ActionSheetIOS, GestureResponderEvent } from 'react-native';
 
 type TTrainingModeInstructionsProps = {
     navigation: any; // TODO: I don't know the type of this
@@ -38,7 +38,10 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
     const chunkedDecks = chunk( decksData, 3 );
 
-    const editClick = ( deckKey: number ) => {
+    const editClick = ( deckKey: number, event: GestureResponderEvent ) => {
+
+        event.stopPropagation();
+
         ActionSheetIOS.showActionSheetWithOptions(
             {
                 options: ['Cancel', 'Edit Deck', 'Delete Deck'],
@@ -102,7 +105,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
                                     key={ deckKey }
                                 >
                                     <TouchableOpacity
-                                        onPress={ () => editClick( deckKey ) }
+                                        onPress={ ( event ) => editClick( deckKey, event ) }
                                     >
                                         <EditButton />
                                     </TouchableOpacity>
