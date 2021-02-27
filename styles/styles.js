@@ -470,10 +470,5 @@ export const styles = StyleSheet.create( {
         top: -50,
         right: -20,
         zIndex: 2
-    },
-    koseTest: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0
     }
 } );
