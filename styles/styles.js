@@ -117,6 +117,10 @@ export const styles = StyleSheet.create( {
     topSearchInput: {
         ...inputGlobalStyles
     },
+    smallInput: {
+        ...inputGlobalStyles,
+        borderRadius: 6
+    },
     walletInstructions: {
         marginTop: 40,
         paddingLeft: 30,
@@ -466,5 +470,10 @@ export const styles = StyleSheet.create( {
         top: -50,
         right: -20,
         zIndex: 2
+    },
+    koseTest: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0
     }
 } );
