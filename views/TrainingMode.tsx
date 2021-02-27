@@ -11,7 +11,7 @@ import { chunk } from 'lodash';
 import { DeckAddEdit } from './DeckAddEdit';
 import { SvgXml } from 'react-native-svg';
 import { editSvgBase, getCustomSvg } from '../utils/customIcons';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, ActionSheetIOS } from 'react-native';
 
 type TTrainingModeInstructionsProps = {
     navigation: any; // TODO: I don't know the type of this
@@ -38,8 +38,22 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
     const chunkedDecks = chunk( decksData, 3 );
 
-    const editClick = () => {
-        console.log( 'click edit button' );
+    const editClick = ( deckKey: number ) => {
+        ActionSheetIOS.showActionSheetWithOptions(
+            {
+                options: ['Cancel', 'Edit Deck', 'Delete Deck'],
+                destructiveButtonIndex: 2,
+                cancelButtonIndex: 0
+            },
+            buttonIndex => {
+                if ( buttonIndex === 1 ) {
+                    navigation.navigate( 'training-mode_new-deck', { deckKey, editMode: true } );
+                }
+                if ( buttonIndex === 2 ) {
+                    console.log( 'delete logic here, deck:', deckKey );
+                }
+            }
+        );
     };
 
     const cardClick = ( deckKey: number ) => {
@@ -48,6 +62,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
     return (
         <Layout style={ styles.instructions }>
+
 
             <Text style={ [ styles.text, styles.titleText ] } category='h4'>Training mode</Text>
 
@@ -86,7 +101,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
                                     key={ deckKey }
                                 >
                                     <TouchableOpacity
-                                        onPress={ editClick }
+                                        onPress={ () => editClick( deckKey ) }
                                     >
                                         <EditButton />
                                     </TouchableOpacity>
