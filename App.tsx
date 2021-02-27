@@ -100,6 +100,7 @@ type TAppData = {
     storeDecksData: ( value: TDecks ) => void;
     addSingleWord: ( word: TSingleWord ) => void;
     addSingleDeck: ( deck: TDeck ) => void;
+    removeSingleDeck: ( deckKey: number ) => void;
     increaseTapsCount: () => void;
     setBottomBarVisibility: ( value: boolean ) => void;
 };
@@ -232,10 +233,22 @@ export default () => {
         // removing the add placeholder row
         decksClone.splice( -1, 1 );
 
-        decksClone.unshift( deckData );
+        decksClone.push( deckData );
 
         storeDecksData( decksClone );
 
+    };
+
+    const removeSingleDeck = ( deckKey: number ) => {
+        const decksClone = decksData.slice();
+
+        // removing the add placeholder row
+        decksClone.splice( -1, 1 );
+
+        // removing the specified key
+        decksClone.splice( deckKey, 1 );
+
+        storeDecksData( decksClone );
     };
 
     const getDecksData = async () => {
@@ -290,8 +303,12 @@ export default () => {
     }
 
     if ( !isDecksDataUpdated ){
-        getDecksData();
-        setDecksDataUpdated( true );
+        // I'm not super happy about this timeout
+        // I should consider a more solid solution
+        setTimeout( () => {
+            getDecksData();
+            setDecksDataUpdated( true );
+        }, 100 );
     }
 
     const onMenuClick = ( index: number ) => {
@@ -338,6 +355,7 @@ export default () => {
         storeData,
         storeDecksData,
         addSingleDeck,
+        removeSingleDeck,
         addSingleWord,
         increaseTapsCount,
         setBottomBarVisibility
