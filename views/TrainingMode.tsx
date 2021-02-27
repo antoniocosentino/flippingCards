@@ -34,7 +34,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
     const { navigation } = props;
 
     const appData = useContext( AppContext );
-    const { decksData } = appData;
+    const { decksData, removeSingleDeck } = appData;
 
     const chunkedDecks = chunk( decksData, 3 );
 
@@ -51,6 +51,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
                 }
                 if ( buttonIndex === 2 ) {
                     console.log( 'delete logic here, deck:', deckKey );
+                    removeSingleDeck( deckKey );
                 }
             }
         );
