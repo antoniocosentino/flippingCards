@@ -467,8 +467,8 @@ export const styles = StyleSheet.create( {
     },
     editButtonSvg: {
         position: 'absolute',
-        top: -50,
-        right: -20,
+        top: -33,
+        right: 4,
         zIndex: 2
     }
 } );
