@@ -78,17 +78,22 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
                 return (
                     <Layout key={ rowKey } style={ styles.decksWrapper }>
-                        { singleRow.map( ( singleDeck, deckKey ) => {
+                        { singleRow.map( ( singleDeck, colNumber ) => {
+
+                            // deck key is calculated based on row and column
+                            const deckKey = ( rowKey * 3 ) + colNumber;
+
                             if ( singleDeck.name === '__ADD_PLACEHOLDER__' ) {
+
                                 return (
                                     <Card
                                         onPress={ () => navigation.navigate( 'training-mode_new-deck' ) }
                                         style={ [
                                             styles.singleDeck,
                                             styles.addDeck,
-                                            ( deckKey === 0 || deckKey === 2 ) && styles['singleDeck--noMargin']
+                                            ( colNumber === 0 || colNumber === 2 ) && styles['singleDeck--noMargin']
                                         ] }
-                                        key={ deckKey }
+                                        key={ -1 }
                                     >
                                         <Text style={ styles.addDeckPlus }>+</Text>
                                     </Card>
@@ -100,7 +105,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
                                     onPress={ () => cardClick( deckKey ) }
                                     style={ [
                                         styles.singleDeck,
-                                        ( deckKey === 0 || deckKey === 2 ) && styles['singleDeck--noMargin']
+                                        ( colNumber === 0 || colNumber === 2 ) && styles['singleDeck--noMargin']
                                     ] }
                                     key={ deckKey }
                                 >

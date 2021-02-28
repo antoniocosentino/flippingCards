@@ -337,8 +337,8 @@ export const styles = StyleSheet.create( {
         backgroundColor: secondColor
     },
     instructions: {
-        paddingLeft: 30,
-        paddingRight: 30
+        paddingLeft: 13,
+        paddingRight: 13
     },
     instructionsText: {
         marginTop: 20,
