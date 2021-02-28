@@ -102,19 +102,21 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
                             return (
                                 <Card
-                                    onPress={ () => cardClick( deckKey ) }
+                                    onPress={ ( event ) => editClick( deckKey, event ) }
                                     style={ [
                                         styles.singleDeck,
                                         ( colNumber === 0 || colNumber === 2 ) && styles['singleDeck--noMargin']
                                     ] }
                                     key={ deckKey }
                                 >
+
+                                    <EditButton />
+
                                     <TouchableOpacity
-                                        onPress={ ( event ) => editClick( deckKey, event ) }
+                                        onPress={ () => cardClick( deckKey ) }
                                     >
-                                        <EditButton />
+                                        <Text style={ [ styles.whiteText, styles.verySmallText ] }>{ singleDeck.name }</Text>
                                     </TouchableOpacity>
-                                    <Text style={ [ styles.whiteText, styles.verySmallText ] }>{ singleDeck.name }</Text>
                                 </Card>
                             );
                         } ) }
