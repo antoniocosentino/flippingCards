@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { Button, CheckBox, Layout, Text, Input } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
@@ -9,8 +9,9 @@ import { timeAgo } from './../utils/utils';
 const SingleRow = ( props: any ) => {
 
     const { data, rowSelector } = props;
+
     const { item } = data;
-    const [ checked, setChecked ] = useState( false );
+    const [ checked, setChecked ] = useState( item.checked );
 
     const onCheckboxChange = () => {
         setChecked( !checked );
@@ -44,15 +45,15 @@ const SingleRow = ( props: any ) => {
 
 export const DeckAddEdit = ( props: any ) => { // TODO: types
 
-    const routeName = props.route?.name;
     const { navigation } = props;
-    const params = props.route?.params;
+    const params = props.route?.params || {};
 
     const editMode = params?.editMode || false;
-    const deckKey = params?.deckKey || null;
+    const deckKey = params?.deckKey !== null ? params.deckKey : null;
 
     const appData = useContext( AppContext );
-    const { wordsWallet, setBottomBarVisibility, addSingleDeck } = appData;
+    const { wordsWallet, decksData, addSingleDeck, updateSingleDeck } = appData;
+    const thisDeck = editMode ? decksData[ deckKey ] : null;
 
     const newDeckCards: TCards = [];
 
@@ -66,10 +67,6 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
     //     };
     // }, [ routeName, setBottomBarVisibility ] );
 
-    const initialSelectionState = wordsWallet.map( ( word, index ) => {
-        return { ...word, checked: false, id: index.toString() };
-    } );
-
     const rowSelector = ( rowId: string, isSelected: boolean ) => {
         if ( isSelected ) {
             const cardToAdd: TSingleCard = {
@@ -80,14 +77,37 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
             };
             newDeckCards.push( cardToAdd );
         }
+        else {
+            const cardToDelete = newDeckCards.findIndex( ( singleCard ) =>
+                singleCard.en === wordsWallet[ parseInt( rowId, 10 ) ].en  &&
+                singleCard.de === wordsWallet[ parseInt( rowId, 10 ) ].de );
 
-        // TODO: add removing logic
+            newDeckCards.splice( cardToDelete, 1 );
+        }
     };
 
-    const constructNewDeckData = (): TDeck => {
+    const initialSelectionState = wordsWallet.map( ( word, index ) => {
+
+        let checkedValue = false;
+
+        if ( editMode && thisDeck ) {
+            const thisWordInOriginalDeck = thisDeck.cards.find( ( deckWord: TSingleCard ) => deckWord.de === word.de && deckWord.en === word.en );
+
+            if ( thisWordInOriginalDeck ) {
+                rowSelector( index.toString(), true );
+                checkedValue = true;
+            }
+
+        }
+
+
+        return { ...word, checked: checkedValue, id: index.toString() };
+    } );
+
+    const constructNewDeckData = ( name?: string ): TDeck => {
         return {
             id: ( new Date() ).getTime(),
-            name: ( new Date() ).toLocaleString( 'de-DE' ),
+            name: name ? name : ( new Date() ).toLocaleString( 'de-DE' ),
             createdTimestamp: ( new Date() ).getTime(),
             updatedTimestamp: ( new Date() ).getTime(),
             cards: newDeckCards
@@ -99,7 +119,14 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
         navigation.goBack();
     };
 
-    const [ inputContent, setInputContent ] = useState( 'Deck name' );
+    const onUpdateDeck = () => {
+        const updatedData = constructNewDeckData( inputContent );
+        updateSingleDeck( updatedData, deckKey );
+
+        navigation.goBack();
+    };
+
+    const [ inputContent, setInputContent ] = useState( thisDeck?.name );
 
     const subHeaderContent =
         editMode ?
@@ -139,7 +166,7 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
             />
 
             <Layout style={ styles.createDeckCta }>
-                <Button onPress={ onCreateDeck } style={ styles.ctaButton }>
+                <Button onPress={ editMode ? onUpdateDeck : onCreateDeck } style={ styles.ctaButton }>
                     { editMode ? 'Save Changes' : 'Create Deck' }
                 </Button>
             </Layout>
