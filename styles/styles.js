@@ -446,7 +446,7 @@ export const styles = StyleSheet.create( {
     },
     createDeckList: {
         width: '100%',
-        height: '75%'
+        height: '77%'
     },
     createDeckCta: {
         height: '25%',
@@ -467,8 +467,13 @@ export const styles = StyleSheet.create( {
     },
     editButtonSvg: {
         position: 'absolute',
-        top: -33,
+        top: 5,
         right: 4,
         zIndex: 2
+    },
+    deckName: {
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center'
     }
 } );
