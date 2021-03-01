@@ -100,6 +100,7 @@ type TAppData = {
     storeDecksData: ( value: TDecks ) => void;
     addSingleWord: ( word: TSingleWord ) => void;
     addSingleDeck: ( deck: TDeck ) => void;
+    updateSingleDeck: ( deck: TDeck, deckKey: number ) => void;
     removeSingleDeck: ( deckKey: number ) => void;
     increaseTapsCount: () => void;
     setBottomBarVisibility: ( value: boolean ) => void;
@@ -239,6 +240,17 @@ export default () => {
 
     };
 
+    const updateSingleDeck = ( deckData: TDeck, deckKey: number ) => {
+        const decksClone = decksData.slice();
+
+        // removing the add placeholder row
+        decksClone.splice( -1, 1 );
+
+        decksClone[ deckKey ] = deckData;
+
+        storeDecksData( decksClone );
+    };
+
     const removeSingleDeck = ( deckKey: number ) => {
         const decksClone = decksData.slice();
 
@@ -355,6 +367,7 @@ export default () => {
         storeData,
         storeDecksData,
         addSingleDeck,
+        updateSingleDeck,
         removeSingleDeck,
         addSingleWord,
         increaseTapsCount,

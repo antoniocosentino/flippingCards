@@ -53,7 +53,6 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
                     navigation.navigate( 'training-mode_new-deck', { deckKey, editMode: true } );
                 }
                 if ( buttonIndex === 2 ) {
-                    console.log( 'delete logic here, deck:', deckKey );
                     removeSingleDeck( deckKey );
                 }
             }
