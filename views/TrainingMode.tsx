@@ -11,7 +11,7 @@ import { chunk } from 'lodash';
 import { DeckAddEdit } from './DeckAddEdit';
 import { SvgXml } from 'react-native-svg';
 import { editSvgBase, getCustomSvg } from '../utils/customIcons';
-import { TouchableOpacity, ActionSheetIOS, GestureResponderEvent } from 'react-native';
+import { TouchableOpacity, ActionSheetIOS, GestureResponderEvent, View } from 'react-native';
 
 type TTrainingModeInstructionsProps = {
     navigation: any; // TODO: I don't know the type of this
@@ -115,7 +115,9 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
                                     <TouchableOpacity
                                         onPress={ () => cardClick( deckKey ) }
                                     >
-                                        <Text style={ [ styles.whiteText, styles.verySmallText ] }>{ singleDeck.name }</Text>
+                                        <View style={ styles.deckName }>
+                                            <Text style={ [ styles.whiteText, styles.verySmallText ] }>{ singleDeck.name }</Text>
+                                        </View>
                                     </TouchableOpacity>
                                 </Card>
                             );

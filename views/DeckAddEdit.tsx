@@ -58,13 +58,13 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
 
     // TODO: this is slightly buggy (there's a flickering on the list)
     // check if I can make this smoother
-    useEffect( () => {
-        setBottomBarVisibility( false );
+    // useEffect( () => {
+    //     setBottomBarVisibility( false );
 
-        return () => {
-            setBottomBarVisibility( true );
-        };
-    }, [ routeName, setBottomBarVisibility ] );
+    //     return () => {
+    //         setBottomBarVisibility( true );
+    //     };
+    // }, [ routeName, setBottomBarVisibility ] );
 
     const initialSelectionState = wordsWallet.map( ( word, index ) => {
         return { ...word, checked: false, id: index.toString() };
