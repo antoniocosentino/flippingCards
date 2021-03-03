@@ -9,6 +9,7 @@ import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { BottomMenu } from './BottomMenu';
 
 export const FlexiIcon = ( settingsIconProps: IconProps ) => (
     <Icon { ...settingsIconProps } width={ 22 } height={ 22 } fill='#333' />
@@ -18,36 +19,39 @@ const Stack = createStackNavigator();
 
 export const InfoView = () => {
     return (
-        <Layout style={ styles.stackNavigatorWrapper } >
-            <Stack.Navigator
-                screenOptions={ {
-                    cardStyle: { backgroundColor: '#fff' }
-                } }
-            >
-                <Stack.Screen
-                    name='infoMainView'
-                    component={ InfoMainView }
-                    options={ {
-                        title: '',
-                        headerLeft: () => null,
-                        headerStyle: {
-                            shadowColor: 'transparent',
-                            elevation: 0
-                        }
+        <Layout style={ styles.megaWrap } >
+            <Layout style={ styles.stackNavigatorWrapper } >
+                <Stack.Navigator
+                    screenOptions={ {
+                        cardStyle: { backgroundColor: '#fff' }
                     } }
-                />
-                <Stack.Screen
-                    name='infoSecondView'
-                    component={ InfoSecondView }
-                    options={ {
-                        headerShown: true,
-                        title: 'App Info',
-                        headerStyle: {
-                            shadowColor: 'transparent'
-                        }
-                    } }
-                />
-            </Stack.Navigator>
+                >
+                    <Stack.Screen
+                        name='infoMainView'
+                        component={ InfoMainView }
+                        options={ {
+                            title: '',
+                            headerLeft: () => null,
+                            headerStyle: {
+                                shadowColor: 'transparent',
+                                elevation: 0
+                            }
+                        } }
+                    />
+                    <Stack.Screen
+                        name='infoSecondView'
+                        component={ InfoSecondView }
+                        options={ {
+                            headerShown: true,
+                            title: 'App Info',
+                            headerStyle: {
+                                shadowColor: 'transparent'
+                            }
+                        } }
+                    />
+                </Stack.Navigator>
+            </Layout>
+            <BottomMenu />
         </Layout>
     );
 };

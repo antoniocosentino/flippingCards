@@ -135,15 +135,17 @@ export const styles = StyleSheet.create( {
         justifyContent: 'center'
     },
     bottomZone: {
-        flex: 1.6,
         justifyContent: 'flex-start',
-        alignItems: 'center'
-    },
-    'bottomZone--Hidden': {
-        display: 'none'
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        width: '100%'
     },
     bottomWrapper: {
-        paddingTop: 16
+        paddingTop: 12,
+        paddingBottom: 25
     },
     text: {
         textAlign: 'center',
@@ -240,10 +242,12 @@ export const styles = StyleSheet.create( {
         justifyContent: 'center',
         paddingRight: 10
     },
+    megaWrap: {
+        height: '100%',
+        backgroundColor: '#FFF'
+    },
     mainViewWrapper: {
-        width: '100%',
-        flex: 1,
-        backgroundColor: '#fff'
+        width: '100%'
     },
     'mainViewWrapper--extraTopSpacing': {
         paddingTop: 10
@@ -402,7 +406,7 @@ export const styles = StyleSheet.create( {
     },
     stackNavigatorWrapper: {
         width: '100%',
-        flex: 13
+        flex: 1
     },
     standardModal: {
         width: '90%'

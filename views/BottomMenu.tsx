@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { BottomNavigation, BottomNavigationTab, IconProps } from '@ui-kitten/components';
+import { BottomNavigation, BottomNavigationTab, IconProps, Layout } from '@ui-kitten/components';
 
 import { AppContext } from '../App';
 import { styles } from '../styles/styles';
@@ -67,16 +67,18 @@ export const BottomMenu = () => {
     const { onMenuClick, selectedIndex } = appData;
 
     return (
-        <BottomNavigation
-            appearance={ 'noIndicator' }
-            style={ styles.bottomWrapper }
-            selectedIndex={ selectedIndex }
-            onSelect={ ( index ) => onMenuClick( index ) }>
-            <BottomNavigationTab icon={ ListIcon } />
-            <BottomNavigationTab icon={ CardsIcon } />
-            <BottomNavigationTab icon={ PlusIcon } />
-            <BottomNavigationTab icon={ PlayIcon } />
-            <BottomNavigationTab icon={ InfoIcon } />
-        </BottomNavigation>
+        <Layout style={ styles.bottomZone }>
+            <BottomNavigation
+                appearance={ 'noIndicator' }
+                style={ styles.bottomWrapper }
+                selectedIndex={ selectedIndex }
+                onSelect={ ( index ) => onMenuClick( index ) }>
+                <BottomNavigationTab icon={ ListIcon } />
+                <BottomNavigationTab icon={ CardsIcon } />
+                <BottomNavigationTab icon={ PlusIcon } />
+                <BottomNavigationTab icon={ PlayIcon } />
+                <BottomNavigationTab icon={ InfoIcon } />
+            </BottomNavigation>
+        </Layout>
     );
 };

@@ -12,7 +12,6 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import AsyncStorage from '@react-native-community/async-storage';
 import { styles } from './styles/styles';
 import { List } from './views/List';
-import { BottomMenu } from './views/BottomMenu';
 import { AddToWallet } from './components/AddToWallet';
 import { TrainingMode } from './views/TrainingMode';
 import { customTheme } from './utils/customTheme';
@@ -440,10 +439,6 @@ export default () => {
 
                         </Tab.Navigator>
 
-                    </Layout>
-
-                    <Layout style={ [ styles.bottomZone, !isBottomBarShown && styles['bottomZone--Hidden'] ] }>
-                        <BottomMenu />
                     </Layout>
 
                 </AppContext.Provider>
