@@ -12,6 +12,7 @@ import { DeckAddEdit } from './DeckAddEdit';
 import { SvgXml } from 'react-native-svg';
 import { editSvgBase, getCustomSvg } from '../utils/customIcons';
 import { TouchableOpacity, ActionSheetIOS, GestureResponderEvent, View } from 'react-native';
+import { BottomMenu } from './BottomMenu';
 
 type TTrainingModeInstructionsProps = {
     navigation: any; // TODO: I don't know the type of this
@@ -64,67 +65,71 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
     };
 
     return (
-        <Layout style={ styles.instructions }>
+        <Layout style={ styles.megaWrap }>
+            <Layout style={ styles.instructions }>
 
 
-            <Text style={ [ styles.text, styles.titleText ] } category='h4'>Training mode</Text>
+                <Text style={ [ styles.text, styles.titleText ] } category='h4'>Training mode</Text>
 
-            <Text style={ styles.verySmallText }>{ '\n' }</Text>
+                <Text style={ styles.verySmallText }>{ '\n' }</Text>
 
-            <Text style={ [ styles.text, styles.boldText, styles.smallerText, styles.leftAlignedText ] }>YOUR DECKS</Text>
+                <Text style={ [ styles.text, styles.boldText, styles.smallerText, styles.leftAlignedText ] }>YOUR DECKS</Text>
 
-            { chunkedDecks.map( ( singleRow, rowKey ) => {
+                { chunkedDecks.map( ( singleRow, rowKey ) => {
 
-                return (
-                    <Layout key={ rowKey } style={ styles.decksWrapper }>
-                        { singleRow.map( ( singleDeck, colNumber ) => {
+                    return (
+                        <Layout key={ rowKey } style={ styles.decksWrapper }>
+                            { singleRow.map( ( singleDeck, colNumber ) => {
 
-                            // deck key is calculated based on row and column
-                            const deckKey = ( rowKey * 3 ) + colNumber;
+                                // deck key is calculated based on row and column
+                                const deckKey = ( rowKey * 3 ) + colNumber;
 
-                            if ( singleDeck.name === '__ADD_PLACEHOLDER__' ) {
+                                if ( singleDeck.name === '__ADD_PLACEHOLDER__' ) {
+
+                                    return (
+                                        <Card
+                                            onPress={ () => navigation.navigate( 'training-mode_new-deck' ) }
+                                            style={ [
+                                                styles.singleDeck,
+                                                styles.addDeck,
+                                                ( colNumber === 0 || colNumber === 2 ) && styles['singleDeck--noMargin']
+                                            ] }
+                                            key={ -1 }
+                                        >
+                                            <Text style={ styles.addDeckPlus }>+</Text>
+                                        </Card>
+                                    );
+                                }
 
                                 return (
                                     <Card
-                                        onPress={ () => navigation.navigate( 'training-mode_new-deck' ) }
+                                        onPress={ ( event ) => editClick( deckKey, event ) }
                                         style={ [
                                             styles.singleDeck,
-                                            styles.addDeck,
                                             ( colNumber === 0 || colNumber === 2 ) && styles['singleDeck--noMargin']
                                         ] }
-                                        key={ -1 }
+                                        key={ deckKey }
                                     >
-                                        <Text style={ styles.addDeckPlus }>+</Text>
+
+                                        <EditButton />
+
+                                        <TouchableOpacity
+                                            onPress={ () => cardClick( deckKey ) }
+                                        >
+                                            <View style={ styles.deckName }>
+                                                <Text style={ [ styles.whiteText, styles.verySmallText ] }>{ singleDeck.name }</Text>
+                                            </View>
+                                        </TouchableOpacity>
                                     </Card>
                                 );
-                            }
+                            } ) }
+                        </Layout>
+                    );
 
-                            return (
-                                <Card
-                                    onPress={ ( event ) => editClick( deckKey, event ) }
-                                    style={ [
-                                        styles.singleDeck,
-                                        ( colNumber === 0 || colNumber === 2 ) && styles['singleDeck--noMargin']
-                                    ] }
-                                    key={ deckKey }
-                                >
+                } ) }
 
-                                    <EditButton />
-
-                                    <TouchableOpacity
-                                        onPress={ () => cardClick( deckKey ) }
-                                    >
-                                        <View style={ styles.deckName }>
-                                            <Text style={ [ styles.whiteText, styles.verySmallText ] }>{ singleDeck.name }</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </Card>
-                            );
-                        } ) }
-                    </Layout>
-                );
-
-            } ) }
+            </Layout>
+            <BottomMenu />
         </Layout>
     );
 };

@@ -13,6 +13,7 @@ import { getArticle, getCapitalizedIfNeeded } from '../utils/utils';
 import { EmptyList } from './EmptyList';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Fuse from 'fuse.js';
+import { BottomMenu } from './BottomMenu';
 
 export const DeleteIcon = ( props: IconProps ) => <Icon { ...props } fill='#333'  width={ 32 } height={ 32 } name='trash-2-outline' />;
 
@@ -112,60 +113,63 @@ export const List = () => {
     }
 
     return (
-        <SafeAreaView style={ [ styles.mainViewWrapper, deviceNotchSize === 0 ? styles['mainViewWrapper--extraTopSpacing'] : null ] }>
-            <Layout style={ styles.listSearchWrapper } >
-                <Input
-                    style={ styles.topSearchInput }
-                    placeholder='Search your wallet'
-                    value={ walletSearchKeyword }
-                    onChangeText={ nextValue => setWalletSearchKeyword( nextValue ) }
-                    size={ 'small' }
-                    accessoryRight={ renderCloseIconForWalletSearch }
-                    accessoryLeft={ renderFilterIcon }
-                />
-            </Layout>
-            <SwipeListView
-                keyboardDismissMode={ 'on-drag' }
-                previewRowKey={ hasShownAnimation ? '' : '0' }
-                previewOpenValue={ -50 }
-                showsVerticalScrollIndicator={ false }
-                data={ wordsWalletWithKeys }
-                style={ styles.cardsScrollView }
-                renderItem={ ( data ) => {
+        <Layout style={ styles.megaWrap } >
+            <SafeAreaView style={ [ styles.mainViewWrapper, deviceNotchSize === 0 ? styles['mainViewWrapper--extraTopSpacing'] : null ] }>
+                <Layout style={ styles.listSearchWrapper } >
+                    <Input
+                        style={ styles.topSearchInput }
+                        placeholder='Search your wallet'
+                        value={ walletSearchKeyword }
+                        onChangeText={ nextValue => setWalletSearchKeyword( nextValue ) }
+                        size={ 'small' }
+                        accessoryRight={ renderCloseIconForWalletSearch }
+                        accessoryLeft={ renderFilterIcon }
+                    />
+                </Layout>
+                <SwipeListView
+                    keyboardDismissMode={ 'on-drag' }
+                    previewRowKey={ hasShownAnimation ? '' : '0' }
+                    previewOpenValue={ -50 }
+                    showsVerticalScrollIndicator={ false }
+                    data={ wordsWalletWithKeys }
+                    style={ styles.cardsScrollView }
+                    renderItem={ ( data ) => {
 
-                    return (
-                        <Card
-                            style={ styles.wordCard }
-                        >
-                            <Text>
-                                <Text
-                                    style={ styles.mainWord }
-                                >
-                                    { getArticle( data.item ) }
-                                </Text>
-                                <Text
-                                    style={ styles.mainWord }
-                                >
-                                    { getCapitalizedIfNeeded( data.item ) }
-                                </Text>
-                            </Text>
-                            <Text
-                                style={ styles.translationWord }
+                        return (
+                            <Card
+                                style={ styles.wordCard }
                             >
-                                { data.item.en }
-                            </Text>
-                        </Card>
-                    ); } }
-                renderHiddenItem={ ( data, rowMap ) => (
-                    <View style={ styles.deleteAction } >
-                        <DeleteIcon
-                            onPress={ () => { deleteWord( data.item, rowMap, data.item.key ); } }
-                        />
-                    </View>
-                ) }
-                rightOpenValue={ -75 }
-                disableRightSwipe={ true }
-            />
-        </SafeAreaView>
+                                <Text>
+                                    <Text
+                                        style={ styles.mainWord }
+                                    >
+                                        { getArticle( data.item ) }
+                                    </Text>
+                                    <Text
+                                        style={ styles.mainWord }
+                                    >
+                                        { getCapitalizedIfNeeded( data.item ) }
+                                    </Text>
+                                </Text>
+                                <Text
+                                    style={ styles.translationWord }
+                                >
+                                    { data.item.en }
+                                </Text>
+                            </Card>
+                        ); } }
+                    renderHiddenItem={ ( data, rowMap ) => (
+                        <View style={ styles.deleteAction } >
+                            <DeleteIcon
+                                onPress={ () => { deleteWord( data.item, rowMap, data.item.key ); } }
+                            />
+                        </View>
+                    ) }
+                    rightOpenValue={ -75 }
+                    disableRightSwipe={ true }
+                />
+            </SafeAreaView>
+            <BottomMenu />
+        </Layout>
     );
 };
