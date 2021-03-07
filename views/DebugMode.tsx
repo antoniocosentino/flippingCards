@@ -6,6 +6,7 @@ import { storeDBversion } from '../App';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from '../styles/styles';
 import { DEMO_DECKS } from '../utils/demoDecks';
+import { BottomMenu } from './BottomMenu';
 
 export const DebugMode = () => {
 
@@ -13,54 +14,57 @@ export const DebugMode = () => {
     const { storeData, storeDecksData } = appData;
 
     return (
-        <SafeAreaView style={ styles.mainViewWrapper }>
-            <Layout style={ styles.centeredElement }>
-                <Button
-                    onPress={ () => storeData( DEMO_WORDS_DEBUG ) }
-                >
-                    Fill Wallet with Debug Demo Words
-                </Button>
+        <Layout style={ styles.megaWrap } >
+            <SafeAreaView style={ styles.mainViewWrapper }>
+                <Layout style={ styles.centeredElement }>
+                    <Button
+                        onPress={ () => storeData( DEMO_WORDS_DEBUG ) }
+                    >
+                        Fill Wallet with Debug Demo Words
+                    </Button>
 
-                <Text />
+                    <Text />
 
-                <Button
-                    onPress={ () => storeDecksData( DEMO_DECKS ) }
-                >
-                    Fill with demo decks
-                </Button>
+                    <Button
+                        onPress={ () => storeDecksData( DEMO_DECKS ) }
+                    >
+                        Fill with demo decks
+                    </Button>
 
-                <Text />
+                    <Text />
 
-                <Button
-                    onPress={ () => storeData( [] ) }
-                >
-                    Wipe Wallet
-                </Button>
+                    <Button
+                        onPress={ () => storeData( [] ) }
+                    >
+                        Wipe Wallet
+                    </Button>
 
-                <Text />
+                    <Text />
 
-                <Button
-                    onPress={ () => storeDecksData( [] ) }
-                >
-                    Wipe Decks
-                </Button>
+                    <Button
+                        onPress={ () => storeDecksData( [] ) }
+                    >
+                        Wipe Decks
+                    </Button>
 
-                <Text />
+                    <Text />
 
-                <Button
-                    onPress={ dbRefresh }
-                >
-                    Force DB refresh
-                </Button>
+                    <Button
+                        onPress={ dbRefresh }
+                    >
+                        Force DB refresh
+                    </Button>
 
-                <Text />
+                    <Text />
 
-                <Button
-                    onPress={ () => storeDBversion( '' ) }
-                >
-                    Clear stored DB version
-                </Button>
-            </Layout>
-        </SafeAreaView>
+                    <Button
+                        onPress={ () => storeDBversion( '' ) }
+                    >
+                        Clear stored DB version
+                    </Button>
+                </Layout>
+            </SafeAreaView>
+            <BottomMenu />
+        </Layout>
     );
 };
