@@ -117,7 +117,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
                                             onPress={ () => cardClick( deckKey ) }
                                         >
                                             <View style={ styles.deckName }>
-                                                <Text style={ [ styles.whiteText, styles.verySmallText ] }>{ singleDeck.name }</Text>
+                                                <Text style={ [ styles.whiteText, styles.smallerText ] }>{ singleDeck.name }</Text>
                                             </View>
                                         </TouchableOpacity>
                                     </Card>
