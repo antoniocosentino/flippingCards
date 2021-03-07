@@ -194,14 +194,14 @@ export const TrainingMode = () => {
                 <Stack.Screen
                     name='training-mode_new-deck'
                     options={ {
-                        headerShown: true,
+                        headerShown: false,
                         title: '',
                         animationEnabled: true,
                         headerStyle: {
                             shadowColor: 'transparent',
                             elevation: 0
                         },
-                        ...TransitionPresets.ModalSlideFromBottomIOS
+                        ...TransitionPresets.ModalPresentationIOS
                     } }
                 >
                     {

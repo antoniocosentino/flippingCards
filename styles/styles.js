@@ -479,5 +479,10 @@ export const styles = StyleSheet.create( {
         height: '100%',
         display: 'flex',
         justifyContent: 'center'
+    },
+    createDeckCloseBtn: {
+        width: '100%',
+        paddingRight: 10,
+        alignItems: 'flex-end'
     }
 } );

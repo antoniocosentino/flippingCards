@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 
-import { Button, CheckBox, Layout, Text, Input } from '@ui-kitten/components';
+import { Button, CheckBox, Layout, Text, Input, Icon } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
 import { FlatList } from 'react-native-gesture-handler';
 import { AppContext, TCards, TDeck, TSingleCard } from '../App';
@@ -145,6 +145,17 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
 
     return (
         <Layout style={ [ styles.centeredElement, styles['centeredElement--noTopSpace' ], styles['centeredElement--lessHorizontalPadding' ] ] }>
+
+            <Layout style={ styles.createDeckCloseBtn  }>
+                <Icon
+                    onPress={ () => navigation.goBack() }
+                    width={ 30 }
+                    height={ 30 }
+                    fill='#000'
+                    name={ 'close' }
+                />
+            </Layout>
+
             <Text style={ [ styles.text, styles.titleText ] } category='h4'>
                 { editMode ? 'Edit Deck' : 'Create new Deck' }
             </Text>
