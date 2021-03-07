@@ -196,6 +196,7 @@ export default () => {
     };
 
     const getData = async () => {
+
         try {
             const value = await AsyncStorage.getItem( '@wordsWallet' );
 
@@ -289,8 +290,12 @@ export default () => {
 
     /* end of DECKS specific */
 
+    const [ dbVersionWasChecked, setDbVersionWasChecked ] = useState( false );
 
     const getDBversion = async () => {
+
+        setDbVersionWasChecked( true );
+
         try {
             const version = await AsyncStorage.getItem( '@dbVersion' );
 
@@ -298,14 +303,15 @@ export default () => {
                 dbRefresh();
                 storeDBversion( DB_VERSION );
             }
-
         } catch ( e ) {
             // error reading value
         }
     };
 
     useEffect( () => {
-        getDBversion();
+        if ( !dbVersionWasChecked ) {
+            getDBversion();
+        }
     } );
 
     if ( !isDataUpdated ){
