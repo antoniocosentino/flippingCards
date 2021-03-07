@@ -5,6 +5,7 @@ import { Image, View } from 'react-native';
 import { AppContext } from '../App';
 import { DEMO_WORDS } from '../utils/demoData';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { BottomMenu } from './BottomMenu';
 
 
 export const EmptyList = () => {
@@ -13,49 +14,52 @@ export const EmptyList = () => {
     const { storeData } = appData;
 
     return (
-        <SafeAreaView style={ styles.mainViewWrapper }>
-            <Layout style={ styles.listSearchWrapper } >
+        <Layout style={ styles.megaWrap } >
+            <SafeAreaView style={ styles.mainViewWrapper }>
+                <Layout style={ styles.listSearchWrapper } >
 
-                <Layout style={ styles.walletInstructions }>
-                    <Text style={ [ styles.text, styles.titleText ] } category='h4'>Hello there! 👋</Text>
+                    <Layout style={ styles.walletInstructions }>
+                        <Text style={ [ styles.text, styles.titleText ] } category='h4'>Hello there! 👋</Text>
 
-                    <Text style={ [ styles.text, styles.instructionsText ] }>
-                        This is your wallet view. All the words that you add in your wallet will show up here.
-                    </Text>
+                        <Text style={ [ styles.text, styles.instructionsText ] }>
+                            This is your wallet view. All the words that you add in your wallet will show up here.
+                        </Text>
 
-                    <View
-                        style={ styles.centeredSimpleView }
-                    >
-                        <Image
-                            source={ require( './../img/start-page.jpg' ) }
-                            resizeMode={ 'contain' }
-                            // eslint-disable-next-line react-native/no-inline-styles
-                            style={ {
-                                width: 210,
-                                height: 210 // this small hack fixes an issue with an unwanted border on Android
-                            } }
-                        />
-                    </View>
+                        <View
+                            style={ styles.centeredSimpleView }
+                        >
+                            <Image
+                                source={ require( './../img/start-page.jpg' ) }
+                                resizeMode={ 'contain' }
+                                // eslint-disable-next-line react-native/no-inline-styles
+                                style={ {
+                                    width: 210,
+                                    height: 210 // this small hack fixes an issue with an unwanted border on Android
+                                } }
+                            />
+                        </View>
+                    </Layout>
+
+                    <Layout style={ styles.walletInstructions }>
+                        <Button onPress={ () => storeData( DEMO_WORDS ) } style={ styles.ctaButton }>
+                            START WITH DEMO WORDS
+                        </Button>
+                    </Layout>
                 </Layout>
 
-                <Layout style={ styles.walletInstructions }>
-                    <Button onPress={ () => storeData( DEMO_WORDS ) } style={ styles.ctaButton }>
-                        START WITH DEMO WORDS
-                    </Button>
+                <Layout style={ styles.tapInstructions }>
+                    <Image
+                        source={ require( './../img/tap-hint.png' ) }
+                        resizeMode={ 'cover' }
+                        // eslint-disable-next-line react-native/no-inline-styles
+                        style={ {
+                            width: 350,
+                            height: 100 // this small hack fixes an issue with an unwanted border on Android
+                        } }
+                    />
                 </Layout>
-            </Layout>
-
-            <Layout style={ styles.tapInstructions }>
-                <Image
-                    source={ require( './../img/tap-hint.png' ) }
-                    resizeMode={ 'cover' }
-                    // eslint-disable-next-line react-native/no-inline-styles
-                    style={ {
-                        width: 350,
-                        height: 100 // this small hack fixes an issue with an unwanted border on Android
-                    } }
-                />
-            </Layout>
-        </SafeAreaView>
+            </SafeAreaView>
+            <BottomMenu />
+        </Layout>
     );
 };
