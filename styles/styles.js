@@ -450,11 +450,18 @@ export const styles = StyleSheet.create( {
     },
     createDeckList: {
         width: '100%',
-        height: '72%'
+        height: '100%'
     },
     createDeckCta: {
-        height: '25%',
-        paddingTop: '6%'
+        height: 200,
+        width: '100%',
+        position: 'absolute',
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        bottom: 0,
+        alignItems: 'center'
+    },
+    createDeckCtaButton: {
+        width: 170
     },
     deckAddRow: {
         marginTop: 10,

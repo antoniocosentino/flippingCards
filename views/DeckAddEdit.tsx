@@ -167,7 +167,7 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
             />
 
             <Layout style={ styles.createDeckCta }>
-                <Button onPress={ editMode ? onUpdateDeck : onCreateDeck } style={ styles.ctaButton }>
+                <Button onPress={ editMode ? onUpdateDeck : onCreateDeck } style={ [ styles.ctaButton, styles.createDeckCtaButton ] }>
                     { editMode ? 'Save Changes' : 'Create Deck' }
                 </Button>
             </Layout>
