@@ -197,6 +197,7 @@ export const TrainingMode = () => {
                         headerShown: false,
                         title: '',
                         animationEnabled: true,
+                        cardOverlayEnabled: true,
                         headerStyle: {
                             shadowColor: 'transparent',
                             elevation: 0

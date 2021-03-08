@@ -489,7 +489,15 @@ export const styles = StyleSheet.create( {
     },
     createDeckCloseBtn: {
         width: '100%',
+        height: 20,
         paddingRight: 10,
-        alignItems: 'flex-end'
+        alignItems: 'center',
+        justifyContent: 'flex-end'
+    },
+    drawerHandle: {
+        backgroundColor: '#ddd',
+        height: 3,
+        width: 50,
+        borderRadius: 3
     }
 } );
