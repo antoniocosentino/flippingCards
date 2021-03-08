@@ -57,16 +57,6 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
 
     const newDeckCards: TCards = [];
 
-    // TODO: this is slightly buggy (there's a flickering on the list)
-    // check if I can make this smoother
-    // useEffect( () => {
-    //     setBottomBarVisibility( false );
-
-    //     return () => {
-    //         setBottomBarVisibility( true );
-    //     };
-    // }, [ routeName, setBottomBarVisibility ] );
-
     const rowSelector = ( rowId: string, isSelected: boolean ) => {
         if ( isSelected ) {
             const cardToAdd: TSingleCard = {
@@ -151,7 +141,7 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
                     onPress={ () => navigation.goBack() }
                     width={ 30 }
                     height={ 30 }
-                    fill='#000'
+                    fill='#504F54'
                     name={ 'close' }
                 />
             </Layout>

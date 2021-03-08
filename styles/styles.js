@@ -450,7 +450,7 @@ export const styles = StyleSheet.create( {
     },
     createDeckList: {
         width: '100%',
-        height: '77%'
+        height: '72%'
     },
     createDeckCta: {
         height: '25%',

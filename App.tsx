@@ -90,7 +90,6 @@ type TAppData = {
     selectedIndex: number;
     hasShownAnimation: boolean;
     deviceNotchSize: number;
-    isBottomBarShown: boolean;
     db: any; // TODO: not sure if we can type here
     customNavigate: ( route: string ) => void;
     setHasShownAnimation: ( value: boolean ) => void;
@@ -102,12 +101,9 @@ type TAppData = {
     updateSingleDeck: ( deck: TDeck, deckKey: number ) => void;
     removeSingleDeck: ( deckKey: number ) => void;
     increaseTapsCount: () => void;
-    setBottomBarVisibility: ( value: boolean ) => void;
 };
 
 export const AppContext = React.createContext( {} as TAppData );
-
-let hasShownAnimation = true;
 
 const setHasShownAnimation = ( value: boolean ) => {
     hasShownAnimation = value;
@@ -127,15 +123,22 @@ const customNavigate = ( route: string ) => {
     navigationRef.current?.navigate( route );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+let rerenderCount = 0;
+
+// here I'm defining all the variables that don't actually need to be in the state
+let isDataUpdated = false;
+let hasShownAnimation = true;
+let isDecksDataUpdated = false;
+let dbVersionWasChecked = false;
+let hasFetchedWallet = false;
+
 export default () => {
     const [ selectedIndex, setSelectedIndex ] = useState( 0 );
-
-    const [ isBottomBarShown, setBottomBarVisibility ] = useState( true );
 
     const currentRouteObj = navigationRef.current?.getCurrentRoute();
     const currentRoute = currentRouteObj?.name;
 
-    // dev feature to enable debug mode
     const [ tapsCount, setTapsCount ] = React.useState( 0 );
 
     const increaseTapsCount = () => {
@@ -152,7 +155,9 @@ export default () => {
 
     const [ decksData, setDecksData ] = React.useState( [] as any );
 
-    const [ hasFetchedWallet, setHasFetchedWallet ] = React.useState( false );
+    const setHasFetchedWallet = ( newVal: boolean ) => {
+        hasFetchedWallet = newVal;
+    };
 
     const [ deviceNotchSize, setDeviceNotchSize ] = React.useState( 0 );
 
@@ -165,7 +170,9 @@ export default () => {
 
 
     // WALLET specific
-    const [ isDataUpdated, setDataUpdated ] = React.useState( false );
+    const setDataUpdated = ( newVal: boolean ) => {
+        isDataUpdated = newVal;
+    };
 
     const storeData = async ( value: TWordsWallet ) => {
 
@@ -216,7 +223,10 @@ export default () => {
     /* end of WALLET specific */
 
     // DECKS specific
-    const [ isDecksDataUpdated, setDecksDataUpdated ] = React.useState( false );
+
+    const setDecksDataUpdated = ( newVal: boolean ) => {
+        isDecksDataUpdated = newVal;
+    };
 
     const storeDecksData = async ( value: TDecks ) => {
         setDecksDataUpdated( false );
@@ -290,7 +300,9 @@ export default () => {
 
     /* end of DECKS specific */
 
-    const [ dbVersionWasChecked, setDbVersionWasChecked ] = useState( false );
+    const setDbVersionWasChecked = ( newVal: boolean ) => {
+        dbVersionWasChecked = newVal;
+    };
 
     const getDBversion = async () => {
 
@@ -365,7 +377,6 @@ export default () => {
         hasShownAnimation,
         db,
         deviceNotchSize,
-        isBottomBarShown,
         customNavigate,
         setHasShownAnimation,
         onMenuClick,
@@ -375,11 +386,14 @@ export default () => {
         updateSingleDeck,
         removeSingleDeck,
         addSingleWord,
-        increaseTapsCount,
-        setBottomBarVisibility
+        increaseTapsCount
     };
 
     const Tab = createBottomTabNavigator();
+
+    // rerenderCount++;
+    // uncomment this to debug the number of re-renders
+    // console.log( 'Re-render count: ', rerenderCount );
 
     return (
         <NavigationContainer ref={ navigationRef }>
