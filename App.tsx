@@ -83,6 +83,8 @@ export type TDeck = {
 
 export type TDecks = ReadonlyArray<TDeck>;
 
+export type TEnrichedDecks = TDeck[];
+
 type TAppData = {
     wordsWallet: TWordsWallet;
     decksData: TDecks;
@@ -129,9 +131,24 @@ let rerenderCount = 0;
 // here I'm defining all the variables that don't actually need to be in the state
 let isDataUpdated = false;
 let hasShownAnimation = true;
-let isDecksDataUpdated = false;
+//let isDecksDataUpdated = false;
 let dbVersionWasChecked = false;
 let hasFetchedWallet = false;
+
+const enrichDecksWithPlaceholder = ( decks: TEnrichedDecks ): TDecks => {
+
+    const DECKS_EXTRA = {
+        id: -1,
+        name: '__ADD_PLACEHOLDER__',
+        createdTimestamp: 1609757292,
+        updatedTimestamp: 1609757492,
+        cards: []
+    };
+
+    decks.push( DECKS_EXTRA );
+
+    return decks;
+};
 
 export default () => {
     const [ selectedIndex, setSelectedIndex ] = useState( 0 );
@@ -155,6 +172,24 @@ export default () => {
 
     const [ decksData, setDecksData ] = React.useState( [] as any );
 
+    useEffect( () => {
+        const getDecksData = async () => {
+            try {
+                const value = await AsyncStorage.getItem( '@decks' );
+
+                if ( value !== null ) {
+                    const dataAsArr = JSON.parse( value );
+
+                    setDecksData( enrichDecksWithPlaceholder( dataAsArr ) );
+                }
+            } catch ( e ) {
+                // error reading value
+            }
+        };
+
+        getDecksData();
+    }, [] );
+
     const setHasFetchedWallet = ( newVal: boolean ) => {
         hasFetchedWallet = newVal;
     };
@@ -166,8 +201,6 @@ export default () => {
             const safeAreaInsets: SafeAreaInsets = result.safeAreaInsets;
             setDeviceNotchSize( safeAreaInsets.bottom );
         } );
-
-
 
     // WALLET specific
     const setDataUpdated = ( newVal: boolean ) => {
@@ -224,12 +257,11 @@ export default () => {
 
     // DECKS specific
 
-    const setDecksDataUpdated = ( newVal: boolean ) => {
-        isDecksDataUpdated = newVal;
-    };
+    // const setDecksDataUpdated = ( newVal: boolean ) => {
+    //     isDecksDataUpdated = newVal;
+    // };
 
     const storeDecksData = async ( value: TDecks ) => {
-        setDecksDataUpdated( false );
         try {
             const jsonValue = JSON.stringify( value );
             await AsyncStorage.setItem( '@decks', jsonValue );
@@ -246,7 +278,9 @@ export default () => {
 
         decksClone.push( deckData );
 
-        storeDecksData( decksClone );
+        storeDecksData( decksClone ).then( () => {
+            setDecksData( enrichDecksWithPlaceholder( decksClone ) );
+        } );
 
     };
 
@@ -258,7 +292,9 @@ export default () => {
 
         decksClone[ deckKey ] = deckData;
 
-        storeDecksData( decksClone );
+        storeDecksData( decksClone ).then( () => {
+            setDecksData( enrichDecksWithPlaceholder( decksClone ) );
+        } );
     };
 
     const removeSingleDeck = ( deckKey: number ) => {
@@ -270,32 +306,9 @@ export default () => {
         // removing the specified key
         decksClone.splice( deckKey, 1 );
 
-        storeDecksData( decksClone );
-    };
-
-    const getDecksData = async () => {
-        try {
-            const value = await AsyncStorage.getItem( '@decks' );
-
-            if ( value !== null ) {
-
-                const DECKS_EXTRA = {
-                    id: -1,
-                    name: '__ADD_PLACEHOLDER__',
-                    createdTimestamp: 1609757292,
-                    updatedTimestamp: 1609757492,
-                    cards: []
-                };
-
-                const dataAsArr = JSON.parse( value );
-                dataAsArr.push( DECKS_EXTRA );
-
-                setDecksData( dataAsArr );
-            }
-
-        } catch ( e ) {
-            // error reading value
-        }
+        storeDecksData( decksClone ).then( () => {
+            setDecksData( enrichDecksWithPlaceholder( decksClone ) );
+        } );
     };
 
     /* end of DECKS specific */
@@ -331,14 +344,14 @@ export default () => {
         setDataUpdated( true );
     }
 
-    if ( !isDecksDataUpdated ){
-        // I'm not super happy about this timeout
-        // I should consider a more solid solution
-        setTimeout( () => {
-            getDecksData();
-            setDecksDataUpdated( true );
-        }, 100 );
-    }
+    // if ( !isDecksDataUpdated ){
+    //     // I'm not super happy about this timeout
+    //     // I should consider a more solid solution
+    //     setTimeout( () => {
+    //         getDecksData();
+    //         setDecksDataUpdated( true );
+    //     }, 100 );
+    // }
 
     const onMenuClick = ( index: number ) => {
         switch ( index ) {
