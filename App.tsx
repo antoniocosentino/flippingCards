@@ -88,7 +88,6 @@ export type TEnrichedDecks = TDeck[];
 type TAppData = {
     wordsWallet: TWordsWallet;
     decksData: TDecks;
-    hasFetchedWallet: boolean;
     selectedIndex: number;
     hasShownAnimation: boolean;
     deviceNotchSize: number;
@@ -96,8 +95,9 @@ type TAppData = {
     customNavigate: ( route: string ) => void;
     setHasShownAnimation: ( value: boolean ) => void;
     onMenuClick: ( index: number ) => void;
-    storeData: ( value: TWordsWallet ) => void;
-    storeDecksData: ( value: TDecks ) => void;
+    setWordsWallet: ( value: TWordsWallet ) => void;
+    storeData: ( value: TWordsWallet ) => Promise<void>;
+    storeDecksData: ( value: TDecks ) => Promise<void>;
     addSingleWord: ( word: TSingleWord ) => void;
     addSingleDeck: ( deck: TDeck ) => void;
     updateSingleDeck: ( deck: TDeck, deckKey: number ) => void;
@@ -129,11 +129,9 @@ const customNavigate = ( route: string ) => {
 let rerenderCount = 0;
 
 // here I'm defining all the variables that don't actually need to be in the state
-let isDataUpdated = false;
 let hasShownAnimation = true;
 //let isDecksDataUpdated = false;
 let dbVersionWasChecked = false;
-let hasFetchedWallet = false;
 
 const enrichDecksWithPlaceholder = ( decks: TEnrichedDecks ): TDecks => {
 
@@ -190,9 +188,22 @@ export default () => {
         getDecksData();
     }, [] );
 
-    const setHasFetchedWallet = ( newVal: boolean ) => {
-        hasFetchedWallet = newVal;
-    };
+    useEffect( () => {
+        const getData = async () => {
+            try {
+                const value = await AsyncStorage.getItem( '@wordsWallet' );
+
+                if ( value !== null ) {
+                    setWordsWallet( JSON.parse( value ) );
+                }
+
+            } catch ( e ) {
+                // error reading value
+            }
+        };
+
+        getData();
+    }, [] );
 
     const [ deviceNotchSize, setDeviceNotchSize ] = React.useState( 0 );
 
@@ -202,17 +213,19 @@ export default () => {
             setDeviceNotchSize( safeAreaInsets.bottom );
         } );
 
-    // WALLET specific
-    const setDataUpdated = ( newVal: boolean ) => {
-        isDataUpdated = newVal;
-    };
-
     const storeData = async ( value: TWordsWallet ) => {
-
-        setDataUpdated( false );
         try {
             const jsonValue = JSON.stringify( value );
             await AsyncStorage.setItem( '@wordsWallet', jsonValue );
+        } catch ( e ) {
+            console.error( 'Error:', e );
+        }
+    };
+
+    const storeDecksData = async ( value: TDecks ) => {
+        try {
+            const jsonValue = JSON.stringify( value );
+            await AsyncStorage.setItem( '@decks', jsonValue );
         } catch ( e ) {
             console.error( 'Error:', e );
         }
@@ -229,46 +242,16 @@ export default () => {
         walletCopy.unshift( wordWithCurrentTimestamp );
 
         setHasShownAnimation( false );
-        setHasFetchedWallet( false ); // this is to avoid flickering on the welcome screen
 
-        storeData( walletCopy );
+        storeData( walletCopy ).then( () => {
+            setWordsWallet( walletCopy );
+        } );
+
         onMenuClick( 0 );
     };
 
-    const getData = async () => {
-
-        try {
-            const value = await AsyncStorage.getItem( '@wordsWallet' );
-
-            if ( value !== null ) {
-                setWordsWallet( JSON.parse( value ) );
-            }
-
-            // this needs to be executed anyway
-            // otherwise you will have an empty screen on first load
-            setHasFetchedWallet( true );
-
-        } catch ( e ) {
-            // error reading value
-        }
-    };
 
     /* end of WALLET specific */
-
-    // DECKS specific
-
-    // const setDecksDataUpdated = ( newVal: boolean ) => {
-    //     isDecksDataUpdated = newVal;
-    // };
-
-    const storeDecksData = async ( value: TDecks ) => {
-        try {
-            const jsonValue = JSON.stringify( value );
-            await AsyncStorage.setItem( '@decks', jsonValue );
-        } catch ( e ) {
-            console.error( 'Error:', e );
-        }
-    };
 
     const addSingleDeck = ( deckData: TDeck ) => {
         const decksClone = decksData.slice();
@@ -339,20 +322,6 @@ export default () => {
         }
     } );
 
-    if ( !isDataUpdated ){
-        getData();
-        setDataUpdated( true );
-    }
-
-    // if ( !isDecksDataUpdated ){
-    //     // I'm not super happy about this timeout
-    //     // I should consider a more solid solution
-    //     setTimeout( () => {
-    //         getDecksData();
-    //         setDecksDataUpdated( true );
-    //     }, 100 );
-    // }
-
     const onMenuClick = ( index: number ) => {
         switch ( index ) {
             case 0:
@@ -385,7 +354,6 @@ export default () => {
     const appData: TAppData = {
         wordsWallet,
         decksData,
-        hasFetchedWallet,
         selectedIndex,
         hasShownAnimation,
         db,
@@ -393,6 +361,7 @@ export default () => {
         customNavigate,
         setHasShownAnimation,
         onMenuClick,
+        setWordsWallet,
         storeData,
         storeDecksData,
         addSingleDeck,

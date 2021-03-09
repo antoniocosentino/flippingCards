@@ -23,9 +23,9 @@ export const List = () => {
 
     const {
         wordsWallet,
-        hasFetchedWallet,
         hasShownAnimation,
         deviceNotchSize,
+        setWordsWallet,
         setHasShownAnimation,
         storeData
     } = appData;
@@ -53,12 +53,8 @@ export const List = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ walletSearchKeyword ] );
 
-    if ( hasFetchedWallet && wordsWallet.length === 0 ) {
+    if ( wordsWallet.length === 0 ) {
         return <EmptyList />;
-    }
-
-    if ( !hasFetchedWallet ) {
-        return null;
     }
 
     const wipeWalletSearch = () => {
@@ -95,7 +91,9 @@ export const List = () => {
             return ( !( singleWord.de === word.de && singleWord.en === word.en ) );
         } );
 
-        storeData( updatedWallet );
+        storeData( updatedWallet ).then( () => {
+            setWordsWallet( updatedWallet );
+        } );
 
         wipeWalletSearch();
 
