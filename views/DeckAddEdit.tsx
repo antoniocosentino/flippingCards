@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 
-import { Button, CheckBox, Layout, Text, Input } from '@ui-kitten/components';
+import { Button, CheckBox, Layout, Text, Input, Icon } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
 import { FlatList } from 'react-native-gesture-handler';
 import { AppContext, TCards, TDeck, TSingleCard } from '../App';
@@ -105,7 +105,7 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
     };
 
     const onCreateDeck = () => {
-        addSingleDeck( constructNewDeckData() );
+        addSingleDeck( constructNewDeckData( inputContent ) );
         navigation.goBack();
     };
 
@@ -118,33 +118,31 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
 
     const [ inputContent, setInputContent ] = useState( thisDeck?.name );
 
-    const subHeaderContent =
-        editMode ?
+    return (
+        <Layout style={ [ styles.centeredElement, styles['centeredElement--noTopSpace' ], styles['centeredElement--lessHorizontalPadding' ] ] }>
+
+            <Layout style={ styles.createDeckCloseBtn  }>
+                <Icon
+                    style={ styles.createDeckCloseBtnIcon  }
+                    onPress={ () => navigation.goBack() }
+                    width={ 30 }
+                    height={ 30 }
+                    fill='#504F54'
+                    name={ 'close-circle' }
+                />
+            </Layout>
+
+            <Text style={ [ styles.text, styles.titleTextSmall ] } category='h4'>
+                { editMode ? 'Edit Deck' : 'Create new Deck' }
+            </Text>
+
             <Input
-                style={ styles.smallInput }
+                style={ [ styles.smallInput, styles.inputExtraTopSpacing ] }
                 size='small'
                 value={ inputContent }
                 placeholder='Name of your deck'
                 onChangeText={ nextValue => setInputContent( nextValue  ) }
             />
-            :
-            <Text style={ styles.text }>
-                Select words that will be added to this deck.
-                { '\n' }
-            </Text>;
-
-    return (
-        <Layout style={ [ styles.centeredElement, styles['centeredElement--noTopSpace' ], styles['centeredElement--lessHorizontalPadding' ] ] }>
-
-            <Layout style={ styles.createDeckCloseBtn  }>
-                <Layout style={ styles.drawerHandle } />
-            </Layout>
-
-            <Text style={ [ styles.text, styles.titleText ] } category='h4'>
-                { editMode ? 'Edit Deck' : 'Create new Deck' }
-            </Text>
-
-            { subHeaderContent }
 
             <FlatList
                 style={ styles.createDeckList }
