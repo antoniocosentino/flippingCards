@@ -121,6 +121,9 @@ export const styles = StyleSheet.create( {
         ...inputGlobalStyles,
         borderRadius: 6
     },
+    inputExtraTopSpacing: {
+        marginTop: 5
+    },
     walletInstructions: {
         marginTop: 40,
         paddingLeft: 30,
@@ -491,13 +494,11 @@ export const styles = StyleSheet.create( {
         width: '100%',
         height: 20,
         paddingRight: 10,
-        alignItems: 'center',
+        alignItems: 'flex-end',
         justifyContent: 'flex-end'
     },
-    drawerHandle: {
-        backgroundColor: '#ddd',
-        height: 3,
-        width: 50,
-        borderRadius: 3
+    createDeckCloseBtnIcon: {
+        position: 'relative',
+        top: 16
     }
 } );
