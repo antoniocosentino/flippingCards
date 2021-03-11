@@ -464,7 +464,12 @@ export const styles = StyleSheet.create( {
         alignItems: 'center'
     },
     createDeckCtaButton: {
-        width: 170
+        width: 170,
+        backgroundColor: mainColor
+    },
+    'createDeckCtaButton--Disabled': {
+        backgroundColor: '#EAC4CE',
+        borderWidth: 0
     },
     deckAddRow: {
         marginTop: 10,
@@ -499,6 +504,6 @@ export const styles = StyleSheet.create( {
     },
     createDeckCloseBtnIcon: {
         position: 'relative',
-        top: 16
+        top: 20
     }
 } );

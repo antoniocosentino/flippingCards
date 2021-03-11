@@ -22,6 +22,7 @@
     "@ui-kitten/components": "5.0.0",
     "@ui-kitten/eva-icons": "5.0.0",
     "babel-plugin-inline-import": "^3.0.0",
+    "dateformat": "^4.5.1",
     "eslint-config-prettier": "^6.11.0",
     "fuse.js": "^6.4.1",
     "lodash": "^4.17.19",

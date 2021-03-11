@@ -6,6 +6,8 @@ import { FlatList } from 'react-native-gesture-handler';
 import { AppContext, TCards, TDeck, TSingleCard } from '../App';
 import { timeAgo } from './../utils/utils';
 
+const  dateFormat = require( 'dateformat' );
+
 const SingleRow = ( props: any ) => {
 
     const { data, rowSelector } = props;
@@ -55,6 +57,8 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
     const { wordsWallet, decksData, addSingleDeck, updateSingleDeck } = appData;
     const thisDeck = editMode ? decksData[ deckKey ] : null;
 
+    const [ isButtonEnabled, setButtonEnabled ] = useState( false );
+
     const newDeckCards: TCards = [];
 
     const rowSelector = ( rowId: string, isSelected: boolean ) => {
@@ -74,6 +78,15 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
 
             newDeckCards.splice( cardToDelete, 1 );
         }
+
+        if ( !isButtonEnabled && newDeckCards.length > 0 ) {
+            setButtonEnabled( true );
+        }
+
+        if ( isButtonEnabled && newDeckCards.length < 1 ) {
+            setButtonEnabled( false );
+        }
+
     };
 
     const initialSelectionState = wordsWallet.map( ( word, index ) => {
@@ -95,9 +108,12 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
     } );
 
     const constructNewDeckData = ( name?: string ): TDeck => {
+        const now = new Date();
+        const readableDate = dateFormat( now, 'mmmm dS, yyyy, H:MM:ss' );
+
         return {
             id: ( new Date() ).getTime(),
-            name: name ? name : ( new Date() ).toLocaleString( 'de-DE' ),
+            name: name ? name : readableDate,
             createdTimestamp: ( new Date() ).getTime(),
             updatedTimestamp: ( new Date() ).getTime(),
             cards: newDeckCards
@@ -105,11 +121,19 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
     };
 
     const onCreateDeck = () => {
+        if ( newDeckCards.length < 1 ) {
+            return;
+        }
+
         addSingleDeck( constructNewDeckData( inputContent ) );
         navigation.goBack();
     };
 
     const onUpdateDeck = () => {
+        if ( newDeckCards.length < 1 ) {
+            return;
+        }
+
         const updatedData = constructNewDeckData( inputContent );
         updateSingleDeck( updatedData, deckKey );
 
@@ -127,7 +151,7 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
                     onPress={ () => navigation.goBack() }
                     width={ 30 }
                     height={ 30 }
-                    fill='#504F54'
+                    fill='#ccc'
                     name={ 'close-circle' }
                 />
             </Layout>
@@ -159,7 +183,7 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
             />
 
             <Layout style={ styles.createDeckCta }>
-                <Button onPress={ editMode ? onUpdateDeck : onCreateDeck } style={ [ styles.ctaButton, styles.createDeckCtaButton ] }>
+                <Button onPress={ editMode ? onUpdateDeck : onCreateDeck } style={ [ styles.ctaButton, styles.createDeckCtaButton, !isButtonEnabled && styles['createDeckCtaButton--Disabled'] ] }>
                     { editMode ? 'Save Changes' : 'Create Deck' }
                 </Button>
             </Layout>

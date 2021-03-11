@@ -373,8 +373,8 @@ export default () => {
 
     const Tab = createBottomTabNavigator();
 
-    // rerenderCount++;
     // uncomment this to debug the number of re-renders
+    // rerenderCount++;
     // console.log( 'Re-render count: ', rerenderCount );
 
     return (
