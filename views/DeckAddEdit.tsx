@@ -170,6 +170,7 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
 
             <FlatList
                 style={ styles.createDeckList }
+                contentContainerStyle={ styles.createDeckListContainer }
                 data={ initialSelectionState }
                 renderItem={ ( data ) => {
                     return (

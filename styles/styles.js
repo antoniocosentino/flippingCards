@@ -463,6 +463,9 @@ export const styles = StyleSheet.create( {
         width: '100%',
         height: '100%'
     },
+    createDeckListContainer: {
+        paddingBottom: 200
+    },
     createDeckCta: {
         height: 200,
         width: '100%',
