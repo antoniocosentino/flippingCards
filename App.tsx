@@ -96,6 +96,7 @@ type TAppData = {
     setHasShownAnimation: ( value: boolean ) => void;
     onMenuClick: ( index: number ) => void;
     setWordsWallet: ( value: TWordsWallet ) => void;
+    setDecksData: ( value: TDecks ) => void;
     storeData: ( value: TWordsWallet ) => Promise<void>;
     storeDecksData: ( value: TDecks ) => Promise<void>;
     addSingleWord: ( word: TSingleWord ) => void;
@@ -133,7 +134,7 @@ let hasShownAnimation = true;
 //let isDecksDataUpdated = false;
 let dbVersionWasChecked = false;
 
-const enrichDecksWithPlaceholder = ( decks: TEnrichedDecks ): TDecks => {
+export const enrichDecksWithPlaceholder = ( decks: TEnrichedDecks ): TDecks => {
 
     const DECKS_EXTRA = {
         id: -1,
@@ -166,7 +167,16 @@ export default () => {
         }
     }, [ tapsCount, currentRoute ] );
 
-    const [ wordsWallet, setWordsWallet ] = React.useState( [] as TWordsWallet );
+    const WALLET_INITIAL_STATE = [
+        {
+            de: '__LOADING__WALLET__',
+            en: '__LOADING__WALLET__',
+            wordType: '__LOADING__WALLET__',
+            dateAdded: 0
+        }
+    ];
+
+    const [ wordsWallet, setWordsWallet ] = React.useState( WALLET_INITIAL_STATE as TWordsWallet );
 
     const [ decksData, setDecksData ] = React.useState( [] as any );
 
@@ -192,11 +202,8 @@ export default () => {
         const getData = async () => {
             try {
                 const value = await AsyncStorage.getItem( '@wordsWallet' );
-
-                if ( value !== null ) {
-                    setWordsWallet( JSON.parse( value ) );
-                }
-
+                const derivedValue = value || JSON.stringify( [] );
+                setWordsWallet( JSON.parse( derivedValue ) );
             } catch ( e ) {
                 // error reading value
             }
@@ -250,9 +257,6 @@ export default () => {
         onMenuClick( 0 );
     };
 
-
-    /* end of WALLET specific */
-
     const addSingleDeck = ( deckData: TDeck ) => {
         const decksClone = decksData.slice();
 
@@ -293,8 +297,6 @@ export default () => {
             setDecksData( enrichDecksWithPlaceholder( decksClone ) );
         } );
     };
-
-    /* end of DECKS specific */
 
     const setDbVersionWasChecked = ( newVal: boolean ) => {
         dbVersionWasChecked = newVal;
@@ -362,6 +364,7 @@ export default () => {
         setHasShownAnimation,
         onMenuClick,
         setWordsWallet,
+        setDecksData,
         storeData,
         storeDecksData,
         addSingleDeck,

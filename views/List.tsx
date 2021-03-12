@@ -57,6 +57,10 @@ export const List = () => {
         return <EmptyList />;
     }
 
+    if ( wordsWallet[0].wordType === '__LOADING__WALLET__' ) {
+        return null;
+    }
+
     const wipeWalletSearch = () => {
         setWalletSearchKeyword( '' );
     };
