@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { isAndroid } from '../utils/utils';
+import { Dimensions } from 'react-native';
+
 
 const inputGlobalStyles = {
     width: '91%',
@@ -18,6 +20,8 @@ export const sixthColor = '#3251B8';
 
 const customFontRegular = 'Nunito-Regular';
 const customFontBold = 'Nunito-SemiBold';
+
+const screenHeight = Dimensions.get( 'window' ).height;
 
 export const styles = StyleSheet.create( {
     topContainer: {
@@ -219,7 +223,8 @@ export const styles = StyleSheet.create( {
     cardsScrollView: {
         width: '91%',
         marginLeft: '4.5%',
-        marginRight: '4.5%'
+        marginRight: '4.5%',
+        height: screenHeight - 160
     },
     wordCard: {
         marginBottom: 10,
