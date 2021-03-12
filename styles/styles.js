@@ -131,8 +131,8 @@ export const styles = StyleSheet.create( {
     },
     tapInstructions: {
         position: 'absolute',
+        bottom: 80,
         width: '100%',
-        bottom: 0,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center'
@@ -254,6 +254,9 @@ export const styles = StyleSheet.create( {
     },
     'mainViewWrapper--extraTopSpacing': {
         paddingTop: 10
+    },
+    emptyListWrapper: {
+        height: '100%'
     },
     singleSearchResult: {
         width: '91%',
