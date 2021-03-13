@@ -19,6 +19,8 @@ type TTrainingModeInstructionsProps = {
     route: any; // TODO: same.
 }
 
+const MAX_N_OF_DECKS = 9;
+
 const EditButton = () => {
     return (
         <SvgXml
@@ -83,6 +85,14 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
                                 // deck key is calculated based on row and column
                                 const deckKey = ( rowKey * 3 ) + colNumber;
+
+                                if ( deckKey >= MAX_N_OF_DECKS ) {
+                                    return (
+                                        <Text style={ [ styles.text, styles.smallerText, styles.lightText ] }>
+                                            You reached the maximum amount of allowed decks.
+                                        </Text>
+                                    );
+                                }
 
                                 if ( singleDeck.name === '__ADD_PLACEHOLDER__' ) {
 
