@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Text, Layout, Card } from '@ui-kitten/components';
+import { Text, Layout, Card, Button } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
 import { AppContext } from '../App';
 import { TransitionPresets } from '@react-navigation/stack';
@@ -37,7 +37,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
     const { navigation } = props;
 
     const appData = useContext( AppContext );
-    const { decksData, removeSingleDeck } = appData;
+    const { decksData, removeSingleDeck, wordsWallet, onMenuClick } = appData;
 
     const chunkedDecks = chunk( decksData, 3 );
 
@@ -75,13 +75,39 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
                 <Text style={ styles.verySmallText }>{ '\n' }</Text>
 
-                <Text style={ [ styles.text, styles.boldText, styles.smallerText, styles.leftAlignedText ] }>YOUR DECKS</Text>
+                { wordsWallet.length > 0 && decksData.length > 1 &&
+                    <Text style={ [ styles.text, styles.boldText, styles.smallerText, styles.leftAlignedText ] }>YOUR DECKS</Text>
+                }
+
+                { wordsWallet.length > 0 && decksData.length === 1 &&
+                    <Text style={ [ styles.text, styles.smallerText, styles.lightText ] } >
+                        You currently don't have any decks. { '\n' } Create a new one by clicking on the + icon below.
+                    </Text>
+                }
+
+                { wordsWallet.length === 0 &&
+                    <>
+                        <Text style={ [ styles.text, styles.smallerText, styles.lightText ] } >
+                            In this area you will be able to create custom decks with words coming from your wallet.
+                            Start by adding some words there and then come back 🙂
+                        </Text>
+                        <Layout style={ styles.walletInstructions }>
+                            <Button onPress={ () => { onMenuClick( 0 ); } } style={ styles.ctaButton }>
+                                GO TO WALLET
+                            </Button>
+                        </Layout>
+                    </>
+                }
 
                 { chunkedDecks.map( ( singleRow, rowKey ) => {
 
                     return (
                         <Layout key={ rowKey } style={ styles.decksWrapper }>
                             { singleRow.map( ( singleDeck, colNumber ) => {
+
+                                if ( wordsWallet.length === 0 ) {
+                                    return;
+                                }
 
                                 // deck key is calculated based on row and column
                                 const deckKey = ( rowKey * 3 ) + colNumber;

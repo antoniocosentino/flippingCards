@@ -70,7 +70,7 @@ const InfoSecondView = () => {
                     { '\n\n' }
                     <Text style={ [ styles.boldText ] }>App Development, UI/UX, Icon Design:</Text>
                     { '\n' }
-                    Antonio Cosentino © 2020
+                    Antonio Cosentino © 2020 - 2021
                     { '\n' }
                     <Text
                         style={ [ styles.text, styles.leftAlignedText, styles.smallerText, styles.linkText ] }
@@ -140,7 +140,7 @@ const InfoMainView = ( props: any ) => { // TODO: types
                 </Text>
 
                 <Text style={ [ styles.text, styles.smallerText ] }>
-                    Antonio Cosentino © 2020
+                    Antonio Cosentino © 2020 - 2021
                 </Text>
             </Layout>
 
