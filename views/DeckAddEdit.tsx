@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { Button, CheckBox, Layout, Text, Input, Icon } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
@@ -59,9 +59,12 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
 
     const [ isButtonEnabled, setButtonEnabled ] = useState( false );
 
-    const newDeckCards: TCards = [];
+    const [ newDeckCards, setnewDeckCards ] = useState( editMode && thisDeck ? thisDeck.cards : [] as TCards );
 
     const rowSelector = ( rowId: string, isSelected: boolean ) => {
+
+        const newDeckCardsClone = [ ...newDeckCards ];
+
         if ( isSelected ) {
             const cardToAdd: TSingleCard = {
                 en: wordsWallet[ parseInt( rowId, 10 ) ].en,
@@ -69,25 +72,22 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
                 wordType: wordsWallet[ parseInt( rowId, 10 ) ].wordType,
                 mastered: false
             };
-            newDeckCards.push( cardToAdd );
+            newDeckCardsClone.push( cardToAdd );
         }
         else {
             const cardToDelete = newDeckCards.findIndex( ( singleCard ) =>
                 singleCard.en === wordsWallet[ parseInt( rowId, 10 ) ].en  &&
                 singleCard.de === wordsWallet[ parseInt( rowId, 10 ) ].de );
 
-            newDeckCards.splice( cardToDelete, 1 );
+            newDeckCardsClone.splice( cardToDelete, 1 );
         }
 
-        if ( !isButtonEnabled && newDeckCards.length > 0 ) {
-            setButtonEnabled( true );
-        }
-
-        if ( isButtonEnabled && newDeckCards.length < 1 ) {
-            setButtonEnabled( false );
-        }
-
+        setnewDeckCards( newDeckCardsClone );
     };
+
+    useEffect( () => {
+        setButtonEnabled( newDeckCards.length > 0 );
+    }, [ newDeckCards ] );
 
     const initialSelectionState = wordsWallet.map( ( word, index ) => {
 
@@ -97,12 +97,9 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
             const thisWordInOriginalDeck = thisDeck.cards.find( ( deckWord: TSingleCard ) => deckWord.de === word.de && deckWord.en === word.en );
 
             if ( thisWordInOriginalDeck ) {
-                rowSelector( index.toString(), true );
                 checkedValue = true;
             }
-
         }
-
 
         return { ...word, checked: checkedValue, id: index.toString() };
     } );
