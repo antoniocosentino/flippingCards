@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { Button, CheckBox, Layout, Text, Input, Icon } from '@ui-kitten/components';
+import { Button, CheckBox, Layout, Text, Input, Icon, IconProps } from '@ui-kitten/components';
 import { styles } from '../styles/styles';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { AppContext, TCards, TDeck, TSingleCard } from '../App';
 import { timeAgo } from './../utils/utils';
 
 const  dateFormat = require( 'dateformat' );
+
 
 const SingleRow = ( props: any ) => {
 
@@ -139,6 +140,20 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
 
     const [ inputContent, setInputContent ] = useState( thisDeck?.name );
 
+    const [ isInputFocused, setInputFocused ] = useState( false );
+
+    const renderCloseIconForDeckTitle = ( iconProps: IconProps ) => {
+        if ( !isInputFocused || !inputContent || inputContent.length < 1 ) {
+            return <></>;
+        }
+
+        return (
+            <TouchableWithoutFeedback onPress={ () => setInputContent( '' ) }>
+                <Icon { ...iconProps } width={ 22 } height={ 22 } fill='#ccc' name={ 'close-circle' } />
+            </TouchableWithoutFeedback>
+        );
+    };
+
     return (
         <Layout style={ [ styles.centeredElement, styles['centeredElement--noTopSpace' ], styles['centeredElement--lessHorizontalPadding' ] ] }>
 
@@ -149,7 +164,7 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
                     width={ 30 }
                     height={ 30 }
                     fill='#ccc'
-                    name={ 'close-circle' }
+                    name={ 'close' }
                 />
             </Layout>
 
@@ -162,8 +177,11 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
                 size='small'
                 value={ inputContent }
                 placeholder='Name of your deck'
+                onFocus={ () => setInputFocused( true ) }
+                onBlur={ () => setInputFocused( false ) }
                 returnKeyType='done'
                 onChangeText={ nextValue => setInputContent( nextValue  ) }
+                accessoryRight={ renderCloseIconForDeckTitle }
             />
 
             <FlatList
