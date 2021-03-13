@@ -165,6 +165,7 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
                 size='small'
                 value={ inputContent }
                 placeholder='Name of your deck'
+                returnKeyType='done'
                 onChangeText={ nextValue => setInputContent( nextValue  ) }
             />
 
