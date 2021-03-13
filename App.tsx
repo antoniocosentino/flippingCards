@@ -190,6 +190,9 @@ export default () => {
 
                     setDecksData( enrichDecksWithPlaceholder( dataAsArr ) );
                 }
+                else {
+                    setDecksData( enrichDecksWithPlaceholder( [] ) );
+                }
             } catch ( e ) {
                 // error reading value
             }
