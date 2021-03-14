@@ -7,6 +7,8 @@ import {
     IconProps
 } from '@ui-kitten/components';
 
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
+
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -387,69 +389,70 @@ export default () => {
         <NavigationContainer ref={ navigationRef }>
             <IconRegistry icons={ EvaIconsPack } />
             <ApplicationProvider { ...eva } theme={ customTheme }>
-                <AppContext.Provider value={ appData }>
-                    <Layout style={ styles.stackNavigatorWrapper } >
-                        <Tab.Navigator
-                            tabBarOptions={ {
-                                showLabel: false,
-                                style: {
-                                    height: 0
-                                }
-                            } }
-                        >
-                            <Tab.Screen
-                                name='list'
-                                component={ List }
-                                options={ {
-                                    tabBarVisible: false
+                <ActionSheetProvider>
+                    <AppContext.Provider value={ appData }>
+                        <Layout style={ styles.stackNavigatorWrapper } >
+                            <Tab.Navigator
+                                tabBarOptions={ {
+                                    showLabel: false,
+                                    style: {
+                                        height: 0
+                                    }
                                 } }
-                            />
+                            >
+                                <Tab.Screen
+                                    name='list'
+                                    component={ List }
+                                    options={ {
+                                        tabBarVisible: false
+                                    } }
+                                />
 
-                            <Tab.Screen
-                                name='training-mode'
-                                component={ TrainingMode }
-                                options={ {
-                                    tabBarVisible: false
-                                } }
-                            />
+                                <Tab.Screen
+                                    name='training-mode'
+                                    component={ TrainingMode }
+                                    options={ {
+                                        tabBarVisible: false
+                                    } }
+                                />
 
-                            <Tab.Screen
-                                name='add'
-                                component={ AddToWallet }
-                                options={ {
-                                    tabBarVisible: false
-                                } }
-                            />
+                                <Tab.Screen
+                                    name='add'
+                                    component={ AddToWallet }
+                                    options={ {
+                                        tabBarVisible: false
+                                    } }
+                                />
 
-                            <Tab.Screen
-                                name='challenge-mode'
-                                component={ ChallengeMode }
-                                options={ {
-                                    tabBarVisible: false
-                                } }
-                            />
+                                <Tab.Screen
+                                    name='challenge-mode'
+                                    component={ ChallengeMode }
+                                    options={ {
+                                        tabBarVisible: false
+                                    } }
+                                />
 
-                            <Tab.Screen
-                                name='info'
-                                component={ InfoView }
-                                options={ {
-                                    tabBarVisible: false
-                                } }
-                            />
+                                <Tab.Screen
+                                    name='info'
+                                    component={ InfoView }
+                                    options={ {
+                                        tabBarVisible: false
+                                    } }
+                                />
 
-                            <Tab.Screen
-                                name='debug'
-                                component={ DebugMode }
-                                options={ {
-                                    tabBarVisible: false
-                                } }
-                            />
+                                <Tab.Screen
+                                    name='debug'
+                                    component={ DebugMode }
+                                    options={ {
+                                        tabBarVisible: false
+                                    } }
+                                />
 
-                        </Tab.Navigator>
+                            </Tab.Navigator>
 
-                    </Layout>
-
-                </AppContext.Provider>
+                        </Layout>
+                    </AppContext.Provider>
+                </ActionSheetProvider>
             </ApplicationProvider>
         </NavigationContainer>
     );

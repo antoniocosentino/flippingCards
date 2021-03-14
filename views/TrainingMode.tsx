@@ -3,6 +3,8 @@ import { Text, Layout, Card, Button } from '@ui-kitten/components';
 import { styles } from './../styles/styles';
 import { AppContext } from '../App';
 import { TransitionPresets } from '@react-navigation/stack';
+import { useActionSheet } from '@expo/react-native-action-sheet';
+
 
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -11,7 +13,7 @@ import { chunk } from 'lodash';
 import { DeckAddEdit } from './DeckAddEdit';
 import { SvgXml } from 'react-native-svg';
 import { editSvgBase, getCustomSvg } from '../utils/customIcons';
-import { TouchableOpacity, ActionSheetIOS, GestureResponderEvent, View } from 'react-native';
+import { TouchableOpacity, GestureResponderEvent, View } from 'react-native';
 import { BottomMenu } from './BottomMenu';
 
 type TTrainingModeInstructionsProps = {
@@ -35,6 +37,7 @@ const EditButton = () => {
 const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
     const { navigation } = props;
+    const { showActionSheetWithOptions } = useActionSheet();
 
     const appData = useContext( AppContext );
     const { decksData, removeSingleDeck, wordsWallet, onMenuClick } = appData;
@@ -45,7 +48,7 @@ const TrainingModeInstructions = ( props: TTrainingModeInstructionsProps ) => {
 
         event.stopPropagation();
 
-        ActionSheetIOS.showActionSheetWithOptions(
+        showActionSheetWithOptions(
             {
                 options: ['Cancel', 'Edit Deck', 'Delete Deck'],
                 destructiveButtonIndex: 2,
