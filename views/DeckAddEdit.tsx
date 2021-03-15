@@ -157,23 +157,35 @@ export const DeckAddEdit = ( props: any ) => { // TODO: types
     return (
         <Layout style={ [ styles.centeredElement, styles['centeredElement--noTopSpace' ], styles['centeredElement--lessHorizontalPadding' ] ] }>
 
-            <Layout style={ styles.createDeckCloseBtn  }>
-                <Icon
-                    style={ styles.createDeckCloseBtnIcon  }
-                    onPress={ () => navigation.goBack() }
-                    width={ 30 }
-                    height={ 30 }
-                    fill='#ccc'
-                    name={ 'close' }
-                />
+            <Layout
+                style={ styles.createNewDeckHeader }
+            >
+                <Layout style={ styles.createNewDeckSideElement  } />
+
+                <Layout style={ styles.createNewDeckTitle }>
+                    <Text style={ [ styles.text, styles.titleTextSmall ] } category='h4'>
+                        { editMode ? 'Edit Deck' : 'Create new Deck' }
+                    </Text>
+                </Layout>
+
+                <Layout style={ styles.createNewDeckSideElement  } >
+                    <TouchableWithoutFeedback
+                        onPress={ () => navigation.goBack() }
+                    >
+                        <Icon
+                            style={ {} }
+                            width={ 30 }
+                            height={ 30 }
+                            fill='#ccc'
+                            name={ 'close' }
+                        />
+                    </TouchableWithoutFeedback>
+                </Layout>
+
             </Layout>
 
-            <Text style={ [ styles.text, styles.titleTextSmall ] } category='h4'>
-                { editMode ? 'Edit Deck' : 'Create new Deck' }
-            </Text>
-
             <Input
-                style={ [ styles.smallInput, styles.inputExtraTopSpacing ] }
+                style={ styles.smallInput }
                 size='small'
                 value={ inputContent }
                 placeholder='Name of your deck'

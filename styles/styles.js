@@ -506,15 +506,18 @@ export const styles = StyleSheet.create( {
         display: 'flex',
         justifyContent: 'center'
     },
-    createDeckCloseBtn: {
+    createNewDeckHeader: {
+        display: 'flex',
+        flexDirection: 'row',
         width: '100%',
-        height: 20,
-        paddingRight: 10,
-        alignItems: 'flex-end',
-        justifyContent: 'flex-end'
+        height: 50
     },
-    createDeckCloseBtnIcon: {
-        position: 'relative',
-        top: 20
+    createNewDeckTitle: {
+        flexBasis: '80%',
+        justifyContent: 'center'
+    },
+    createNewDeckSideElement: {
+        flexBasis: '10%',
+        justifyContent: 'center'
     }
 } );
