@@ -400,7 +400,7 @@ export default () => {
                                     }
                                 } }
                             >
-
+                                {/* TODO: this needs to be put back in 3rd position */}
                                 <Tab.Screen
                                     name='challenge-mode'
                                     component={ ChallengeMode }
@@ -432,8 +432,6 @@ export default () => {
                                         tabBarVisible: false
                                     } }
                                 />
-
-                                
 
                                 <Tab.Screen
                                     name='info'
