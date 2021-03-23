@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { BottomMenu } from './BottomMenu';
 import { AppContext, TDeck } from '../App';
 import { FlatList } from 'react-native-gesture-handler';
+import Pie from 'react-native-pie';
 
 type TWrappedDeck = {
     index: number;
@@ -93,9 +94,24 @@ export const ChallengeMode = () => {
                                                 justifyContent: 'center'
                                             } }
                                         >
-                                            <Text style={ [styles.text, styles.whiteText, styles.leftAlignedText ] }>
+                                             
+                                            <Pie
+                                                radius={20}
+                                                innerRadius={15}
+                                                sections={[
+                                                {
+                                                    percentage: getDeckPercentage( deck ),
+                                                    color: '#FFF'
+                                                },
+                                                ]}
+                                                backgroundColor='#DC9CAE'
+                                            />
+                                                
+                                            
+
+                                            {/* <Text style={ [styles.text, styles.whiteText, styles.leftAlignedText ] }>
                                                 { `${getDeckPercentage( deck )}%` }
-                                            </Text>
+                                            </Text> */}
                                         </Layout>
 
                                         <Layout

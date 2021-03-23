@@ -9,6 +9,8 @@ target 'flipCards' do
 
   pod 'react-native-safe-area', :path => '../node_modules/react-native-safe-area'
 
+  pod 'ReactNativeART', :path => '../node_modules/@react-native-community/art'
+
   target 'flipCardsTests' do
     inherit! :complete
     # Pods for testing
