@@ -16,6 +16,11 @@ export const PlayIcon = ( props: IconProps ) => (
     <Icon { ...props } width={ 24 } height={ 24 } fill='#fff' name={ 'play-circle-outline' } />
 );
 
+const getDeckPercentage = ( deck: TDeck ): number => {
+    const masteredWords = deck.cards.filter( ( card ) => card.mastered === true );
+    return Math.round( ( masteredWords.length * 100 ) / deck.cards.length );
+};
+
 export const ChallengeMode = () => {
 
     const appData = useContext( AppContext );
@@ -27,7 +32,7 @@ export const ChallengeMode = () => {
                 <Layout style={ styles['centeredElement--lessHorizontalPadding'] }>
                     <Text>{ '\n' }</Text>
                     <Text style={ [ styles.text, styles.titleText ] } category='h4'>Challenge mode</Text>
-                    <Text style={ [ styles.text ] }>Select a deck and start the challenge</Text>
+                    <Text style={ [ styles.text, styles.smallerText ] }>Select a deck and start the challenge</Text>
                     <FlatList
                         keyboardDismissMode={ 'on-drag' }
                         showsVerticalScrollIndicator={ false }
@@ -53,7 +58,7 @@ export const ChallengeMode = () => {
                                     >
                                         <Layout
                                             style={ {
-                                                flexBasis: '50%'
+                                                flexBasis: '60%'
                                             } }
                                         >
                                             <Layout
@@ -83,13 +88,13 @@ export const ChallengeMode = () => {
 
                                         <Layout
                                             style={ {
-                                                flexBasis: '40%',
+                                                flexBasis: '30%',
                                                 backgroundColor: mainColor,
                                                 justifyContent: 'center'
                                             } }
                                         >
                                             <Text style={ [styles.text, styles.whiteText, styles.leftAlignedText ] }>
-                                                50%
+                                                { `${getDeckPercentage( deck )}%` }
                                             </Text>
                                         </Layout>
 
