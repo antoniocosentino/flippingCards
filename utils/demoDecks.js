@@ -9,13 +9,13 @@ export const DEMO_DECKS = [
                 en: 'bread',
                 de: 'brot',
                 wordType: 'n',
-                mastered: false
+                mastered: true
             },
             {
                 en: 'window',
                 de: 'fenster',
                 wordType: 'n',
-                mastered: false
+                mastered: true
             },
             {
                 en: 'salmon',
@@ -35,7 +35,7 @@ export const DEMO_DECKS = [
                 en: 'bread',
                 de: 'brot',
                 wordType: 'n',
-                mastered: false
+                mastered: true
             },
             {
                 en: 'window',
@@ -87,19 +87,19 @@ export const DEMO_DECKS = [
                 en: 'bread',
                 de: 'brot',
                 wordType: 'n',
-                mastered: false
+                mastered: true
             },
             {
                 en: 'window',
                 de: 'fenster',
                 wordType: 'n',
-                mastered: false
+                mastered: true
             },
             {
                 en: 'salmon',
                 de: 'lachs',
                 wordType: 'm',
-                mastered: false
+                mastered: true
             }
         ]
     }
