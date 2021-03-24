@@ -1,20 +1,18 @@
 import React, { useContext } from 'react';
 
 import { Card, Icon, IconProps, Layout, Text } from '@ui-kitten/components';
-import { mainColor, styles } from '../styles/styles';
+import { styles } from '../styles/styles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BottomMenu } from './BottomMenu';
 import { AppContext, TDeck } from '../App';
 import { FlatList } from 'react-native-gesture-handler';
 import Pie from 'react-native-pie';
+import { ListRenderItemInfo } from 'react-native';
 
-type TWrappedDeck = {
-    index: number;
-    item: TDeck;
-}
+type TWrappedDeck = ListRenderItemInfo<TDeck>
 
 export const PlayIcon = ( props: IconProps ) => (
-    <Icon { ...props } width={ 24 } height={ 24 } fill='#fff' name={ 'play-circle-outline' } />
+    <Icon { ...props } width={ 24 } height={ 24 } fill='#fff' name={ 'chevron-right-outline' } />
 );
 
 const getDeckPercentage = ( deck: TDeck ): number => {
@@ -39,6 +37,7 @@ export const ChallengeMode = () => {
                         showsVerticalScrollIndicator={ false }
                         data={ decksData }
                         style={ [ styles.cardsScrollView, styles.inputExtraTopSpacing ] }
+                        keyExtractor={ deck => deck.id.toString() }
                         renderItem={ ( data: TWrappedDeck ) => {
 
                             const { item: deck } = data;
@@ -52,22 +51,13 @@ export const ChallengeMode = () => {
                                     style={ styles.wordCard }
                                 >
                                     <Layout
-                                        style={ {
-                                            display: 'flex',
-                                            flexDirection: 'row'
-                                        } }
+                                        style={ styles.challengeModeCardWrapper }
                                     >
                                         <Layout
-                                            style={ {
-                                                flexBasis: '60%'
-                                            } }
+                                            style={ styles.challengeModeCardLeftZone }
                                         >
                                             <Layout
-                                                style={ {
-                                                    display: 'flex',
-                                                    flexDirection: 'column',
-                                                    backgroundColor: mainColor
-                                                } }
+                                                style={ styles.challengeModeCardLeftZoneTop  }
                                             >
                                                 <Text style={ [styles.text, styles.whiteText, styles.leftAlignedText ] }>
                                                     { deck.name  }
@@ -75,11 +65,7 @@ export const ChallengeMode = () => {
                                             </Layout>
 
                                             <Layout
-                                                style={ {
-                                                    display: 'flex',
-                                                    flexDirection: 'column',
-                                                    backgroundColor: mainColor
-                                                } }
+                                                style={ styles.challengeModeCardLeftZoneBottom }
                                             >
                                                 <Text style={ [styles.text, styles.whiteText, styles.leftAlignedText, styles.smallerText ] }>
                                                     { `${ deck.cards.length } card${ deck.cards.length > 1 ? 's' : '' }` }
@@ -88,38 +74,28 @@ export const ChallengeMode = () => {
                                         </Layout>
 
                                         <Layout
-                                            style={ {
-                                                flexBasis: '30%',
-                                                backgroundColor: mainColor,
-                                                justifyContent: 'center'
-                                            } }
+                                            style={ styles.challengeModeCardCenterZone }
                                         >
-                                             
                                             <Pie
-                                                radius={20}
-                                                innerRadius={15}
-                                                sections={[
-                                                {
-                                                    percentage: getDeckPercentage( deck ),
-                                                    color: '#FFF'
-                                                },
-                                                ]}
+                                                radius={ 24 }
+                                                innerRadius={ 18 }
+                                                sections={ [
+                                                    {
+                                                        percentage: getDeckPercentage( deck ),
+                                                        color: '#FFF'
+                                                    }
+                                                ] }
                                                 backgroundColor='#DC9CAE'
                                             />
-                                                
-                                            
 
-                                            {/* <Text style={ [styles.text, styles.whiteText, styles.leftAlignedText ] }>
+                                            <Text style={ [styles.text, styles.whiteText, styles.verySmallText, styles.challengeModeCardPercentageText ] }>
                                                 { `${getDeckPercentage( deck )}%` }
-                                            </Text> */}
+                                            </Text>
+
                                         </Layout>
 
                                         <Layout
-                                            style={ {
-                                                flexBasis: '10%',
-                                                backgroundColor: mainColor,
-                                                justifyContent: 'center'
-                                            } }
+                                            style={ styles.challengeModeCardRightZone }
                                         >
                                             <PlayIcon />
                                         </Layout>

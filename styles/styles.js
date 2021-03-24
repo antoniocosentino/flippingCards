@@ -519,5 +519,41 @@ export const styles = StyleSheet.create( {
     createNewDeckSideElement: {
         flexBasis: '10%',
         justifyContent: 'center'
+    },
+    // CHALLENGE MODE
+    challengeModeCardWrapper: {
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    challengeModeCardLeftZone: {
+        flexBasis: '60%',
+        backgroundColor: mainColor
+    },
+    challengeModeCardLeftZoneTop: {
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: mainColor
+    },
+    challengeModeCardLeftZoneBottom: {
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: mainColor,
+        marginTop: 8
+    },
+    challengeModeCardCenterZone: {
+        flexBasis: '30%',
+        backgroundColor: mainColor,
+        justifyContent: 'center'
+    },
+    challengeModeCardPercentageText: {
+        position: 'absolute',
+        left: 9,
+        width: 30
+    },
+    challengeModeCardRightZone: {
+        flexBasis: '10%',
+        backgroundColor: mainColor,
+        justifyContent: 'center',
+        alignItems: 'flex-end'
     }
 } );
