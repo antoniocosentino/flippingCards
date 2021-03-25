@@ -44,6 +44,11 @@ export const styles = StyleSheet.create( {
     'centeredElement--noTopSpace': {
         paddingTop: 0
     },
+    'centeredElement--mediumHorizontalPadding': {
+        width: '92%',
+        marginLeft: '4%',
+        marginRight: '4%'
+    },
     'centeredElement--lessHorizontalPadding': {
         width: '98%',
         marginLeft: '1%',
@@ -166,6 +171,9 @@ export const styles = StyleSheet.create( {
     },
     biggerText: {
         fontSize: 18
+    },
+    veryBigText: {
+        fontSize: 27
     },
     smallerText: {
         fontSize: 13
@@ -370,6 +378,10 @@ export const styles = StyleSheet.create( {
         borderColor: mainColor,
         fontFamily: customFontRegular
     },
+    'ctaButton--smallWidth': {
+        width: '50%',
+        marginLeft: '25%'
+    },
     cardsTopNav: {
         paddingLeft: 20,
         display: 'flex',
@@ -555,5 +567,14 @@ export const styles = StyleSheet.create( {
         backgroundColor: mainColor,
         justifyContent: 'center',
         alignItems: 'flex-end'
+    },
+    // CHALLENGE MODE - Playing
+    progressBarWrapper: {
+        width: '100%',
+        marginTop: 10,
+        marginBottom: 20,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
     }
 } );
