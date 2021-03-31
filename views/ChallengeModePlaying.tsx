@@ -7,17 +7,22 @@ import CharacterInput from 'react-native-character-input';
 import { shuffle } from 'lodash';
 import { getArticle } from '../utils/utils';
 
-type TChallengeModePlaying = any;
+type TChallengeModePlaying = {
+    route: any; // TODO: can this be better typed?
+}
 
 type TProgressBar = {
     totalNumber: number;
     currentNumber: number;
 };
 
+type TWordRenderer = {
+    currentWord: TSingleWord;
+    nextClick: () => void;
+}
+
 const getWordToGuessAsArray = ( word: TSingleWord ): string[] => {
-
     const fullWord = `${ getArticle( word ) }${word.de}`;
-
     return fullWord.split( '' );
 };
 
@@ -72,6 +77,36 @@ const ProgressBar = ( props: TProgressBar ) => {
     );
 };
 
+const WordRenderer = ( props: TWordRenderer  ) => {
+    const { currentWord, nextClick  } = props;
+    const wordToGuessAsArray = getWordToGuessAsArray( currentWord );
+    const wordBinary = getWordBinary( wordToGuessAsArray );
+    const placeHolder = getWordPlaceholder( wordToGuessAsArray );
+
+    const [ typedWord, setTypedWord ] = useState( [] as ReadonlyArray<string> );
+
+    return (
+        <>
+            <Text style={ [ styles.text, styles.veryBigText, styles.boldText ] } >{ currentWord.en  }</Text>
+            <Text>{ '\n' }</Text>
+            <Text style={ [ styles.text, styles.verySmallText, styles.lightText ] } >Type it in German (article included):</Text>
+            <Text>{ '\n' }</Text>
+            <CharacterInput
+                key={ currentWord.en }
+                placeHolder={ placeHolder }
+                showCharBinary={ wordBinary }
+                handleChange={ ( value: ReadonlyArray<string> ) => setTypedWord( value ) }
+            />
+
+            <Layout style={ styles.verticalSpacer } />
+
+            <Button onPress={ nextClick } style={ [ styles.ctaButton, styles[ 'ctaButton--smallWidth' ] ] }>
+                Next
+            </Button>
+        </>
+    );
+};
+
 
 export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
 
@@ -95,17 +130,11 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
         setCurrentCard( currentCard + 1 );
     };
 
-    const [ typedWord, setTypedWord ] = useState( [] as ReadonlyArray<string> );
     const currentWord = currentDeckCardsShuffled[ currentCard ];
 
     if ( !currentWord ) {
         return null;
     }
-
-    const wordToGuessAsArray = getWordToGuessAsArray( currentWord );
-    console.log("🍌: ChallengeModePlaying -> wordToGuessAsArray", wordToGuessAsArray)
-    const wordBinary = getWordBinary( wordToGuessAsArray );
-    const placeHolder = getWordPlaceholder( wordToGuessAsArray );
 
     return (
         <Layout style={ styles['centeredElement--mediumHorizontalPadding'] }>
@@ -119,21 +148,12 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
 
             <Layout>
                 <Text style={ [ styles.text, styles.verySmallText] } >{ currentCard + 1 }/{ currentDeckCardsShuffled.length || 0 }</Text>
-                <Text style={ [ styles.text, styles.veryBigText, styles.boldText ] } >{ currentDeckCardsShuffled[ currentCard ].en  }</Text>
-                <Text>{ '\n' }</Text>
-                <Text style={ [ styles.text, styles.verySmallText, styles.lightText ] } >Type it in German (article included):</Text>
 
-                <CharacterInput
-                    placeHolder={ placeHolder }
-                    showCharBinary={ wordBinary }
-                    handleChange={ ( value: ReadonlyArray<string> ) => setTypedWord( value ) }
+                <WordRenderer
+                    currentWord={ currentWord }
+                    nextClick={ nextClick }
                 />
 
-                <Layout style={ styles.verticalSpacer } />
-
-                <Button onPress={ nextClick } style={ [ styles.ctaButton, styles[ 'ctaButton--smallWidth' ] ] }>
-                        Next
-                </Button>
             </Layout>
         </Layout>
     );
