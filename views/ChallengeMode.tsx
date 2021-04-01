@@ -7,7 +7,7 @@ import { AppContext, TDeck } from '../App';
 import { FlatList } from 'react-native-gesture-handler';
 import Pie from 'react-native-pie';
 import { ListRenderItemInfo } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, HeaderBackButton } from '@react-navigation/stack';
 import { ChallengeModePlaying } from './ChallengeModePlaying';
 
 type TWrappedDeck = ListRenderItemInfo<TDeck>
@@ -15,6 +15,13 @@ type TWrappedDeck = ListRenderItemInfo<TDeck>
 export const PlayIcon = ( props: IconProps ) => (
     <Icon { ...props } width={ 24 } height={ 24 } fill='#fff' name={ 'chevron-right-outline' } />
 );
+
+const renderCloseIcon = () => {
+
+    return (
+        <Icon width={ 22 } height={ 22 } fill='#ccc' name={ 'close-circle' } />
+    );
+};
 
 const getDeckPercentage = ( deck: TDeck ): number => {
     const masteredWords = deck.cards.filter( ( card ) => card.mastered === true );
@@ -160,6 +167,24 @@ export const ChallengeMode = () => {
                         headerShown: true,
                         title: '',
                         animationEnabled: true,
+                        headerLeft: () => (
+                            <></> // this is just a workaround to show nothing
+                        ),
+                        headerRight: ( props ) => {
+                            
+                            console.log("🍌: ChallengeMode -> props", props)
+
+
+                            return (
+                                <HeaderBackButton
+                                    { ...props }
+                                    labelVisible={ false }
+                                    backImage={ renderCloseIcon }
+                                    onPress={ () => console.log('click click motherfucker', props) }
+                                />
+                            );
+                        },
+                        headerBackTitleVisible: false,
                         headerStyle: {
                             shadowColor: 'transparent',
                             elevation: 0
