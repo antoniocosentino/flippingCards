@@ -3,9 +3,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AppContext, TCards, TSingleWord } from '../App';
 import { styles, mainColor } from '../styles/styles';
 import { Dimensions } from 'react-native';
-import CharacterInput from 'react-native-character-input';
 import { shuffle } from 'lodash';
 import { getArticle } from '../utils/utils';
+import { IndividualCharsInput } from './../components/IndividualCharsInput';
 
 type TChallengeModePlaying = {
     route: any; // TODO: can this be better typed?
@@ -26,24 +26,17 @@ const getWordToGuessAsArray = ( word: TSingleWord ): string[] => {
     return fullWord.split( '' );
 };
 
-const getWordBinary = ( letterArray: ReadonlyArray<string> ): string => {
+const getWordStructure = ( letterArray: ReadonlyArray<string> ): ReadonlyArray<boolean> => {
 
     const binaryArr = letterArray.map( ( thisLetter ) => {
         if ( thisLetter !== ' ' ) {
-            return '1';
+            return true;
         } else {
-            return '0';
+            return false;
         }
     } );
 
-    return binaryArr.join( '' );
-};
-
-const getWordPlaceholder = ( letterArray: ReadonlyArray<string> ): string => {
-
-    const placeholderArr = letterArray.map( () => ' ' );
-
-    return placeholderArr.join( '' );
+    return binaryArr;
 };
 
 const ProgressBar = ( props: TProgressBar ) => {
@@ -80,8 +73,9 @@ const ProgressBar = ( props: TProgressBar ) => {
 const WordRenderer = ( props: TWordRenderer  ) => {
     const { currentWord, nextClick  } = props;
     const wordToGuessAsArray = getWordToGuessAsArray( currentWord );
-    const wordBinary = getWordBinary( wordToGuessAsArray );
-    const placeHolder = getWordPlaceholder( wordToGuessAsArray );
+
+    const wordStructure = getWordStructure( wordToGuessAsArray );
+    console.log("🍌: WordRenderer -> wordStructure", wordStructure)
 
     const [ typedWord, setTypedWord ] = useState( [] as ReadonlyArray<string> );
 
@@ -91,11 +85,9 @@ const WordRenderer = ( props: TWordRenderer  ) => {
             <Text>{ '\n' }</Text>
             <Text style={ [ styles.text, styles.verySmallText, styles.lightText ] } >Type it in German (article included):</Text>
             <Text>{ '\n' }</Text>
-            <CharacterInput
-                key={ currentWord.en }
-                placeHolder={ placeHolder }
-                showCharBinary={ wordBinary }
-                handleChange={ ( value: ReadonlyArray<string> ) => setTypedWord( value ) }
+
+            <IndividualCharsInput
+                wordStructure={ wordStructure }
             />
 
             <Layout style={ styles.verticalSpacer } />
