@@ -72,10 +72,10 @@ const ProgressBar = ( props: TProgressBar ) => {
 
 const WordRenderer = ( props: TWordRenderer  ) => {
     const { currentWord, nextClick  } = props;
+
     const wordToGuessAsArray = getWordToGuessAsArray( currentWord );
 
     const wordStructure = getWordStructure( wordToGuessAsArray );
-    console.log("🍌: WordRenderer -> wordStructure", wordStructure)
 
     const [ typedWord, setTypedWord ] = useState( [] as ReadonlyArray<string> );
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { TextInput } from 'react-native-gesture-handler';
 import { View } from 'react-native';
-import { styles } from '../styles/styles';
 
 type TIndividualCharsInput = {
     wordStructure: ReadonlyArray<boolean>
@@ -15,11 +14,19 @@ const individualCharsInputStyles = {
     },
     singleInput: {
         width: 20,
-        height: 20,
-        borderBottomWidth: 2,
+        height: 30,
+        borderRadius: 7,
+        borderBottomWidth: 1,
+        borderBottomColor: '#bbb',
+        borderTopWidth: 1,
+        borderTopColor: '#bbb',
+        borderLeftWidth: 1,
+        borderLeftColor: '#bbb',
+        borderRightWidth: 1,
+        borderRightColor: '#bbb',
         marginLeft: 1,
         marginRight: 1,
-        borderBottomColor: '#666'
+        paddingLeft: 4
     },
     spacer: {
         width: 20
@@ -31,19 +38,20 @@ export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
     const { wordStructure } = props;
 
     return (
-        <View style={ individualCharsInputStyles.inputWrapper }>
+        <View style={ individualCharsInputStyles.inputWrapper as any }>
             { wordStructure.map( ( singleInput, index ) => {
                 if ( singleInput ) {
                     return (
                         <TextInput
                             key={ index.toString() }
                             style={ individualCharsInputStyles.singleInput }
+                            maxLength={ 1 }
                         />
                     );
                 } else {
                     return (
                         <View key={ index.toString() } style={ individualCharsInputStyles.spacer } />
-                    )
+                    );
                 }
             } ) }
         </View>
