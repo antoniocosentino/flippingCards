@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import { Card, Icon, IconProps, Layout, Text } from '@ui-kitten/components';
-import { styles } from '../styles/styles';
+import { mainColor, styles } from '../styles/styles';
 import { BottomMenu } from './BottomMenu';
 import { AppContext, TDeck } from '../App';
 import { FlatList } from 'react-native-gesture-handler';
@@ -17,9 +17,14 @@ export const PlayIcon = ( props: IconProps ) => (
 );
 
 const renderCloseIcon = () => {
-
     return (
-        <Icon width={ 22 } height={ 22 } fill='#ccc' name={ 'close-circle' } />
+        <Icon
+            style={ styles.challengeModeCloseButton }
+            width={ 22 }
+            height={ 22 }
+            fill={ mainColor }
+            name={ 'close-circle' }
+        />
     );
 };
 
@@ -129,6 +134,38 @@ export const ChallengeModeMainScreen = ( props: TChallengeModeMainScreen ) => {
 
 const Stack = createStackNavigator();
 
+type TNavigationOptionsProps = {
+    navigation: any; // TODO: better type?
+}
+
+const navigationOptions = ( props: TNavigationOptionsProps  ) => {
+
+    const { navigation } = props;
+
+    return {
+        title: '',
+        animationEnabled: true,
+        headerLeft: () => (
+            <></> // this is just a workaround to show nothing
+        ),
+        headerRight: () => {
+
+            return (
+                <HeaderBackButton
+                    labelVisible={ false }
+                    backImage={ renderCloseIcon }
+                    onPress={ () => navigation.goBack() }
+                />
+            );
+        },
+        headerBackTitleVisible: false,
+        headerStyle: {
+            shadowColor: 'transparent',
+            elevation: 0
+        }
+    };
+};
+
 export const ChallengeMode = () => {
 
     return (
@@ -163,33 +200,7 @@ export const ChallengeMode = () => {
 
                 <Stack.Screen
                     name='challenge-mode_playing'
-                    options={ {
-                        headerShown: true,
-                        title: '',
-                        animationEnabled: true,
-                        headerLeft: () => (
-                            <></> // this is just a workaround to show nothing
-                        ),
-                        headerRight: ( props ) => {
-                            
-                            console.log("🍌: ChallengeMode -> props", props)
-
-
-                            return (
-                                <HeaderBackButton
-                                    { ...props }
-                                    labelVisible={ false }
-                                    backImage={ renderCloseIcon }
-                                    onPress={ () => console.log('click click motherfucker', props) }
-                                />
-                            );
-                        },
-                        headerBackTitleVisible: false,
-                        headerStyle: {
-                            shadowColor: 'transparent',
-                            elevation: 0
-                        }
-                    } }
+                    options={ navigationOptions }
                 >
                     {
                         ( props ) => {
