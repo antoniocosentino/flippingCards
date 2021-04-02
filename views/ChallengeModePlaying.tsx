@@ -83,18 +83,18 @@ const WordRenderer = ( props: TWordRenderer  ) => {
     const wordStructure = getWordStructure( wordToGuessAsArray );
 
     const [ typedWord, setTypedWord ] = useState( {} as TInputContent );
-    console.log("🍌: WordRenderer -> typedWord", typedWord)
 
     return (
         <>
             <Text style={ [ styles.text, styles.veryBigText, styles.boldText ] } >{ currentWord.en  }</Text>
             <Text>{ '\n' }</Text>
-            <Text style={ [ styles.text, styles.verySmallText, styles.lightText ] } >Type it in German (article included):</Text>
-            <Text>{ '\n' }</Text>
+            <Text style={ [ styles.text, styles.verySmallText, styles.lightText ] }>Type it in German (article included):</Text>
+            <Text style={ [ styles.verySmallText ] }>{ '\n' }</Text>
 
             <IndividualCharsInput
                 wordStructure={ wordStructure }
                 key={ currentWord.de }
+                maxBoxesPerLine={ 16 }
                 onChange={ setTypedWord }
             />
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
 import { View, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
+import { chunk } from 'lodash';
 
 type TInputContent = {
     wordArray: ReadonlyArray<string | false>,
@@ -16,9 +17,14 @@ type TIndividualCharsInput = {
 };
 
 const individualCharsInputStyles = {
+    inputsWrapper: {
+        display: 'flex',
+        flexDirection: 'column'
+    },
     inputWrapper: {
         display: 'flex',
         flexDirection: 'row',
+        marginBottom: 10,
         justifyContent: 'center'
     },
     singleInput: {
@@ -106,7 +112,7 @@ export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
         ...props
     } as TIndividualCharsInput;
 
-    const { wordStructure, autoFocus, onChange: externalOnChange } = mergedProps;
+    const { wordStructure, autoFocus, maxBoxesPerLine, onChange: externalOnChange } = mergedProps;
     const inputsRef = useRef( [] as any );
     const [ activeLetter, setActiveLetter ] = useState( 0 );
     const [ typedWordArray, setTypeWordArray ] = useState( [] as string[] );
@@ -179,26 +185,37 @@ export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
         return wordForExternalMethod;
     };
 
-    return (
-        <View style={ individualCharsInputStyles.inputWrapper as any }>
-            { wordStructure.map( ( singleInput, index ) => {
+    const wordStructureRows = maxBoxesPerLine! <= 0 ? [ wordStructure ] : chunk( wordStructure, maxBoxesPerLine );
 
-                if ( singleInput ) {
-                    return (
-                        <TextInput
-                            key={ index.toString() }
-                            ref={ ( el ) =>  { inputsRef.current[ index ] = el; } }
-                            style={ individualCharsInputStyles.singleInput as any }
-                            maxLength={ 1 }
-                            onKeyPress={ ( event ) => onLetterChange( event, index ) }
-                            autoCorrect={ false }
-                        />
-                    );
-                } else {
-                    return (
-                        <View key={ index.toString() } style={ individualCharsInputStyles.spacer } />
-                    );
-                }
+    return (
+        <View style={ individualCharsInputStyles.inputsWrapper as any }>
+            { wordStructureRows.map( ( singleRow, rowIndex ) => {
+                return (
+                    <View style={ individualCharsInputStyles.inputWrapper as any }>
+
+                        { singleRow.map( ( singleInput, indexInRow ) => {
+
+                            const derivedIndex = ( maxBoxesPerLine! * rowIndex ) + indexInRow;
+
+                            if ( singleInput ) {
+                                return (
+                                    <TextInput
+                                        key={ derivedIndex.toString() }
+                                        ref={ ( el ) =>  { inputsRef.current[ derivedIndex ] = el; } }
+                                        style={ individualCharsInputStyles.singleInput as any }
+                                        maxLength={ 1 }
+                                        onKeyPress={ ( event ) => onLetterChange( event, derivedIndex ) }
+                                        autoCorrect={ false }
+                                    />
+                                );
+                            } else {
+                                return (
+                                    <View key={ derivedIndex.toString() } style={ individualCharsInputStyles.spacer } />
+                                );
+                            }
+                        } ) }
+                    </View>
+                );
             } ) }
         </View>
     );
