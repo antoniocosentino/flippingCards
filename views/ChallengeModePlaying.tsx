@@ -18,13 +18,15 @@ type TProgressBar = {
 
 type TWordRenderer = {
     currentWord: TSingleWord;
-    nextClick: () => void;
+    nextClick: ( wordToGuess: string, typedWord: string ) => void
 }
 
 type TInputContent = {
     wordArray: ReadonlyArray<string | false>,
     wordString: string
 };
+
+type TViewTypes = 'WORDGUESS' | 'CORRECT' | 'WRONG';
 
 const getFullWordString = ( word: TSingleWord ): string => {
     return `${ getArticle( word ) }${word.de}`;
@@ -107,7 +109,7 @@ const WordRenderer = ( props: TWordRenderer  ) => {
             <Layout style={ styles.verticalSpacer } />
 
             <Button
-                onPress={ isButtonEnabled ?  nextClick : undefined }
+                onPress={ isButtonEnabled ? () => nextClick( getFullWordString( currentWord ), typedWord.wordString ) : undefined }
                 style={ [
                     styles.ctaButton,
                     styles[ 'ctaButton--smallWidth'],
@@ -132,13 +134,31 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
 
     const [ currentDeckCardsShuffled, setShuffledCards ] = useState( [] as TCards );
 
+    const [ currentView, setCurrentView ] = useState( 'WORDGUESS' as TViewTypes );
+
     useEffect( () => {
         setShuffledCards( shuffle( currentDeckCards ) );
     }, [ currentDeckCards ] );
 
+    useEffect( () => {
+        if ( currentView !== 'WORDGUESS' ) {
+            setTimeout( () => {
+                setCurrentView( 'WORDGUESS' );
+            }, 1000 );
+        }
+    }, [ currentView ] );
+
     const [ currentCard, setCurrentCard ] = useState( 0 );
 
-    const nextClick = () => {
+    const nextClick = ( wordToGuess: string, typedWord: string ) => {
+
+        if ( wordToGuess.toUpperCase() === typedWord.toUpperCase() ) {
+            setCurrentView( 'CORRECT' );
+        }
+        else {
+            setCurrentView( 'WRONG' );
+        }
+
         setCurrentCard( currentCard + 1 );
     };
 
@@ -146,6 +166,31 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
 
     if ( !currentWord ) {
         return null;
+    }
+
+    if ( currentView !== 'WORDGUESS' ) {
+        return (
+            <Layout style={ styles['centeredElement--mediumHorizontalPadding'] }>
+                <Layout
+                    style={
+                        {
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            height: 600
+                        }
+                    }
+                >
+                    <Text style={ [ styles.text, styles.veryBigText, styles.boldText ] } >{ currentView === 'CORRECT' ? 'Correct' : 'Wrong' }!</Text>
+                    <Text style={ {
+                        fontSize: 200
+                    } }>
+                        { currentView === 'CORRECT' ? '🎉' : '❌' }
+                    </Text>
+                </Layout>
+            </Layout>
+        );
     }
 
     return (
