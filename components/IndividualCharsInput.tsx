@@ -2,10 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
 import { View, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
 
+type TInputContent = {
+    wordArray: ReadonlyArray<string | false>,
+    wordString: string
+};
+
 type TIndividualCharsInput = {
     wordStructure: ReadonlyArray<boolean>;
     key: string;
-    onChange: ( wordArray: ReadonlyArray<string | false> ) => any;
+    autoFocus?: boolean;
+    maxBoxesPerLine?: number;
+    onChange: ( inputContent: TInputContent ) => any;
 };
 
 const individualCharsInputStyles = {
@@ -35,9 +42,10 @@ const individualCharsInputStyles = {
     }
 };
 
-const defaultProps = {
-    autoFocus: true
-};
+const DEFAULT_PROPS = {
+    autoFocus: true,
+    maxBoxesPerLine: 0
+} as Partial<TIndividualCharsInput>;
 
 const getNextValidIndex = ( wordStructure: ReadonlyArray<boolean>, currentIndex: number ): number => {
 
@@ -65,13 +73,38 @@ const getPreviousValidIndex = ( wordStructure: ReadonlyArray<boolean>, currentIn
     return getPreviousValidIndex( wordStructure, currentIndex - 1 );
 };
 
+const getWordStringForExternalMethod = ( newWordArray: string[] ): string => {
+
+    const processedArr = [];
+
+    for ( let count = 0; count < newWordArray.length; count++ ) {
+        const currentLetter = newWordArray[ count ];
+
+        switch ( currentLetter ) {
+            case undefined:
+                processedArr.push( ' ' );
+                break;
+            case '':
+                processedArr.push( '' );
+                break;
+
+            default:
+                processedArr.push( currentLetter );
+                break;
+        }
+
+    }
+
+    return processedArr.join( '' );
+};
+
 
 export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
 
     const mergedProps = {
-        ...defaultProps,
+        ...DEFAULT_PROPS,
         ...props
-    };
+    } as TIndividualCharsInput;
 
     const { wordStructure, autoFocus, onChange: externalOnChange } = mergedProps;
     const inputsRef = useRef( [] as any );
@@ -118,11 +151,17 @@ export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
         }
 
         setTypeWordArray( typedWordArrayClone );
-        externalOnChange( getWordForExternalMethod( typedWordArrayClone ) );
+
+        const inputContent = {
+            wordArray: getWordArrayForExternalMethod( typedWordArrayClone ),
+            wordString: getWordStringForExternalMethod( typedWordArrayClone )
+        } as TInputContent;
+
+        externalOnChange( inputContent  );
 
     };
 
-    const getWordForExternalMethod = ( newWordArray: string[] ): ReadonlyArray<string | false> => {
+    const getWordArrayForExternalMethod = ( newWordArray: string[] ): ReadonlyArray<string | false> => {
 
         const wordForExternalMethod = wordStructure.map( ( singleSlot, index ) => {
 
