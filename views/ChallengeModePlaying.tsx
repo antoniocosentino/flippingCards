@@ -21,6 +21,11 @@ type TWordRenderer = {
     nextClick: () => void;
 }
 
+type TInputContent = {
+    wordArray: ReadonlyArray<string | false>,
+    wordString: string
+};
+
 const getWordToGuessAsArray = ( word: TSingleWord ): string[] => {
     const fullWord = `${ getArticle( word ) }${word.de}`;
     return fullWord.split( '' );
@@ -77,7 +82,7 @@ const WordRenderer = ( props: TWordRenderer  ) => {
 
     const wordStructure = getWordStructure( wordToGuessAsArray );
 
-    const [ typedWord, setTypedWord ] = useState( [] as ReadonlyArray<string | false> );
+    const [ typedWord, setTypedWord ] = useState( {} as TInputContent );
     console.log("🍌: WordRenderer -> typedWord", typedWord)
 
     return (
