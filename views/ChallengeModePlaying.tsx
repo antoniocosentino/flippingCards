@@ -88,6 +88,7 @@ const WordRenderer = ( props: TWordRenderer  ) => {
 
             <IndividualCharsInput
                 wordStructure={ wordStructure }
+                key={ currentWord.de }
             />
 
             <Layout style={ styles.verticalSpacer } />

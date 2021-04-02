@@ -26,7 +26,7 @@ const individualCharsInputStyles = {
         borderRightColor: '#bbb',
         marginLeft: 1,
         marginRight: 1,
-        paddingLeft: 4
+        textAlign: 'center'
     },
     spacer: {
         width: 20
@@ -72,10 +72,9 @@ export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
     };
 
     const { wordStructure, autoFocus } = mergedProps;
-
     const inputsRef = useRef( [] as any );
-
     const [ activeLetter, setActiveLetter ] = useState( 0 );
+    const [ typedWordArray, setTypeWordArray ] = useState( [] as string[] );
 
     useEffect( () => {
         inputsRef.current = inputsRef.current.slice( 0, wordStructure.length );
@@ -88,27 +87,36 @@ export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
     }, [ autoFocus ] );
 
     useEffect( () => {
+        inputsRef?.current?.[activeLetter]?.clear();
         inputsRef?.current?.[activeLetter]?.focus();
     }, [ activeLetter ] );
 
-    const onType = ( letter: string, index: number ) => {
-        const nextIndex = getNextValidIndex( wordStructure, index );
 
-        if ( letter ) {
-            setActiveLetter( nextIndex );
-            inputsRef?.current?.[nextIndex]?.clear();
-        }
-    };
-
-    const checkForBackspace = ( event: NativeSyntheticEvent<TextInputKeyPressEventData>, index: number ) => {
+    const onLetterChange = ( event: NativeSyntheticEvent<TextInputKeyPressEventData>, index: number ) => {
 
         const { nativeEvent } = event;
+        const typedWordArrayClone = typedWordArray.slice();
 
         if ( nativeEvent.key === 'Backspace' ) {
-            const prevIndex = getPreviousValidIndex( wordStructure, index );
-            setActiveLetter( prevIndex );
-            inputsRef?.current?.[prevIndex]?.clear();
+
+            if ( !typedWordArray[ index ] ) {
+                const prevIndex = getPreviousValidIndex( wordStructure, index );
+                setActiveLetter( prevIndex );
+                typedWordArrayClone[ prevIndex ] = '';
+            } else {
+                typedWordArrayClone[ index ] = '';
+            }
+
+        } else {
+            // TODO: consider filtering chars via regex
+            typedWordArrayClone[ index ] = nativeEvent.key;
+
+            const nextIndex = getNextValidIndex( wordStructure, index );
+            setActiveLetter( nextIndex );
         }
+
+        setTypeWordArray( typedWordArrayClone );
+
     };
 
     return (
@@ -120,10 +128,9 @@ export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
                         <TextInput
                             key={ index.toString() }
                             ref={ ( el ) =>  { inputsRef.current[ index ] = el; } }
-                            style={ individualCharsInputStyles.singleInput }
+                            style={ individualCharsInputStyles.singleInput as any }
                             maxLength={ 1 }
-                            onChangeText={ ( letter ) => onType( letter, index )  }
-                            onKeyPress={ ( event ) =>  checkForBackspace( event, index ) }
+                            onKeyPress={ ( event ) => onLetterChange( event, index ) }
                             autoCorrect={ false }
                         />
                     );
