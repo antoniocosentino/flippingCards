@@ -10,7 +10,6 @@ type TInputContent = {
 
 type TIndividualCharsInput = {
     wordStructure: ReadonlyArray<boolean>;
-    key: string;
     autoFocus?: boolean;
     maxBoxesPerLine?: number;
     onChange: ( inputContent: TInputContent ) => any;
@@ -41,7 +40,9 @@ const individualCharsInputStyles = {
         borderRightColor: '#bbb',
         marginLeft: 1,
         marginRight: 1,
-        textAlign: 'center'
+        textAlign: 'center',
+        paddingTop: 0,
+        paddingBottom: 0
     },
     spacer: {
         width: 20
@@ -191,7 +192,7 @@ export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
         <View style={ individualCharsInputStyles.inputsWrapper as any }>
             { wordStructureRows.map( ( singleRow, rowIndex ) => {
                 return (
-                    <View style={ individualCharsInputStyles.inputWrapper as any }>
+                    <View key={ rowIndex } style={ individualCharsInputStyles.inputWrapper as any }>
 
                         { singleRow.map( ( singleInput, indexInRow ) => {
 
@@ -206,6 +207,7 @@ export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
                                         maxLength={ 1 }
                                         onKeyPress={ ( event ) => onLetterChange( event, derivedIndex ) }
                                         autoCorrect={ false }
+                                        autoCapitalize={ 'characters' }
                                     />
                                 );
                             } else {
