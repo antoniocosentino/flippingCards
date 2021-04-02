@@ -3,8 +3,10 @@ import { TextInput } from 'react-native-gesture-handler';
 import { View, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
 
 type TIndividualCharsInput = {
-    wordStructure: ReadonlyArray<boolean>
-}
+    wordStructure: ReadonlyArray<boolean>;
+    key: string;
+    onChange: ( wordArray: ReadonlyArray<string | false> ) => any;
+};
 
 const individualCharsInputStyles = {
     inputWrapper: {
@@ -71,7 +73,7 @@ export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
         ...props
     };
 
-    const { wordStructure, autoFocus } = mergedProps;
+    const { wordStructure, autoFocus, onChange: externalOnChange } = mergedProps;
     const inputsRef = useRef( [] as any );
     const [ activeLetter, setActiveLetter ] = useState( 0 );
     const [ typedWordArray, setTypeWordArray ] = useState( [] as string[] );
@@ -116,7 +118,26 @@ export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
         }
 
         setTypeWordArray( typedWordArrayClone );
+        externalOnChange( getWordForExternalMethod( typedWordArrayClone ) );
 
+    };
+
+    const getWordForExternalMethod = ( newWordArray: string[] ): ReadonlyArray<string | false> => {
+
+        const wordForExternalMethod = wordStructure.map( ( singleSlot, index ) => {
+
+            if ( singleSlot === false ) {
+                return singleSlot;
+            }
+
+            if ( newWordArray[ index ] ) {
+                return newWordArray[ index ];
+            } else {
+                return '';
+            }
+        } );
+
+        return wordForExternalMethod;
     };
 
     return (
