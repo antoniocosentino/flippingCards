@@ -77,7 +77,8 @@ const WordRenderer = ( props: TWordRenderer  ) => {
 
     const wordStructure = getWordStructure( wordToGuessAsArray );
 
-    const [ typedWord, setTypedWord ] = useState( [] as ReadonlyArray<string> );
+    const [ typedWord, setTypedWord ] = useState( [] as ReadonlyArray<string | false> );
+    console.log("🍌: WordRenderer -> typedWord", typedWord)
 
     return (
         <>
@@ -89,6 +90,7 @@ const WordRenderer = ( props: TWordRenderer  ) => {
             <IndividualCharsInput
                 wordStructure={ wordStructure }
                 key={ currentWord.de }
+                onChange={ setTypedWord }
             />
 
             <Layout style={ styles.verticalSpacer } />
