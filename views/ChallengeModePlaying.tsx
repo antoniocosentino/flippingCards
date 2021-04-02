@@ -26,8 +26,12 @@ type TInputContent = {
     wordString: string
 };
 
+const getFullWordString = ( word: TSingleWord ): string => {
+    return `${ getArticle( word ) }${word.de}`;
+};
+
 const getWordToGuessAsArray = ( word: TSingleWord ): string[] => {
-    const fullWord = `${ getArticle( word ) }${word.de}`;
+    const fullWord = getFullWordString( word );
     return fullWord.split( '' );
 };
 
@@ -84,6 +88,8 @@ const WordRenderer = ( props: TWordRenderer  ) => {
 
     const [ typedWord, setTypedWord ] = useState( {} as TInputContent );
 
+    const isButtonEnabled = getFullWordString( currentWord ).length === typedWord?.wordString?.length;
+
     return (
         <>
             <Text style={ [ styles.text, styles.veryBigText, styles.boldText ] } >{ currentWord.en  }</Text>
@@ -100,7 +106,13 @@ const WordRenderer = ( props: TWordRenderer  ) => {
 
             <Layout style={ styles.verticalSpacer } />
 
-            <Button onPress={ nextClick } style={ [ styles.ctaButton, styles[ 'ctaButton--smallWidth' ] ] }>
+            <Button
+                onPress={ isButtonEnabled ?  nextClick : undefined }
+                style={ [
+                    styles.ctaButton,
+                    styles[ 'ctaButton--smallWidth'],
+                    !isButtonEnabled && styles['createDeckCtaButton--Disabled']
+                ] }>
                 Next
             </Button>
         </>
