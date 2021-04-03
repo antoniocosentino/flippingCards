@@ -27,8 +27,8 @@ const individualCharsInputStyles = {
         justifyContent: 'center'
     },
     singleInput: {
-        width: 20,
-        height: 30,
+        width: 26,
+        height: 34,
         borderRadius: 7,
         borderBottomWidth: 1,
         borderBottomColor: '#bbb',
