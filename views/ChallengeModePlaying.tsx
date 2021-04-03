@@ -6,7 +6,7 @@ import { Dimensions } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 import { shuffle } from 'lodash';
-import { getArticle } from '../utils/utils';
+import { getArticle, getCapitalizedIfNeeded } from '../utils/utils';
 import { IndividualCharsInput } from './../components/IndividualCharsInput';
 
 type TChallengeModePlaying = {
@@ -33,7 +33,7 @@ type TInputContent = {
 type TViewTypes = 'WORDGUESS' | 'CORRECT' | 'WRONG';
 
 const getFullWordString = ( word: TSingleWord ): string => {
-    return `${ getArticle( word ) }${word.de}`;
+    return `${ getArticle( word ) }${ getCapitalizedIfNeeded( word ) }`;
 };
 
 const getWordToGuessAsArray = ( word: TSingleWord ): string[] => {
@@ -96,31 +96,16 @@ const WordRenderer = ( props: TWordRenderer  ) => {
 
     const isButtonEnabled = getFullWordString( currentWord ).length === typedWord?.wordString?.length;
 
-    const titleRef = useRef( null ) as any;
-
-    useEffect( () => {
-        if ( currentView === 'CORRECT' ) {
-            titleRef?.current?.bounceIn( 800 );
-        }
-        if ( currentView === 'WRONG' ) {
-            titleRef?.current?.shake( 800 );
-        }
-    }, [ currentWord, titleRef, currentView ] );
-
-
     return (
         <>
-            <Animatable.Text
-                ref={ titleRef }
+            <Text
                 style={ [
                     styles.text,
-                    styles.veryBigText,styles.boldText,
-                    currentView === 'CORRECT' && styles.greenText,
-                    currentView === 'WRONG' && styles.redText
+                    styles.veryBigText,styles.boldText
                 ] }
             >
                 { currentWord.en  }
-            </Animatable.Text>
+            </Text>
 
             { currentView === 'WORDGUESS' &&
                 <>
@@ -131,7 +116,7 @@ const WordRenderer = ( props: TWordRenderer  ) => {
                     <IndividualCharsInput
                         wordStructure={ wordStructure }
                         key={ currentWord.de }
-                        maxBoxesPerLine={ 16 }
+                        maxBoxesPerLine={ 13 }
                         onChange={ setTypedWord }
                     />
 
@@ -171,6 +156,8 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
 
     const [ currentView, setCurrentView ] = useState( 'WORDGUESS' as TViewTypes );
 
+    const [ lastUserTypedWord, setLastUserTypedWord ] = useState( '' );
+
     const emojiRef = useRef( null ) as any;
 
     useEffect( () => {
@@ -178,7 +165,12 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
     }, [ currentDeckCards ] );
 
     useEffect( () => {
-        emojiRef?.current?.tada( 1200 );
+        if ( currentView === 'CORRECT' ) {
+            emojiRef?.current?.tada( 1200 );
+        }
+        if ( currentView === 'WRONG' ) {
+            emojiRef?.current?.shake( 1200 );
+        }
     }, [ currentView, emojiRef ] );
 
     const [ currentCard, setCurrentCard ] = useState( 0 );
@@ -190,6 +182,7 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
         }
         else {
             setCurrentView( 'WRONG' );
+            setLastUserTypedWord( typedWord );
         }
     };
 
@@ -228,7 +221,30 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
                     <>
                         <Text>{ '\n' }</Text>
                         <Animatable.Text ref={ emojiRef } style={ styles.bigEmoji }>{ currentView === 'CORRECT' ? '🎉' : '❌' }</Animatable.Text>
-                        <Text style={ [ styles.text ] } >{ getFullWordString( currentWord ) }</Text>
+                        <Text>{ '\n' }</Text>
+
+                        { currentView === 'WRONG' &&
+                            <Text
+                                style={ [
+                                    styles.text,
+                                    styles.smallerText,
+                                    styles.strikedText
+                                ] }
+                            >
+                                { lastUserTypedWord.toLowerCase() }
+                            </Text>
+                        }
+
+                        <Text
+                            style={ [
+                                styles.text,
+                                styles.veryBigText,
+                                styles.greenText
+                            ] }
+                        >
+                            { getFullWordString( currentWord ) }
+                        </Text>
+
                         <Text>{ '\n' }</Text>
                         <Button
                             onPress={ continueClick }

@@ -196,6 +196,9 @@ export const styles = StyleSheet.create( {
     greenText: {
         color: 'green'
     },
+    strikedText: {
+        textDecorationLine: 'line-through'
+    },
     redText: {
         color: 'red'
     },
