@@ -171,9 +171,15 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
 
     const [ currentView, setCurrentView ] = useState( 'WORDGUESS' as TViewTypes );
 
+    const emojiRef = useRef( null ) as any;
+
     useEffect( () => {
         setShuffledCards( shuffle( currentDeckCards ) );
     }, [ currentDeckCards ] );
+
+    useEffect( () => {
+        emojiRef?.current?.tada( 1200 );
+    }, [ currentView, emojiRef ] );
 
     const [ currentCard, setCurrentCard ] = useState( 0 );
 
@@ -221,7 +227,7 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
                 { currentView !== 'WORDGUESS' &&
                     <>
                         <Text>{ '\n' }</Text>
-                        <Text style={ styles.bigEmoji }>{ currentView === 'CORRECT' ? '🎉' : '❌' }</Text>
+                        <Animatable.Text ref={ emojiRef } style={ styles.bigEmoji }>{ currentView === 'CORRECT' ? '🎉' : '❌' }</Animatable.Text>
                         <Text style={ [ styles.text ] } >{ getFullWordString( currentWord ) }</Text>
                         <Text>{ '\n' }</Text>
                         <Button
