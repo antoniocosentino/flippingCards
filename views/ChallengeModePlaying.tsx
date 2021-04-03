@@ -22,6 +22,7 @@ type TWordRenderer = {
     currentWord: TSingleWord;
     currentView: TViewTypes;
     nextClick: ( wordToGuess: string, typedWord: string ) => void
+    continueClick: () => void
 }
 
 type TInputContent = {
@@ -85,7 +86,7 @@ const ProgressBar = ( props: TProgressBar ) => {
 };
 
 const WordRenderer = ( props: TWordRenderer  ) => {
-    const { currentWord, currentView, nextClick  } = props;
+    const { currentWord, currentView, nextClick, continueClick } = props;
 
     const wordToGuessAsArray = getWordToGuessAsArray( currentWord );
 
@@ -109,7 +110,18 @@ const WordRenderer = ( props: TWordRenderer  ) => {
 
     return (
         <>
-            <Animatable.Text ref={ titleRef } style={ [ styles.text, styles.veryBigText, styles.boldText ] } >{ currentWord.en  }</Animatable.Text>
+            <Animatable.Text
+                ref={ titleRef }
+                style={ [
+                    styles.text,
+                    styles.veryBigText,styles.boldText,
+                    currentView === 'CORRECT' && styles.greenText,
+                    currentView === 'WRONG' && styles.redText
+                ] }
+            >
+                { currentWord.en  }
+            </Animatable.Text>
+
             { currentView === 'WORDGUESS' &&
                 <>
                     <Text>{ '\n' }</Text>
@@ -134,6 +146,10 @@ const WordRenderer = ( props: TWordRenderer  ) => {
                         ] }>
                         Send
                     </Button>
+
+                    <Text onPress={ continueClick } style={ [ styles.text, styles.smallerText, styles.linkText ] }>
+                        Skip
+                    </Text>
                 </>
             }
         </>
@@ -198,19 +214,16 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
                 <WordRenderer
                     currentWord={ currentWord }
                     nextClick={ nextClick }
+                    continueClick={ continueClick }
                     currentView={ currentView }
                 />
 
                 { currentView !== 'WORDGUESS' &&
                     <>
+                        <Text>{ '\n' }</Text>
                         <Text style={ styles.bigEmoji }>{ currentView === 'CORRECT' ? '🎉' : '❌' }</Text>
-
-                        <Text>{ '\n' }</Text>
-
                         <Text style={ [ styles.text ] } >{ getFullWordString( currentWord ) }</Text>
-
                         <Text>{ '\n' }</Text>
-
                         <Button
                             onPress={ continueClick }
                             style={ [

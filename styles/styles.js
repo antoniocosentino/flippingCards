@@ -193,6 +193,12 @@ export const styles = StyleSheet.create( {
     lightText: {
         color: '#666'
     },
+    greenText: {
+        color: 'green'
+    },
+    redText: {
+        color: 'red'
+    },
     textWithTopMargin: {
         marginTop: 10
     },
