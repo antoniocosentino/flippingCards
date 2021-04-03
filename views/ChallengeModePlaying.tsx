@@ -1,8 +1,10 @@
 import { Layout, Text, Button } from '@ui-kitten/components';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { AppContext, TCards, TSingleWord } from '../App';
 import { styles, mainColor } from '../styles/styles';
 import { Dimensions } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+
 import { shuffle } from 'lodash';
 import { getArticle } from '../utils/utils';
 import { IndividualCharsInput } from './../components/IndividualCharsInput';
@@ -93,9 +95,21 @@ const WordRenderer = ( props: TWordRenderer  ) => {
 
     const isButtonEnabled = getFullWordString( currentWord ).length === typedWord?.wordString?.length;
 
+    const titleRef = useRef( null ) as any;
+
+    useEffect( () => {
+        if ( currentView === 'CORRECT' ) {
+            titleRef?.current?.bounceIn( 800 );
+        }
+        if ( currentView === 'WRONG' ) {
+            titleRef?.current?.shake( 800 );
+        }
+    }, [ currentWord, titleRef, currentView ] );
+
+
     return (
         <>
-            <Text style={ [ styles.text, styles.veryBigText, styles.boldText ] } >{ currentWord.en  }</Text>
+            <Animatable.Text ref={ titleRef } style={ [ styles.text, styles.veryBigText, styles.boldText ] } >{ currentWord.en  }</Animatable.Text>
             { currentView === 'WORDGUESS' &&
                 <>
                     <Text>{ '\n' }</Text>
