@@ -8,10 +8,17 @@ type TInputContent = {
     wordString: string
 };
 
+type TWordStructure = ReadonlyArray<boolean>;
+
+type TLineBreakOnSpace = 'always' | 'auto' | 'never'; // auto doesn't work yet
+
+type TSmartChunkedArray = ReadonlyArray<TWordStructure>;
+
 type TIndividualCharsInput = {
-    wordStructure: ReadonlyArray<boolean>;
+    wordStructure: TWordStructure;
     autoFocus?: boolean;
     maxBoxesPerLine?: number;
+    lineBreakOnSpace?: TLineBreakOnSpace;
     onChange: ( inputContent: TInputContent ) => any;
 };
 
@@ -51,10 +58,88 @@ const individualCharsInputStyles = {
 
 const DEFAULT_PROPS = {
     autoFocus: true,
-    maxBoxesPerLine: 0
+    maxBoxesPerLine: 0,
+    lineBreakOnSpace: 'always'
 } as Partial<TIndividualCharsInput>;
 
-const getNextValidIndex = ( wordStructure: ReadonlyArray<boolean>, currentIndex: number ): number => {
+
+const transformWordStructureToString = ( wordStructure: TWordStructure ): string => {
+    return wordStructure.map( ( singleLetter ) => {
+        if ( singleLetter ) {
+            return 'L';
+        } else {
+            return 'S';
+        }
+    } ).join( '' );
+};
+
+const transformStringWordStructureToSArr = ( wordStructureAsString: ReadonlyArray<string> ): TSmartChunkedArray => {
+
+    return wordStructureAsString.map( ( singleBlock ) => {
+        const singleBlockAsArr = singleBlock.split( '' );
+        return singleBlockAsArr.map( ( singleLetter ) => ( singleLetter === 'L' ? true : false ) );
+    } );
+};
+
+const getSmartChunkedArray = (
+    wordStructure: TWordStructure,
+    lineBreakOnSpace: TLineBreakOnSpace,
+    maxBoxesPerLine: number,
+): TSmartChunkedArray => {
+
+    if ( maxBoxesPerLine <= 0 ) {
+        return [ wordStructure ];
+    }
+
+    if ( lineBreakOnSpace === 'never' ) {
+        return chunk( wordStructure, maxBoxesPerLine );
+    }
+
+    // If we reach here we are in the "auto" or "always" case
+
+    const wordStructureAsString = transformWordStructureToString( wordStructure );
+    const spaceChunks = wordStructureAsString.split( 'S' );
+
+    const spaceChunksWithSpaceRow = [] as string[];
+
+    spaceChunks.forEach( ( spaceChunk, index ) => {
+        spaceChunksWithSpaceRow.push( spaceChunk );
+
+        if ( index % 2 === 0 ) {
+            spaceChunksWithSpaceRow.push( 'S' );
+        }
+    } );
+
+    const processedSpaceChunks = spaceChunksWithSpaceRow.map( ( singleChunk ) => {
+        if ( singleChunk.length <= maxBoxesPerLine ) {
+            return singleChunk;
+        } else {
+            return chunk( singleChunk, maxBoxesPerLine );
+        }
+    } );
+
+    const flattenedArray = [] as any; // TODO: type!
+
+    processedSpaceChunks.forEach( ( singleChunk ) => {
+        if ( Array.isArray( singleChunk ) ) {
+            singleChunk.forEach( ( nestedChunk ) => {
+                flattenedArray.push( nestedChunk.join( '' ) );
+            } );
+        } else {
+            flattenedArray.push( singleChunk );
+        }
+    } );
+
+    const reconstructedArr = transformStringWordStructureToSArr( flattenedArray );
+
+    return reconstructedArr;
+
+    // TODO: the 'auto' case is not ready yet
+
+};
+
+
+const getNextValidIndex = ( wordStructure: TWordStructure, currentIndex: number ): number => {
 
     if ( currentIndex > wordStructure.length ) {
         return currentIndex;
@@ -67,7 +152,7 @@ const getNextValidIndex = ( wordStructure: ReadonlyArray<boolean>, currentIndex:
     return getNextValidIndex( wordStructure, currentIndex + 1 );
 };
 
-const getPreviousValidIndex = ( wordStructure: ReadonlyArray<boolean>, currentIndex: number ): number => {
+const getPreviousValidIndex = ( wordStructure: TWordStructure, currentIndex: number ): number => {
 
     if ( currentIndex <= 0 ) {
         return currentIndex;
@@ -106,6 +191,20 @@ const getWordStringForExternalMethod = ( newWordArray: string[] ): string => {
 };
 
 
+const getDerivedIndex = ( smartChunkedArray: TSmartChunkedArray, rowIndex: number, indexInRow: number ) => {
+    if ( rowIndex === 0 ) {
+        return indexInRow;
+    }
+
+    let previousRowsTotalCount = 0;
+
+    for ( let rowCount = 0; rowCount < rowIndex; rowCount++ ) {
+        previousRowsTotalCount = previousRowsTotalCount + smartChunkedArray[ rowCount ].length;
+    }
+
+    return previousRowsTotalCount + indexInRow;
+};
+
 export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
 
     const mergedProps = {
@@ -113,7 +212,7 @@ export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
         ...props
     } as TIndividualCharsInput;
 
-    const { wordStructure, autoFocus, maxBoxesPerLine, onChange: externalOnChange } = mergedProps;
+    const { wordStructure, autoFocus, maxBoxesPerLine, lineBreakOnSpace, onChange: externalOnChange } = mergedProps;
     const inputsRef = useRef( [] as any );
     const [ activeLetter, setActiveLetter ] = useState( 0 );
     const [ typedWordArray, setTypeWordArray ] = useState( [] as string[] );
@@ -186,7 +285,7 @@ export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
         return wordForExternalMethod;
     };
 
-    const wordStructureRows = maxBoxesPerLine! <= 0 ? [ wordStructure ] : chunk( wordStructure, maxBoxesPerLine );
+    const wordStructureRows = getSmartChunkedArray( wordStructure, lineBreakOnSpace!, maxBoxesPerLine! );
 
     return (
         <View style={ individualCharsInputStyles.inputsWrapper as any }>
@@ -196,7 +295,7 @@ export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
 
                         { singleRow.map( ( singleInput, indexInRow ) => {
 
-                            const derivedIndex = ( maxBoxesPerLine! * rowIndex ) + indexInRow;
+                            const derivedIndex = getDerivedIndex( wordStructureRows, rowIndex, indexInRow );
 
                             if ( singleInput ) {
                                 return (
