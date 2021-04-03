@@ -21,7 +21,7 @@ type TProgressBar = {
 type TWordRenderer = {
     currentWord: TSingleWord;
     currentView: TViewTypes;
-    nextClick: ( wordToGuess: string, typedWord: string ) => void
+    nextClick: ( wordToGuess: TSingleWord, typedWord: string ) => void
     continueClick: () => void
 }
 
@@ -123,7 +123,7 @@ const WordRenderer = ( props: TWordRenderer  ) => {
                     <Layout style={ styles.verticalSpacer } />
 
                     <Button
-                        onPress={ isButtonEnabled ? () => nextClick( getFullWordString( currentWord ), typedWord.wordString ) : undefined }
+                        onPress={ isButtonEnabled ? () => nextClick( currentWord, typedWord.wordString ) : undefined }
                         style={ [
                             styles.ctaButton,
                             styles[ 'ctaButton--smallWidth'],
@@ -147,7 +147,7 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
     const { deckKey } = props.route?.params;
 
     const appData = useContext( AppContext );
-    const { decksData } = appData;
+    const { decksData, markWordAsMastered } = appData;
 
     const currentDeck = decksData.find( ( deck ) => deck.id === deckKey );
     const currentDeckCards = ( currentDeck?.cards || [] );
@@ -175,14 +175,18 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
 
     const [ currentCard, setCurrentCard ] = useState( 0 );
 
-    const nextClick = ( wordToGuess: string, typedWord: string ) => {
+    const nextClick = ( wordToGuess: TSingleWord, typedWord: string ) => {
 
-        if ( wordToGuess.toUpperCase() === typedWord.toUpperCase() ) {
+        const wordToGuessString = getFullWordString( wordToGuess );
+
+        if ( wordToGuessString.toUpperCase() === typedWord.toUpperCase() ) {
             setCurrentView( 'CORRECT' );
+            markWordAsMastered( wordToGuess, deckKey, true );
         }
         else {
             setCurrentView( 'WRONG' );
             setLastUserTypedWord( typedWord );
+            markWordAsMastered( wordToGuess, deckKey, false );
         }
     };
 
