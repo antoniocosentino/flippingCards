@@ -132,12 +132,9 @@ const WordRenderer = ( props: TWordRenderer  ) => {
                             styles[ 'ctaButton--smallWidth'],
                             !isButtonEnabled && styles['createDeckCtaButton--Disabled']
                         ] }>
-                        Next
+                        Send
                     </Button>
                 </>
-            }
-            { currentView !== 'WORDGUESS' &&
-                <Text style={ [ styles.text ] }>{ currentView === 'CORRECT' ? 'Correct!' : 'Wrong!' }</Text>
             }
         </>
     );
@@ -164,15 +161,6 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
 
     const [ currentCard, setCurrentCard ] = useState( 0 );
 
-    useEffect( () => {
-        if ( currentView !== 'WORDGUESS' ) {
-            setTimeout( () => {
-                setCurrentView( 'WORDGUESS' );
-                setCurrentCard( currentCard + 1 );
-            }, 3000 );
-        }
-    }, [ currentView, currentCard ] );
-
     const nextClick = ( wordToGuess: string, typedWord: string ) => {
 
         if ( wordToGuess.toUpperCase() === typedWord.toUpperCase() ) {
@@ -181,6 +169,11 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
         else {
             setCurrentView( 'WRONG' );
         }
+    };
+
+    const continueClick = () => {
+        setCurrentView( 'WORDGUESS' );
+        setCurrentCard( currentCard + 1 );
     };
 
     const currentWord = currentDeckCardsShuffled[ currentCard ];
@@ -207,6 +200,27 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
                     nextClick={ nextClick }
                     currentView={ currentView }
                 />
+
+                { currentView !== 'WORDGUESS' &&
+                    <>
+                        <Text style={ styles.bigEmoji }>{ currentView === 'CORRECT' ? '🎉' : '❌' }</Text>
+
+                        <Text>{ '\n' }</Text>
+
+                        <Text style={ [ styles.text ] } >{ getFullWordString( currentWord ) }</Text>
+
+                        <Text>{ '\n' }</Text>
+
+                        <Button
+                            onPress={ continueClick }
+                            style={ [
+                                styles.ctaButton,
+                                styles[ 'ctaButton--smallWidth']
+                            ] }>
+                            Continue
+                        </Button>
+                    </>
+                }
 
             </Layout>
         </Layout>

@@ -579,5 +579,9 @@ export const styles = StyleSheet.create( {
     },
     challengeModeCloseButton: {
         marginRight: 20
+    },
+    bigEmoji: {
+        fontSize: 100,
+        textAlign: 'center'
     }
 } );
