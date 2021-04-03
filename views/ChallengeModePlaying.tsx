@@ -18,6 +18,7 @@ type TProgressBar = {
 
 type TWordRenderer = {
     currentWord: TSingleWord;
+    currentView: TViewTypes;
     nextClick: ( wordToGuess: string, typedWord: string ) => void
 }
 
@@ -82,7 +83,7 @@ const ProgressBar = ( props: TProgressBar ) => {
 };
 
 const WordRenderer = ( props: TWordRenderer  ) => {
-    const { currentWord, nextClick  } = props;
+    const { currentWord, currentView, nextClick  } = props;
 
     const wordToGuessAsArray = getWordToGuessAsArray( currentWord );
 
@@ -95,28 +96,35 @@ const WordRenderer = ( props: TWordRenderer  ) => {
     return (
         <>
             <Text style={ [ styles.text, styles.veryBigText, styles.boldText ] } >{ currentWord.en  }</Text>
-            <Text>{ '\n' }</Text>
-            <Text style={ [ styles.text, styles.verySmallText, styles.lightText ] }>Type it in German (article included):</Text>
-            <Text style={ [ styles.verySmallText ] }>{ '\n' }</Text>
+            { currentView === 'WORDGUESS' &&
+                <>
+                    <Text>{ '\n' }</Text>
+                    <Text style={ [ styles.text, styles.verySmallText, styles.lightText ] }>Type it in German (article included):</Text>
+                    <Text style={ [ styles.verySmallText ] }>{ '\n' }</Text>
 
-            <IndividualCharsInput
-                wordStructure={ wordStructure }
-                key={ currentWord.de }
-                maxBoxesPerLine={ 16 }
-                onChange={ setTypedWord }
-            />
+                    <IndividualCharsInput
+                        wordStructure={ wordStructure }
+                        key={ currentWord.de }
+                        maxBoxesPerLine={ 16 }
+                        onChange={ setTypedWord }
+                    />
 
-            <Layout style={ styles.verticalSpacer } />
+                    <Layout style={ styles.verticalSpacer } />
 
-            <Button
-                onPress={ isButtonEnabled ? () => nextClick( getFullWordString( currentWord ), typedWord.wordString ) : undefined }
-                style={ [
-                    styles.ctaButton,
-                    styles[ 'ctaButton--smallWidth'],
-                    !isButtonEnabled && styles['createDeckCtaButton--Disabled']
-                ] }>
-                Next
-            </Button>
+                    <Button
+                        onPress={ isButtonEnabled ? () => nextClick( getFullWordString( currentWord ), typedWord.wordString ) : undefined }
+                        style={ [
+                            styles.ctaButton,
+                            styles[ 'ctaButton--smallWidth'],
+                            !isButtonEnabled && styles['createDeckCtaButton--Disabled']
+                        ] }>
+                        Next
+                    </Button>
+                </>
+            }
+            { currentView !== 'WORDGUESS' &&
+                <Text style={ [ styles.text ] }>{ currentView === 'CORRECT' ? 'Correct!' : 'Wrong!' }</Text>
+            }
         </>
     );
 };
@@ -140,15 +148,16 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
         setShuffledCards( shuffle( currentDeckCards ) );
     }, [ currentDeckCards ] );
 
+    const [ currentCard, setCurrentCard ] = useState( 0 );
+
     useEffect( () => {
         if ( currentView !== 'WORDGUESS' ) {
             setTimeout( () => {
                 setCurrentView( 'WORDGUESS' );
-            }, 1000 );
+                setCurrentCard( currentCard + 1 );
+            }, 3000 );
         }
-    }, [ currentView ] );
-
-    const [ currentCard, setCurrentCard ] = useState( 0 );
+    }, [ currentView, currentCard ] );
 
     const nextClick = ( wordToGuess: string, typedWord: string ) => {
 
@@ -158,39 +167,12 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
         else {
             setCurrentView( 'WRONG' );
         }
-
-        setCurrentCard( currentCard + 1 );
     };
 
     const currentWord = currentDeckCardsShuffled[ currentCard ];
 
     if ( !currentWord ) {
         return null;
-    }
-
-    if ( currentView !== 'WORDGUESS' ) {
-        return (
-            <Layout style={ styles['centeredElement--mediumHorizontalPadding'] }>
-                <Layout
-                    style={
-                        {
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            height: 600
-                        }
-                    }
-                >
-                    <Text style={ [ styles.text, styles.veryBigText, styles.boldText ] } >{ currentView === 'CORRECT' ? 'Correct' : 'Wrong' }!</Text>
-                    <Text style={ {
-                        fontSize: 200
-                    } }>
-                        { currentView === 'CORRECT' ? '🎉' : '❌' }
-                    </Text>
-                </Layout>
-            </Layout>
-        );
     }
 
     return (
@@ -209,6 +191,7 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
                 <WordRenderer
                     currentWord={ currentWord }
                     nextClick={ nextClick }
+                    currentView={ currentView }
                 />
 
             </Layout>
