@@ -11,6 +11,7 @@ import { IndividualCharsInput } from './../components/IndividualCharsInput';
 
 type TChallengeModePlaying = {
     route: any; // TODO: can this be better typed?
+    navigation: any; // TODO: can this be better typed?
 }
 
 type TProgressBar = {
@@ -145,6 +146,7 @@ const WordRenderer = ( props: TWordRenderer  ) => {
 export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
 
     const { deckKey } = props.route?.params;
+    const navigation = props.navigation;
 
     const appData = useContext( AppContext );
     const { decksData, markWordAsMastered } = appData;
@@ -157,6 +159,8 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
     const [ currentView, setCurrentView ] = useState( 'WORDGUESS' as TViewTypes );
 
     const [ lastUserTypedWord, setLastUserTypedWord ] = useState( '' );
+
+    const [ guessedCount, setGuessedCount ] = useState( 0 );
 
     const emojiRef = useRef( null ) as any;
 
@@ -181,6 +185,7 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
 
         if ( wordToGuessString.toUpperCase() === typedWord.toUpperCase() ) {
             setCurrentView( 'CORRECT' );
+            setGuessedCount( guessedCount + 1 );
             markWordAsMastered( wordToGuess, deckKey, true );
         }
         else {
@@ -196,6 +201,39 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
     };
 
     const currentWord = currentDeckCardsShuffled[ currentCard ];
+
+    if ( currentCard + 1 > currentDeckCardsShuffled.length ) {
+        return (
+            <Layout style={ styles['centeredElement--mediumHorizontalPadding'] }>
+                <Text style={ [ styles.text, styles.titleText ] }>
+                    Challenge completed!
+                </Text>
+
+                <Text style={ styles.bigEmoji }>
+                    🏁
+                </Text>
+
+                <Text style={ [ styles.text ] }>
+                    You guessed
+                    <Text style={ [ styles.text, styles.boldText ] }> { guessedCount } </Text>
+                    of
+                    <Text style={ [ styles.text, styles.boldText ] }> { currentDeckCardsShuffled.length } </Text>
+                    words
+                </Text>
+
+                <Text>{ '\n' }</Text>
+
+                <Button
+                    onPress={ navigation.goBack }
+                    style={ [
+                        styles.ctaButton,
+                        styles[ 'ctaButton--smallWidth']
+                    ] }>
+                    Back to overview
+                </Button>
+            </Layout>
+        );
+    }
 
     if ( !currentWord ) {
         return null;
