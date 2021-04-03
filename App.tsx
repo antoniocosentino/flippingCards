@@ -104,6 +104,7 @@ type TAppData = {
     addSingleWord: ( word: TSingleWord ) => void;
     addSingleDeck: ( deck: TDeck ) => void;
     updateSingleDeck: ( deck: TDeck, deckKey: number ) => void;
+    markWordAsMastered: ( word: TSingleWord, deckKey: number, isMastered: boolean ) => void;
     removeSingleDeck: ( deckKey: number ) => void;
     increaseTapsCount: () => void;
 };
@@ -289,6 +290,26 @@ export default () => {
         } );
     };
 
+    const markWordAsMastered = ( word: TSingleWord, deckKey: number, isMastered: boolean ) => {
+        const currentDeck = decksData.find( ( deck: TDeck ) => deck.id === deckKey );
+
+        const deckClone = { ...currentDeck } as TDeck;
+
+        const wordToUpdate = deckClone.cards.find( ( card ) => card.de === word.de && card.en === word.en );
+        wordToUpdate ? wordToUpdate.mastered = isMastered : null;
+
+        const decksClone = decksData.slice();
+
+        // removing the add placeholder row
+        decksClone.splice( -1, 1 );
+
+        decksClone[deckKey] = decksClone;
+
+        storeDecksData( decksClone ).then( () => {
+            setDecksData( enrichDecksWithPlaceholder( decksClone ) );
+        } );
+    };
+
     const removeSingleDeck = ( deckKey: number ) => {
         const decksClone = decksData.slice();
 
@@ -374,6 +395,7 @@ export default () => {
         storeDecksData,
         addSingleDeck,
         updateSingleDeck,
+        markWordAsMastered,
         removeSingleDeck,
         addSingleWord,
         increaseTapsCount
