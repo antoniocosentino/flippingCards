@@ -4,10 +4,12 @@ import { AppContext, TCards, TSingleWord } from '../App';
 import { styles, mainColor } from '../styles/styles';
 import { Dimensions } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import Pie from 'react-native-pie';
 
 import { shuffle } from 'lodash';
 import { getArticle, getCapitalizedIfNeeded } from '../utils/utils';
 import { IndividualCharsInput } from './../components/IndividualCharsInput';
+import { getDeckPercentage } from './ChallengeMode';
 
 type TChallengeModePlaying = {
     route: any; // TODO: can this be better typed?
@@ -220,6 +222,33 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
                     <Text style={ [ styles.text, styles.boldText ] }> { currentDeckCardsShuffled.length } </Text>
                     words
                 </Text>
+
+                <Text>{ '\n' }</Text>
+
+                <Text style={ [ styles.text, styles.smallerText, styles.lightText ] }>
+                    Your current knowledge of this deck is:
+                </Text>
+
+                <Layout
+                    style={ styles.endOfChallengeGraph  }
+                >
+                    <Pie
+                        radius={ 60 }
+                        innerRadius={ 45 }
+                        sections={ [
+                            {
+                                percentage: getDeckPercentage( currentDeck! ),
+                                color: mainColor
+                            }
+                        ] }
+                        backgroundColor='#DC9CAE'
+                    />
+
+                    <Text style={ [ styles.text, styles.endOfChallengeGraphPercentage ] }>
+                        { `${getDeckPercentage( currentDeck! )}%` }
+                    </Text>
+
+                </Layout>
 
                 <Text>{ '\n' }</Text>
 

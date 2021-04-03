@@ -592,5 +592,13 @@ export const styles = StyleSheet.create( {
     bigEmoji: {
         fontSize: 100,
         textAlign: 'center'
+    },
+    endOfChallengeGraph: {
+        alignItems: 'center',
+        marginTop: 20
+    },
+    endOfChallengeGraphPercentage: {
+        position: 'absolute',
+        top: 48
     }
 } );

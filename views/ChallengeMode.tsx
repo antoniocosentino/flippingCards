@@ -28,7 +28,7 @@ const renderCloseIcon = () => {
     );
 };
 
-const getDeckPercentage = ( deck: TDeck ): number => {
+export const getDeckPercentage = ( deck: TDeck ): number => {
     const masteredWords = deck.cards.filter( ( card ) => card.mastered === true );
     return Math.round( ( masteredWords.length * 100 ) / deck.cards.length );
 };
