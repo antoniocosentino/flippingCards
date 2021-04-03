@@ -6,7 +6,7 @@ import { Dimensions } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Pie from 'react-native-pie';
 
-import { shuffle } from 'lodash';
+import { flatten, shuffle } from 'lodash';
 import { getArticle, getCapitalizedIfNeeded } from '../utils/utils';
 import { IndividualCharsInput } from './../components/IndividualCharsInput';
 import { getDeckPercentage } from './ChallengeMode';
@@ -144,6 +144,31 @@ const WordRenderer = ( props: TWordRenderer  ) => {
     );
 };
 
+const getShuffledDeck = ( deckCards: TCards ): TCards => {
+    const MAX_CHALLENGE_SIZE = 12;
+
+    if ( deckCards.length <= MAX_CHALLENGE_SIZE ) {
+        return shuffle( deckCards );
+    }
+
+    const shuffledDeck = shuffle( deckCards );
+
+    const nonMasteredCards = shuffledDeck.filter( ( singleCard ) => !singleCard.mastered  );
+
+    if ( nonMasteredCards.length >= MAX_CHALLENGE_SIZE ) {
+        const deckPortion = nonMasteredCards.slice( 0, MAX_CHALLENGE_SIZE );
+        return deckPortion;
+    }
+
+    const masteredCards = shuffledDeck.filter( ( singleCard ) => singleCard.mastered  );
+    const masteredCardsShuffled = shuffle( masteredCards );
+    const masteredCardsPortion = masteredCardsShuffled.slice( 0, MAX_CHALLENGE_SIZE - nonMasteredCards.length );
+
+    const finalArray = [ ...nonMasteredCards, masteredCardsPortion ];
+
+    return shuffle( flatten( finalArray ) );
+};
+
 
 export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
 
@@ -167,7 +192,7 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
     const emojiRef = useRef( null ) as any;
 
     useEffect( () => {
-        setShuffledCards( shuffle( currentDeckCards ) );
+        setShuffledCards( getShuffledDeck( currentDeckCards ) );
     }, [ currentDeckCards ] );
 
     useEffect( () => {
