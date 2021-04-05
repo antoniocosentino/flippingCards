@@ -157,7 +157,7 @@ export const styles = StyleSheet.create( {
     },
     bottomWrapper: {
         paddingTop: 12,
-        paddingBottom: 25
+        paddingBottom: 30
     },
     text: {
         textAlign: 'center',
