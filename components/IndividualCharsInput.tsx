@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { TextInput } from 'react-native-gesture-handler';
+import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { View, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
 import { chunk } from 'lodash';
 
@@ -291,7 +291,7 @@ export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
         <View style={ individualCharsInputStyles.inputsWrapper as any }>
             { wordStructureRows.map( ( singleRow, rowIndex ) => {
                 return (
-                    <View key={ rowIndex } style={ individualCharsInputStyles.inputWrapper as any }>
+                    <ScrollView keyboardShouldPersistTaps='never' key={ rowIndex } contentContainerStyle={ individualCharsInputStyles.inputWrapper as any }>
 
                         { singleRow.map( ( singleInput, indexInRow ) => {
 
@@ -315,7 +315,7 @@ export const IndividualCharsInput = ( props: TIndividualCharsInput ) => {
                                 );
                             }
                         } ) }
-                    </View>
+                    </ScrollView>
                 );
             } ) }
         </View>
