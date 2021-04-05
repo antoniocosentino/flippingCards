@@ -27,6 +27,10 @@ const capitalizeWord = ( word: string ) => {
     return word.charAt( 0 ).toUpperCase() + word.slice( 1 );
 };
 
+export const getFullWordString = ( word: TSingleWord ): string => {
+    return `${ getArticle( word ) }${ getCapitalizedIfNeeded( word ).trim() }`;
+};
+
 export const uncapitalizeWord = ( word: string ) => {
     return word.charAt( 0 ).toLowerCase() + word.slice( 1 );
 };

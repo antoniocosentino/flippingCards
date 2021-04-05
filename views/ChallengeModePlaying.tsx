@@ -7,7 +7,7 @@ import * as Animatable from 'react-native-animatable';
 import Pie from 'react-native-pie';
 
 import { flatten, shuffle } from 'lodash';
-import { getArticle, getCapitalizedIfNeeded } from '../utils/utils';
+import { getFullWordString } from '../utils/utils';
 import { IndividualCharsInput } from './../components/IndividualCharsInput';
 import { getDeckPercentage } from './ChallengeMode';
 
@@ -35,9 +35,7 @@ type TInputContent = {
 
 type TViewTypes = 'WORDGUESS' | 'CORRECT' | 'WRONG';
 
-const getFullWordString = ( word: TSingleWord ): string => {
-    return `${ getArticle( word ) }${ getCapitalizedIfNeeded( word ) }`;
-};
+
 
 const getWordToGuessAsArray = ( word: TSingleWord ): string[] => {
     const fullWord = getFullWordString( word );
@@ -112,8 +110,10 @@ const WordRenderer = ( props: TWordRenderer  ) => {
 
             { currentView === 'WORDGUESS' &&
                 <>
-                    <Text>{ '\n' }</Text>
-                    <Text style={ [ styles.text, styles.verySmallText, styles.lightText ] }>Type it in German (article included):</Text>
+                    <Text style={ [ styles.text, styles.verySmallText, styles.lightText ] }>
+                        Type it in German
+                        { currentWord.wordType === 'n' || currentWord.wordType === 'm' || currentWord.wordType === 'f' ? ' (article included):' : '' }
+                    </Text>
                     <Text style={ [ styles.verySmallText ] }>{ '\n' }</Text>
 
                     <IndividualCharsInput
@@ -122,8 +122,6 @@ const WordRenderer = ( props: TWordRenderer  ) => {
                         maxBoxesPerLine={ 13 }
                         onChange={ setTypedWord }
                     />
-
-                    <Layout style={ styles.verticalSpacer } />
 
                     <Button
                         onPress={ isButtonEnabled ? () => nextClick( currentWord, typedWord.wordString ) : undefined }
@@ -297,7 +295,7 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
         <Layout style={ styles['centeredElement--mediumHorizontalPadding'] }>
 
             <ProgressBar
-                totalNumber={ currentDeckCards.length || 0 }
+                totalNumber={ currentDeckCardsShuffled.length || 0 }
                 currentNumber={ currentCard }
             />
 
