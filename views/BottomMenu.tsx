@@ -64,13 +64,18 @@ export const BottomMenu = () => {
 
     const appData = useContext( AppContext );
 
-    const { onMenuClick, selectedIndex } = appData;
+    const { onMenuClick, selectedIndex, deviceNotchSize } = appData;
 
     return (
         <Layout style={ styles.bottomZone }>
             <BottomNavigation
                 appearance={ 'noIndicator' }
-                style={ styles.bottomWrapper }
+                style={
+                    [
+                        styles.bottomWrapper,
+                        deviceNotchSize > 0 && styles['bottomWrapper--withNotch']
+                    ]
+                }
                 selectedIndex={ selectedIndex }
                 onSelect={ ( index ) => onMenuClick( index ) }>
                 <BottomNavigationTab icon={ ListIcon } />
