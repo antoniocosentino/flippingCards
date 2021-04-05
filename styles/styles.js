@@ -157,6 +157,9 @@ export const styles = StyleSheet.create( {
     },
     bottomWrapper: {
         paddingTop: 12,
+        paddingBottom: 14
+    },
+    'bottomWrapper--withNotch': {
         paddingBottom: 30
     },
     text: {
