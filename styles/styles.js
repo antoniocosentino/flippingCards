@@ -593,12 +593,17 @@ export const styles = StyleSheet.create( {
         fontSize: 100,
         textAlign: 'center'
     },
+    graphsHolder: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: 20,
+        justifyContent: 'space-around'
+    },
     endOfChallengeGraph: {
-        alignItems: 'center',
-        marginTop: 20
+        alignItems: 'center'
     },
     endOfChallengeGraphPercentage: {
         position: 'absolute',
-        top: 48
+        bottom: 48
     }
 } );
