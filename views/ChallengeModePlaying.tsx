@@ -11,6 +11,8 @@ import { getFullWordString } from '../utils/utils';
 import { IndividualCharsInput } from './../components/IndividualCharsInput';
 import { getDeckPercentage } from './ChallengeMode';
 
+const MAX_CHALLENGE_SIZE = 12;
+
 type TChallengeModePlaying = {
     route: any; // TODO: can this be better typed?
     navigation: any; // TODO: can this be better typed?
@@ -53,6 +55,15 @@ const getWordStructure = ( letterArray: ReadonlyArray<string> ): ReadonlyArray<b
     } );
 
     return binaryArr;
+};
+
+const getChallengePercentage = ( guessedWords: number, totalWordsInchallenge: number ): number => {
+
+    if ( guessedWords === 0 || totalWordsInchallenge === 0 ) {
+        return 0;
+    }
+
+    return Math.round( ( guessedWords * 100 ) / totalWordsInchallenge );
 };
 
 const ProgressBar = ( props: TProgressBar ) => {
@@ -119,7 +130,7 @@ const WordRenderer = ( props: TWordRenderer  ) => {
                     <IndividualCharsInput
                         wordStructure={ wordStructure }
                         key={ currentWord.de }
-                        maxBoxesPerLine={ 13 }
+                        maxBoxesPerLine={ 12 }
                         onChange={ setTypedWord }
                     />
 
@@ -143,7 +154,6 @@ const WordRenderer = ( props: TWordRenderer  ) => {
 };
 
 const getShuffledDeck = ( deckCards: TCards ): TCards => {
-    const MAX_CHALLENGE_SIZE = 12;
 
     if ( deckCards.length <= MAX_CHALLENGE_SIZE ) {
         return shuffle( deckCards );
@@ -248,28 +258,64 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
 
                 <Text>{ '\n' }</Text>
 
-                <Text style={ [ styles.text, styles.smallerText, styles.lightText ] }>
-                    Your current knowledge of this deck is:
-                </Text>
-
                 <Layout
-                    style={ styles.endOfChallengeGraph  }
+                    style={ styles.graphsHolder }
                 >
-                    <Pie
-                        radius={ 60 }
-                        innerRadius={ 45 }
-                        sections={ [
-                            {
-                                percentage: getDeckPercentage( currentDeck! ),
-                                color: mainColor
-                            }
-                        ] }
-                        backgroundColor='#DC9CAE'
-                    />
+                    <Layout
+                        style={ styles.endOfChallengeGraph }
+                    >
+                        <Text style={ [ styles.text, styles.smallerText, styles.boldText ] }>
+                            Challenge Score
+                        </Text>
 
-                    <Text style={ [ styles.text, styles.endOfChallengeGraphPercentage ] }>
-                        { `${getDeckPercentage( currentDeck! )}%` }
-                    </Text>
+                        <Text style={ [ styles.text, styles.verySmallText, styles.lightText ] }>
+                            This is how you performed { '\n' } in this challenge { '\n' }
+                        </Text>
+
+                        <Pie
+                            radius={ 60 }
+                            innerRadius={ 45 }
+                            sections={ [
+                                {
+                                    percentage: getChallengePercentage( guessedCount, currentDeckCardsShuffled.length ),
+                                    color: mainColor
+                                }
+                            ] }
+                            backgroundColor='#DC9CAE'
+                        />
+
+                        <Text style={ [ styles.text, styles.endOfChallengeGraphPercentage ] }>
+                            { `${getChallengePercentage( guessedCount, currentDeckCardsShuffled.length )}%` }
+                        </Text>
+                    </Layout>
+
+                    <Layout
+                        style={ styles.endOfChallengeGraph }
+                    >
+                        <Text style={ [ styles.text, styles.smallerText, styles.boldText ] }>
+                            Deck Score
+                        </Text>
+
+                        <Text style={ [ styles.text, styles.verySmallText, styles.lightText ] }>
+                            This is your overall knowledge { '\n' } of this deck { '\n' }
+                        </Text>
+
+                        <Pie
+                            radius={ 60 }
+                            innerRadius={ 45 }
+                            sections={ [
+                                {
+                                    percentage: getDeckPercentage( currentDeck! ),
+                                    color: mainColor
+                                }
+                            ] }
+                            backgroundColor='#DC9CAE'
+                        />
+
+                        <Text style={ [ styles.text, styles.endOfChallengeGraphPercentage ] }>
+                            { `${getDeckPercentage( currentDeck! )}%` }
+                        </Text>
+                    </Layout>
 
                 </Layout>
 
