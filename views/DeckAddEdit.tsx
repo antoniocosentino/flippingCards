@@ -4,7 +4,7 @@ import { Button, CheckBox, Layout, Text, Input, Icon, IconProps } from '@ui-kitt
 import { styles } from '../styles/styles';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { AppContext, TCards, TDeck, TSingleCard } from '../App';
-import { timeAgo } from './../utils/utils';
+import { getFullWordString, timeAgo } from './../utils/utils';
 
 const  dateFormat = require( 'dateformat' );
 
@@ -33,7 +33,7 @@ const SingleRow = ( props: any ) => {
                 >
                     { /* @ts-ignore */ }
                     <Layout>
-                        <Text style={ styles.boldText } >{ item.de }</Text>
+                        <Text style={ styles.boldText } >{ getFullWordString( item ) }</Text>
                         <Text style={ [styles.text, styles.smallerText, styles.leftAlignedText ] }>{ item.en }</Text>
                     </Layout>
 

@@ -1,11 +1,11 @@
 import React, { useContext, useRef, useState } from 'react';
-import { Text, Icon, IconProps, Layout } from '@ui-kitten/components';
-import { mainColor, styles } from '../styles/styles';
+import { Text, Icon, Layout } from '@ui-kitten/components';
+import { styles } from '../styles/styles';
 import Carousel from 'react-native-snap-carousel';
 import { View } from 'react-native';
 
 import FlipCard from 'react-native-flip-card';
-import { getArticle } from '../utils/utils';
+import { getFullWordString } from '../utils/utils';
 import { AppContext } from '../App';
 
 type TCards = {
@@ -17,7 +17,7 @@ type TRenderCardProps = {
     index: number;
 };
 
-export const CheckIcon = ( props: IconProps ) => (
+export const CheckIcon = () => (
     <Icon width={ 24 } height={ 24 } fill='#fff' name={ 'checkmark-circle-outline' } />
 );
 
@@ -106,7 +106,7 @@ const renderCard = ( props: TRenderCardProps ) => {
                     </View>
 
                     <View style={ [ styles.cardFrontAndBack, styles.cardBack ] }>
-                        <Text style={ styles.slideText }>{ getArticle( item ) } { item.de }</Text>
+                        <Text style={ styles.slideText }>{ getFullWordString( item ) }</Text>
                     </View>
                 </FlipCard>
             </View>
