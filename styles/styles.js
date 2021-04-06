@@ -246,6 +246,12 @@ export const styles = StyleSheet.create( {
         marginRight: '4.5%',
         height: screenHeight - 160
     },
+    cardMasteredIconContainer: {
+        backgroundColor: mainColor,
+        position: 'absolute',
+        bottom: 10,
+        right: 10
+    },
     wordCard: {
         marginBottom: 10,
         backgroundColor: mainColor,

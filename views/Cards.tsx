@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
-import { Text, Icon } from '@ui-kitten/components';
-import { styles } from '../styles/styles';
+import { Text, Icon, IconProps, Layout } from '@ui-kitten/components';
+import { mainColor, styles } from '../styles/styles';
 import Carousel from 'react-native-snap-carousel';
 import { View } from 'react-native';
 
@@ -16,6 +16,10 @@ type TRenderCardProps = {
     item: any;
     index: number;
 };
+
+export const CheckIcon = ( props: IconProps ) => (
+    <Icon width={ 24 } height={ 24 } fill='#fff' name={ 'checkmark-circle-outline' } />
+);
 
 export const Cards = ( props: TCards ) => {
 
@@ -94,6 +98,11 @@ const renderCard = ( props: TRenderCardProps ) => {
                 >
                     <View style={ styles.cardFrontAndBack }>
                         <Text style={ styles.slideText }>{ item.en }</Text>
+                        { item.mastered &&
+                            <Layout style={ styles.cardMasteredIconContainer }>
+                                <CheckIcon />
+                            </Layout>
+                        }
                     </View>
 
                     <View style={ [ styles.cardFrontAndBack, styles.cardBack ] }>
