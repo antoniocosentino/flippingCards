@@ -247,7 +247,7 @@ export const styles = StyleSheet.create( {
         width: '91%',
         marginLeft: '4.5%',
         marginRight: '4.5%',
-        height: screenHeight - 160
+        height: screenHeight - 170
     },
     cardMasteredIconContainer: {
         backgroundColor: mainColor,
