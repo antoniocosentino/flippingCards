@@ -119,6 +119,7 @@ export const AddToWallet = () => {
                 <ScrollView
                     keyboardDismissMode={ 'on-drag' }
                     keyboardShouldPersistTaps={ 'always' }
+                    contentContainerStyle={ styles.searchResultsContainer }
                 >
                     {
                         addSearchResults.map( ( word, index ) => {

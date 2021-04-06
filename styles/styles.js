@@ -123,6 +123,9 @@ export const styles = StyleSheet.create( {
         ...inputGlobalStyles,
         borderRadius: 18
     },
+    searchResultsContainer: {
+        paddingBottom: 80
+    },
     topSearchInput: {
         ...inputGlobalStyles
     },
