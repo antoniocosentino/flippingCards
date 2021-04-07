@@ -237,8 +237,6 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
 
     const currentWord = currentDeckCardsShuffled[ currentCard ];
 
-    console.log('render', currentDeckCardsShuffled.length);
-
     if ( currentDeckCardsShuffled.length === 0 ) {
         return null;
     }
