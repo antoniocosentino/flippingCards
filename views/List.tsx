@@ -5,7 +5,7 @@ import { Text, Card, IconProps, Icon, Layout, Input } from '@ui-kitten/component
 
 import { TouchableWithoutFeedback } from 'react-native';
 
-import { AppContext, TSingleWalletWord, TWordsWallet } from '../App';
+import { AppContext, enrichDecksWithPlaceholder, TDeck, TSingleWalletWord, TSingleWord, TWordsWallet } from '../App';
 import { styles } from '../styles/styles';
 
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -25,9 +25,12 @@ export const List = () => {
         wordsWallet,
         hasShownAnimation,
         deviceNotchSize,
+        decksData,
         setWordsWallet,
         setHasShownAnimation,
-        storeData
+        storeData,
+        storeDecksData,
+        setDecksData
     } = appData;
 
     const [ walletSearchKeyword, setWalletSearchKeyword ] = React.useState( '' );
@@ -41,6 +44,30 @@ export const List = () => {
     const updateWalletFilter = () => {
         const fuseResult = walletFuseInstance.search( walletSearchKeyword );
         setFilteredWordsWallet( fuseResult.map( ( result ) => result.item ) );
+    };
+
+    const deleteWordFromAllDecks = ( word: TSingleWord ) => {
+        const decksDataClone = [ ... decksData ];
+
+        // removing the add placeholder row
+        decksDataClone.splice( -1, 1 );
+
+        decksDataClone.forEach( ( singleDeck: TDeck ) => {
+            const wordInDeckIndex = singleDeck.cards.findIndex( ( singleCard ) => {
+
+                if ( singleCard.de === word.de && singleCard.en === word.en ) {
+                    return singleCard;
+                }
+
+            }  );
+
+            singleDeck.cards.splice( wordInDeckIndex, 1 );
+        } );
+
+        storeDecksData( decksDataClone ).then( () => {
+            setDecksData( enrichDecksWithPlaceholder( decksDataClone ) );
+        } );
+
     };
 
     useEffect( () => {
@@ -100,6 +127,9 @@ export const List = () => {
         } );
 
         wipeWalletSearch();
+
+        // Word will be removed as well from all the decks
+        deleteWordFromAllDecks( word );
 
     };
 
