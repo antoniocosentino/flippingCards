@@ -107,6 +107,11 @@ const renderCard = ( props: TRenderCardProps ) => {
 
                     <View style={ [ styles.cardFrontAndBack, styles.cardBack ] }>
                         <Text style={ styles.slideText }>{ getFullWordString( item ) }</Text>
+                        { item.mastered &&
+                            <Layout style={ [ styles.cardMasteredIconContainer, styles['cardMasteredIconContainer--Back'] ] }>
+                                <CheckIcon />
+                            </Layout>
+                        }
                     </View>
                 </FlipCard>
             </View>

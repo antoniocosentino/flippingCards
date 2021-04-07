@@ -255,6 +255,9 @@ export const styles = StyleSheet.create( {
         bottom: 10,
         right: 10
     },
+    'cardMasteredIconContainer--Back': {
+        backgroundColor: secondColor
+    },
     wordCard: {
         marginBottom: 10,
         backgroundColor: mainColor,
@@ -556,7 +559,8 @@ export const styles = StyleSheet.create( {
     // CHALLENGE MODE
     challengeModeCardWrapper: {
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        backgroundColor: mainColor
     },
     challengeModeCardLeftZone: {
         flexBasis: '60%',

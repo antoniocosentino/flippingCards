@@ -237,6 +237,79 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
 
     const currentWord = currentDeckCardsShuffled[ currentCard ];
 
+    console.log('render', currentDeckCardsShuffled.length);
+
+    if ( currentDeckCardsShuffled.length === 0 ) {
+        return null;
+    }
+
+    if ( currentCard + 1 <= currentDeckCardsShuffled.length ) {
+
+        return (
+            <Layout style={ styles['centeredElement--mediumHorizontalPadding'] }>
+
+                <ProgressBar
+                    totalNumber={ currentDeckCardsShuffled.length || 0 }
+                    currentNumber={ currentCard }
+                />
+
+                <Layout style={ styles.verticalSpacer } />
+
+                <Layout>
+                    <Text style={ [ styles.text, styles.verySmallText] } >{ currentCard + 1 }/{ currentDeckCardsShuffled.length || 0 }</Text>
+
+                    <WordRenderer
+                        currentWord={ currentWord }
+                        nextClick={ nextClick }
+                        continueClick={ continueClick }
+                        currentView={ currentView }
+                    />
+
+                    { currentView !== 'WORDGUESS' &&
+                        <>
+                            <Text>{ '\n' }</Text>
+                            <Animatable.Text ref={ emojiRef } style={ styles.bigEmoji }>{ currentView === 'CORRECT' ? '🎉' : '❌' }</Animatable.Text>
+                            <Text>{ '\n' }</Text>
+
+                            { currentView === 'WRONG' &&
+                                <Text
+                                    style={ [
+                                        styles.text,
+                                        styles.smallerText,
+                                        styles.strikedText
+                                    ] }
+                                >
+                                    { lastUserTypedWord.toLowerCase() }
+                                </Text>
+                            }
+
+                            <Text
+                                style={ [
+                                    styles.text,
+                                    styles.veryBigText,
+                                    styles.greenText
+                                ] }
+                            >
+                                { getFullWordString( currentWord ) }
+                            </Text>
+
+                            <Text>{ '\n' }</Text>
+                            <Button
+                                onPress={ continueClick }
+                                style={ [
+                                    styles.ctaButton,
+                                    styles[ 'ctaButton--smallWidth']
+                                ] }>
+                                Continue
+                            </Button>
+                        </>
+                    }
+
+                </Layout>
+            </Layout>
+        );
+    }
+
     if ( currentCard + 1 > currentDeckCardsShuffled.length ) {
         return (
             <Layout style={ styles['centeredElement--mediumHorizontalPadding'] }>
@@ -333,71 +406,5 @@ export const ChallengeModePlaying = ( props: TChallengeModePlaying ) => {
         );
     }
 
-    if ( !currentWord ) {
-        return null;
-    }
-
-    return (
-        <Layout style={ styles['centeredElement--mediumHorizontalPadding'] }>
-
-            <ProgressBar
-                totalNumber={ currentDeckCardsShuffled.length || 0 }
-                currentNumber={ currentCard }
-            />
-
-            <Layout style={ styles.verticalSpacer } />
-
-            <Layout>
-                <Text style={ [ styles.text, styles.verySmallText] } >{ currentCard + 1 }/{ currentDeckCardsShuffled.length || 0 }</Text>
-
-                <WordRenderer
-                    currentWord={ currentWord }
-                    nextClick={ nextClick }
-                    continueClick={ continueClick }
-                    currentView={ currentView }
-                />
-
-                { currentView !== 'WORDGUESS' &&
-                    <>
-                        <Text>{ '\n' }</Text>
-                        <Animatable.Text ref={ emojiRef } style={ styles.bigEmoji }>{ currentView === 'CORRECT' ? '🎉' : '❌' }</Animatable.Text>
-                        <Text>{ '\n' }</Text>
-
-                        { currentView === 'WRONG' &&
-                            <Text
-                                style={ [
-                                    styles.text,
-                                    styles.smallerText,
-                                    styles.strikedText
-                                ] }
-                            >
-                                { lastUserTypedWord.toLowerCase() }
-                            </Text>
-                        }
-
-                        <Text
-                            style={ [
-                                styles.text,
-                                styles.veryBigText,
-                                styles.greenText
-                            ] }
-                        >
-                            { getFullWordString( currentWord ) }
-                        </Text>
-
-                        <Text>{ '\n' }</Text>
-                        <Button
-                            onPress={ continueClick }
-                            style={ [
-                                styles.ctaButton,
-                                styles[ 'ctaButton--smallWidth']
-                            ] }>
-                            Continue
-                        </Button>
-                    </>
-                }
-
-            </Layout>
-        </Layout>
-    );
+    return null;
 };
