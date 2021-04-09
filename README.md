@@ -11,11 +11,11 @@ Just add words to your wallet and then you can train your knowledge by organizin
 The app doesn't require an Internet connection, since the words are stored in the internal dictionary. Adding a new word to your wallet takes just a few seconds and you will be in full control of what to learn.
 
 
-![Wallet view + Add to Wallet](screenshots/wallet.png)
-![Decks overview + Deck creation](screenshots/decks.png)
-![Cards view](screenshots/cards.png)
-![Challenge Mode](screenshots/challenge_playing.png)
-![Challenge Mode - Ovewview](screenshots/challenge_overview.png)
+![Wallet view + Add to Wallet](/public-assets/screenshots/wallet.png)
+![Decks overview + Deck creation](/public-assets/screenshots/decks.png)
+![Cards view](/public-assets/screenshots/cards.png)
+![Challenge Mode](/public-assets/screenshots/challenge_playing.png)
+![Challenge Mode - Overview](/public-assets/screenshots/challenge_overview.png)
 
 
 
@@ -40,6 +40,8 @@ Flipping Cards is currently only available with German words. Additional languag
 ---
 
 ## Credits
+App Development, UI/UX, Icon Design: [Antonio Cosentino](https://github.com/antoniocosentino)
+
 Flipping cards is built with [React Native](https://reactnative.dev/) and [UI Kitten](https://akveo.github.io/react-native-ui-kitten/).
 
 Illustrations are from [manypixels.co](https://manypixels.co).
