@@ -143,7 +143,7 @@ export const styles = StyleSheet.create( {
     },
     tapInstructions: {
         position: 'absolute',
-        bottom: 80,
+        bottom: 84,
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
