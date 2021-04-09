@@ -1,0 +1,113 @@
+html, body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #EBE503;
+    padding: 0;
+    margin: 0;
+    font-size: 0;
+}
+
+.header, .footer {
+    background: #fff;
+    padding: 40px 0;
+}
+
+.footer {
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 40px;
+}
+
+.mainContainer {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 40px;
+    width: calc(100% - 80px);
+    font-size: 14px;
+}
+
+.badgeContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 400px;
+    margin: 30px auto;
+}
+
+.pageGrid {
+    display: grid;
+    grid-template-columns: 9fr 3fr;
+    column-gap: 40px;
+}
+
+hr {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(235 229 3, 0.3);
+    margin: 40px 0;
+}
+
+h2 {
+    font-size: 26px;
+}
+
+a {
+    color: #B83B5E;
+}
+
+p, ul li {
+    font-size: 19px;
+}
+
+.footer p {
+    font-size: 15px;
+}
+
+h1 {
+    text-align: center;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.fcLogo {
+    width: 200px;
+    height: auto;
+    margin: 0 auto;
+    display: inherit;
+}
+
+.singleRelease {
+    margin-bottom: 20px;
+}
+
+.singleRelease h3 {
+    margin-bottom: 0;
+}
+
+.singleRelease ul {
+    margin-top: 6px;
+}
+
+.singleRelease ul li {
+    font-size: 15px;
+}
+
+@media only screen and (max-width: 768px) { 
+    .pageGrid {
+        display: block;
+    }
+
+    .fcLogo {
+        width: 140px;
+    }
+
+    .changeLog {
+        margin-top: 60px;
+        padding-top: 20px;
+        border-top: 1px solid #D3CE06;
+    }
+}

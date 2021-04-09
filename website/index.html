@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Flipping Cards - Learn German with flashcards</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"> 
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+        <meta property="og:image" content="/assets/og-image.jpg" />
+        <link href="style.css" rel="stylesheet">
+    </head>
+    <body>
+        
+        <div class="header">
+            <h1>Flipping Cards</h1>
+            
+            <img class="fcLogo" src="https://raw.githubusercontent.com/antoniocosentino/flippingCards/master/img/icon.png" />
+            
+            <div class="badgeContainer">
+                <a href="https://apps.apple.com/us/app/flipping-cards/id1536330032?itsct=apps_box&amp;itscg=30200">
+                    <img src="/assets/appstore_badge.png" alt="Download on the App Store" />
+                </a>
+                <a href="https://play.google.com/store/apps/detailsampaigther-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+                    <img width="200" alt="Get it on Google Play" src="/assets/play_badge.png" />
+                </a>
+            </div>
+        </div>
+
+        <div class="mainContainer">
+            <div class="pageGrid">
+                <div>
+                    <h2>About</h2>
+                    <p>
+                        Flipping Cards is an iOS/Android app that allows you to learn German words
+                        faster by creating flashcards with your own selection of words.
+                    </p>
+                    <p>
+                        Just add words to your wallet and then you can train your knowledge by
+                        organizing these words in cards decks. The app doesn&#39;t require an
+                        Internet connection, since the words are stored in the internal
+                        dictionary. Adding a new word to your wallet takes just a few seconds and
+                        you will be in full control of what to learn.
+                    </p>
+                    <p>
+                        <img src="/assets/screenshots/wallet.png" alt="Wallet view + Add to Wallet" />
+                        <img src="/assets/screenshots/decks.png" alt="Decks overview + Deck creation" />
+                        <img src="/assets/screenshots/cards.png" alt="Cards view" />
+                        <img src="/assets/screenshots/challenge_playing.png" alt="Challenge Mode" />
+                        <img src="/assets/screenshots/challenge_overview.png" alt="Challenge Mode - Overview" />
+                    </p>
+                    <p>
+                        Flipping Cards is currently only available with German words. Additional
+                        languages will be added with future releases.
+                    </p>
+                    <hr />
+                    <h2>Main Features:</h2>
+                    <ul>
+                        <li>
+                            All the functionality is available even offline, thanks to the locally
+                            stored dictionary
+                        </li>
+                        <li>Super simple UI: add a word in less than 5 seconds!</li>
+                        <li>Multi decks: organize words coming from your wallet in card decks</li>
+                        <li>Study words by simply flipping cards in your decks</li>
+                        <li>Challenge mode: test your knowledge in a quiz-like interface</li>
+                        <li>Track your learning progress</li>
+                    </ul>
+                    <hr />
+                    <h2>Download:</h2>
+                    <ul>
+                        <li>
+                            iOS (<a
+                                href="https://apps.apple.com/us/app/flipping-cards/id1536330032?ign-itsct=apps_box&amp;ign-itscg=30200"
+                                >download</a
+                                >)
+                        </li>
+                        <li>
+                            Android (<a
+                                href="https://play.google.com/store/apps/details?id=com.flipcards&amp;pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
+                                >download</a
+                                >)
+                        </li>
+                    </ul>
+                    <hr />
+                    <h2>Source Code</h2>
+                    <p>The entire codebase of Flipping Cards is <a href="https://github.com/antoniocosentino/flippingCards">available on GitHub.</a></p>
+
+                    <hr />
+                    <h2>Credits</h2>
+                    
+                    <p>App Development, UI/UX, Icon Design: <a href="https://github.com/antoniocosentino" target="blank">Antonio Cosentino</a></p>
+
+                    <p>
+                        Flipping cards is built with
+                        <a href="https://reactnative.dev/">React Native</a> and
+                        <a href="https://akveo.github.io/react-native-ui-kitten/">UI Kitten</a>.
+                    </p>
+                    <p>
+                        Illustrations are from <a href="https://manypixels.co">manypixels.co</a>.
+                    </p>
+                    <hr />
+                    <h2>Coming soon:</h2>
+                    <ul>
+                        <li>Reminders</li>
+                        <li>
+                            Add your words: if a word is not available in the dictionary you will be
+                            able to enter it manually
+                        </li>
+                    </ul>
+
+                    <br /><br />
+
+                    <h2>Coming later :)</h2>
+                    <ul>
+                        <li>Additional languages</li>
+                        <li>Pre-made word bundles</li>
+                        <li>Backup your data in iCloud / Google Drive</li>
+                    </ul>
+                </div>
+
+                <div class="changeLog">
+                    <h2>Changelog</h2>
+
+                    <div class="singleRelease">
+                        <h3>v1.2.0</h3>
+                        <em>Coming soon (currently in beta testing)</em>
+                        <ul>
+                            <li>Introduced Challenge Mode 🎉</li>
+                            <li>Fixed bug regarding words capitalization</li>
+                            <li>Fixed bug with words deleted from wallet not disappearing from decks</li>
+                        </ul>
+                    </div>
+
+                    <div class="singleRelease">
+                        <h3>v1.1.0</h3>
+                        <em>14.03.2021</em>
+                        <ul>
+                            <li>Introduced multi-decks</li>
+                            <li>New custom icons</li>
+                            <li>Multiple UI improvements</li>
+                        </ul>
+                    </div>
+
+                    <div class="singleRelease">
+                        <h3>v1.0.2</h3>
+                        <em>30.12.2020</em>
+                        <ul>
+                            <li>Using stack navigation for nested views</li>
+                        </ul>
+                    </div>
+
+                    <div class="singleRelease">
+                        <h3>v1.0</h3>
+                        <em>25.11.2020</em>
+                        <ul>
+                            <li>Initial release</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Flipping Cards &copy; 2020 - 2021 - <a href="https://antoniocosentino.com" target="_blank">Antonio Cosentino</a></p>
+        </div>
+    </body>
+</html>
