@@ -97,6 +97,12 @@ const ProgressBar = ( props: TProgressBar ) => {
     );
 };
 
+const getMaxNumberOfBoxes = (): number => {
+    const totalWidth = Dimensions.get( 'window' ).width;
+
+    return totalWidth / 32;
+};
+
 const WordRenderer = ( props: TWordRenderer  ) => {
     const { currentWord, currentView, nextClick, continueClick } = props;
 
@@ -130,7 +136,7 @@ const WordRenderer = ( props: TWordRenderer  ) => {
                     <IndividualCharsInput
                         wordStructure={ wordStructure }
                         key={ currentWord.de }
-                        maxBoxesPerLine={ 12 }
+                        maxBoxesPerLine={ getMaxNumberOfBoxes() }
                         onChange={ setTypedWord }
                     />
 
