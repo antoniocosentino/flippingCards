@@ -40,7 +40,7 @@ Flipping Cards is currently only available with German words. Additional languag
 ---
 
 ## Credits
-App Development, UI/UX, Icon Design: [Antonio Cosentino](https://github.com/antoniocosentino)
+App Development, UI/UX, Icon Design: [Antonio Cosentino](https://antoniocosentino.com)
 
 Flipping cards is built with [React Native](https://reactnative.dev/) and [UI Kitten](https://akveo.github.io/react-native-ui-kitten/).
 
