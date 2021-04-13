@@ -110,4 +110,9 @@ img {
         padding-top: 20px;
         border-top: 1px solid #D3CE06;
     }
+
+    img.screenshot {
+        width: calc( 100% + 80px);
+        margin-left: -40px;
+    }
 }
