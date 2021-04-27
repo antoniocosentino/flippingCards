@@ -4,11 +4,11 @@ import { AppContext, TCards, TSingleWord } from '../App';
 import { styles, mainColor } from '../styles/styles';
 import { Dimensions } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import { QuizInput, TCallbackData } from 'react-native-quiz-input';
 import Pie from 'react-native-pie';
 
 import { flatten, shuffle } from 'lodash';
 import { getFullWordString } from '../utils/utils';
-import { IndividualCharsInput } from './../components/IndividualCharsInput';
 import { getDeckPercentage } from './ChallengeMode';
 
 const MAX_CHALLENGE_SIZE = 12;
@@ -29,11 +29,6 @@ type TWordRenderer = {
     nextClick: ( wordToGuess: TSingleWord, typedWord: string ) => void
     continueClick: () => void
 }
-
-type TInputContent = {
-    wordArray: ReadonlyArray<string | false>,
-    wordString: string
-};
 
 type TViewTypes = 'WORDGUESS' | 'CORRECT' | 'WRONG';
 
@@ -110,7 +105,7 @@ const WordRenderer = ( props: TWordRenderer  ) => {
 
     const wordStructure = getWordStructure( wordToGuessAsArray );
 
-    const [ typedWord, setTypedWord ] = useState( {} as TInputContent );
+    const [ typedWord, setTypedWord ] = useState( {} as TCallbackData );
 
     const isButtonEnabled = getFullWordString( currentWord ).length === typedWord?.wordString?.length;
 
@@ -133,10 +128,11 @@ const WordRenderer = ( props: TWordRenderer  ) => {
                     </Text>
                     <Text style={ [ styles.verySmallText ] }>{ '\n' }</Text>
 
-                    <IndividualCharsInput
+                    <QuizInput
                         wordStructure={ wordStructure }
                         key={ currentWord.de }
                         maxBoxesPerLine={ getMaxNumberOfBoxes() }
+                        lineBreakOnSpace={ true }
                         onChange={ setTypedWord }
                     />
 
